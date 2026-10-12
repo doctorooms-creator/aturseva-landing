@@ -5,3 +5,4 @@ preview.log
 *.tsbuildinfo
 next-env.d.ts
 .DS_Store
+.preview-tmp/
