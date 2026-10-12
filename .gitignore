@@ -1,0 +1,7 @@
+node_modules/
+.next/
+dev.log
+preview.log
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
