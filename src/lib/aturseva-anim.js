@@ -154,13 +154,13 @@
         );
       }
       laneDraw(t.lanes[0], "comet-p", 0);
-      laneDraw(t.lanes[1], "comet-d", 1.5);
-      laneDraw(t.lanes[2], "comet-h", 3);
+      laneDraw(t.lanes[1], "comet-d", 0.6);
+      laneDraw(t.lanes[2], "comet-h", 1.2);
       tl.fromTo(
         ".conn-label",
         { autoAlpha: 0, x: -14 },
-        { autoAlpha: 1, x: 0, duration: 4, stagger: 1.5, ease: "power2.out" },
-        2
+        { autoAlpha: 1, x: 0, duration: 4, stagger: 1, ease: "power2.out" },
+        1
       );
 
       /* Phase B — converge into the Aturseva hub */
@@ -212,11 +212,11 @@
 
       /* captions crossfade */
       tl.to(t.caps[0], { autoAlpha: 0, y: -14, duration: 3 }, 13);
-      tl.to(t.caps[1], { autoAlpha: 1, y: 0, duration: 4 }, 17);
-      tl.to(t.caps[1], { autoAlpha: 0, y: -14, duration: 3 }, 40);
-      tl.to(t.caps[2], { autoAlpha: 1, y: 0, duration: 4 }, 44);
-      tl.to(t.caps[2], { autoAlpha: 0, y: -14, duration: 3 }, 58);
-      tl.to(t.caps[3], { autoAlpha: 1, y: 0, duration: 4 }, 62);
+      tl.to(t.caps[1], { autoAlpha: 1, y: 0, duration: 4 }, 15);
+      tl.to(t.caps[1], { autoAlpha: 0, y: -14, duration: 3 }, 36);
+      tl.to(t.caps[2], { autoAlpha: 1, y: 0, duration: 4 }, 40);
+      tl.to(t.caps[2], { autoAlpha: 0, y: -14, duration: 3 }, 57);
+      tl.to(t.caps[3], { autoAlpha: 1, y: 0, duration: 4 }, 61);
     }
 
     /* ─────────── Connection: mobile choreographed auto-play ─────────── */

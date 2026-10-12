@@ -182,12 +182,28 @@
   }
   .conn-card {
     position: absolute;
-    width: 300px;
-    max-width: 34vw;
+    width: 280px;
+    max-width: 30vw;
     transform: translate(-50%, calc(-100% - 18px));
   }
   .conn-card[data-side="down"] {
     transform: translate(-50%, 18px);
+  }
+  /* connector stem: ties the card visually to its station dot */
+  .conn-card:not(.conn-bubble)::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -17px;
+    width: 2px;
+    height: 14px;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom, rgb(174 224 208 / 0.55), transparent);
+  }
+  .conn-card[data-side="down"]:not(.conn-bubble)::after {
+    bottom: auto;
+    top: -17px;
+    background: linear-gradient(to top, rgb(174 224 208 / 0.55), transparent);
   }
   .conn-caption {
     position: absolute;
@@ -210,6 +226,8 @@
   @media (max-width: 767px) {
     .conn-label { display: none; }
     .conn-caption { @apply text-base; }
+    .conn-card:not(.conn-bubble)::after,
+    .conn-card[data-side="down"]:not(.conn-bubble)::after { display: none; }
     #conn-cards {
       position: static;
       display: grid;

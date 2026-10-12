@@ -10,9 +10,9 @@ import { Logo } from "./Logo";
 
 const LANES = {
   separate: {
-    patient: "M 30,110 C 190,70 330,150 470,110",
-    doctor: "M 30,300 C 190,260 330,340 470,300",
-    hospital: "M 30,490 C 190,450 330,530 470,490",
+    patient: "M 30,110 C 190,70 380,150 560,110",
+    doctor: "M 30,300 C 190,260 380,340 560,300",
+    hospital: "M 30,490 C 190,450 380,530 560,490",
   },
   converged: {
     patient: "M 30,110 C 150,110 220,190 380,300",
@@ -98,11 +98,11 @@ export function Connection() {
               <circle r="4.5" fill="#efdcab" />
             </g>
 
-            {/* Stations on the unified lane */}
-            <circle id="dot-booking" cx="560" cy="290" r="5" fill="#aee0d0" opacity="0" />
-            <circle id="dot-doctor" cx="780" cy="310" r="5" fill="#e2eeEA" opacity="0" />
-            <circle id="dot-hospital" cx="965" cy="300" r="5" fill="#efdcab" opacity="0" />
-            <circle id="dot-sevika" cx="1150" cy="215" r="5" fill="#e5c77e" opacity="0" />
+            {/* Stations on the unified lane (dot + halo ring) */}
+            <circle id="dot-booking" cx="616" cy="295" r="4.5" fill="#aee0d0" stroke="#aee0d0" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
+            <circle id="dot-doctor" cx="792" cy="311" r="4.5" fill="#e2eeEA" stroke="#e2eeEA" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
+            <circle id="dot-hospital" cx="960" cy="300" r="4.5" fill="#efdcab" stroke="#efdcab" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
+            <circle id="dot-sevika" cx="1150" cy="215" r="4.5" fill="#e5c77e" stroke="#e5c77e" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
           </svg>
 
           {/* Overlay: lane labels + Aturseva hub (absolute, viewBox-aligned) */}
@@ -124,7 +124,7 @@ export function Connection() {
 
           {/* Overlay: journey cards (desktop: absolute viewBox-aligned; mobile: static grid) */}
           <div id="conn-cards">
-            <div className="conn-card" id="card-booking" data-vx="560" data-vy="290" data-side="up">
+            <div className="conn-card" id="card-booking" data-vx="616" data-vy="295" data-side="up">
               <div className="conn-card-inner rounded-2xl border border-ink-100 bg-ivory-50 p-4 text-ink-900 shadow-lift">
                 <p className="eyebrow text-brand-600">Patient · Booking</p>
                 <p className="mt-1.5 font-display text-lg font-semibold leading-tight">
@@ -139,13 +139,13 @@ export function Connection() {
               </div>
             </div>
 
-            <div className="conn-card" id="card-doctor" data-vx="780" data-vy="310" data-side="down">
+            <div className="conn-card" id="card-doctor" data-vx="792" data-vy="311" data-side="down">
               <div className="conn-card-inner glass rounded-2xl p-4 shadow-lift">
                 <p className="eyebrow text-brand-300">Doctor · Today</p>
                 <p className="mt-1.5 font-display text-lg font-semibold leading-tight text-ivory-50">
                   Dr. Mehta&apos;s OPD
                 </p>
-                <p className="mt-1 text-sm text-ink-300">
+                <p className="mt-1 text-sm text-ink-200">
                   Token 11 in room · 3 waiting
                 </p>
                 <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
@@ -154,23 +154,23 @@ export function Connection() {
               </div>
             </div>
 
-            <div className="conn-card" id="card-hospital" data-vx="965" data-vy="300" data-side="up">
+            <div className="conn-card" id="card-hospital" data-vx="960" data-vy="300" data-side="up">
               <div className="conn-card-inner glass rounded-2xl p-4 shadow-lift">
                 <p className="eyebrow text-gold-400">Hospital · Front desk</p>
                 <p className="mt-1.5 font-display text-lg font-semibold leading-tight text-ivory-50">
                   One live queue
                 </p>
-                <p className="mt-1 text-sm text-ink-300">
+                <p className="mt-1 text-sm text-ink-200">
                   Online + walk-in, synced across counters
                 </p>
-                <p className="mt-2 text-xs text-ink-300">
+                <p className="mt-2 text-xs text-ink-200">
                   Tokens today:{" "}
                   <span id="token-counter" className="font-extrabold text-ivory-50">42</span>
                 </p>
               </div>
             </div>
 
-            <div className="conn-card max-w-[280px]" id="sevika-bubble-1" data-vx="1010" data-vy="150" data-side="up">
+            <div className="conn-card conn-bubble max-w-[240px]" id="sevika-bubble-1" data-vx="880" data-vy="42" data-side="up">
               <div className="conn-card-inner rounded-2xl rounded-bl-md border border-brand-300/30 bg-brand-900/70 p-3.5 text-ivory-50 shadow-lift backdrop-blur">
                 <p className="text-sm leading-relaxed">
                   Your token is <strong>#14</strong> — about 20 minutes left.
@@ -184,7 +184,7 @@ export function Connection() {
               </div>
             </div>
 
-            <div className="conn-card max-w-[280px]" id="sevika-bubble-2" data-vx="1085" data-vy="62" data-side="up">
+            <div className="conn-card conn-bubble max-w-[240px]" id="sevika-bubble-2" data-vx="1065" data-vy="148" data-side="up">
               <div className="conn-card-inner rounded-2xl rounded-bl-md border border-gold-300/25 bg-ink-800/70 p-3.5 text-ivory-50 shadow-lift backdrop-blur">
                 <p className="text-sm leading-relaxed">
                   Aaj raat 8 baje — first dose, after food.

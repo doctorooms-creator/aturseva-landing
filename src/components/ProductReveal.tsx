@@ -125,6 +125,9 @@ export function ProductReveal() {
                 <div className="mt-2 h-2 overflow-hidden rounded-full bg-white">
                   <div className="h-full w-[26%] rounded-full bg-gradient-to-r from-brand-400 to-brand-600" />
                 </div>
+                <p className="mt-2 text-[11px] font-semibold text-ink-400">
+                  +38 more tokens in today&apos;s live queue
+                </p>
               </div>
             </div>
 

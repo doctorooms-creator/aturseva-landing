@@ -2,15 +2,15 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-function PathCta({ role }: { role: string }) {
+function PathCta({ role, singular }: { role: string; singular: string }) {
   const [toast, setToast] = useState<string | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const onClick = useCallback(() => {
-    setToast(`Early access for ${role.toLowerCase()} opens soon — Team Aturseva will reach out.`);
+    setToast(`Early access for ${singular}s opens soon — Team Aturseva will reach out.`);
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => setToast(null), 3800);
-  }, [role]);
+  }, [singular]);
 
   useEffect(() => () => {
     if (timer.current) clearTimeout(timer.current);
@@ -23,7 +23,7 @@ function PathCta({ role }: { role: string }) {
         onClick={onClick}
         className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-full bg-ink-900 px-6 text-sm font-bold text-ivory-50 transition-all hover:-translate-y-0.5 hover:bg-brand-600"
       >
-        I&apos;m a {role.toLowerCase()}
+        I&apos;m a {singular}
       </button>
 
       {toast && (
@@ -42,6 +42,7 @@ function PathCta({ role }: { role: string }) {
 const PATHS = [
   {
     role: "Patients",
+    singular: "patient",
     accent: "text-brand-600",
     ring: "bg-brand-50 text-brand-600",
     title: "Walk in without the wait",
@@ -50,6 +51,7 @@ const PATHS = [
   },
   {
     role: "Doctors",
+    singular: "doctor",
     accent: "text-ink-700",
     ring: "bg-ivory-100 text-ink-700",
     title: "Keep the day humane",
@@ -58,6 +60,7 @@ const PATHS = [
   },
   {
     role: "Hospitals",
+    singular: "hospital",
     accent: "text-gold-600",
     ring: "bg-gold-100 text-gold-700",
     title: "One calm front desk",
@@ -99,7 +102,7 @@ export function Paths() {
               <p className="mt-3 flex-1 text-[15px] leading-relaxed text-ink-500">
                 {p.body}
               </p>
-              <PathCta role={p.role} />
+              <PathCta role={p.role} singular={p.singular} />
             </article>
           ))}
         </div>
