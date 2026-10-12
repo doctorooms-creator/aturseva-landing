@@ -81,3 +81,31 @@ Work Log:
 
 Stage Summary:
 - Gateway-safe user-facing preview shipped: `bun run build:preview` regenerates `preview/index.html` (≈378 KB, zero external requests — CSS + 3 base64 fonts + GSAP + ScrollTrigger + animation engine all inline), `bun run preview` serves it on :3006 with per-request file re-read. Canonical app on :3005 unaffected. Rebuilds are picked up live; browser-level QA left to the main agent (no agent-browser used per instructions).
+
+---
+Task ID: 6
+Agent: main (Z.ai Code)
+Task: Browser QA of canonical (:3005) and preview artifact (:3006), desktop + mobile
+
+Work Log:
+- agent-browser desktop 1440×900 + mobile 390×844 passes over both servers; VLM screenshot reviews of every section (hero, journeys, connection phases A–E, platform, sevika, paths, footer).
+- Canonical app: 0 page/console errors; interactions verified (mobile hamburger menu, anchor navigation to #sevika, toast CTA on all three persona buttons); no horizontal overflow on either viewport.
+- Preview artifact :3006 (built by Task 5): boots fully (window.gsap + initAtursevaAnimations + __atursevaAnimBooted=true), pinned scrub animation runs through all phases, styling/fonts intact, no overflow, no errors — CSS/JS/font inlining verified end-to-end in a real browser.
+- Full-page desktop screenshot archived at qa/25-fullpage-desktop.png.
+
+Stage Summary:
+- Both the canonical Next.js app and the self-contained preview artifact are browser-verified, on desktop and mobile.
+
+---
+Task ID: 7
+Agent: main (Z.ai Code)
+Task: Finalize — docs, git, hand-off
+
+Work Log:
+- README.md (run commands + gateway preview instructions), this worklog completed through Task 7.
+- Git history: initial feature commit 2bb5e30 → QA fixes 78dceca → preview artifact 1ce655f/a7deb53 (by Task 5 agent) → final commit.
+- Servers left running: next dev on :3005 (canonical), bun preview server on :3006 (user-facing, self-contained single file).
+
+Stage Summary:
+- User preview path: Preview Panel → append `?XTransformPort=3006` (mechanism live-verified in the prior session; artifact verified self-contained locally).
+- Honest limits: prefers-reduced-motion branch is code-implemented (static finale) but not browser-emulated; external gateway URL not re-tested from inside this sandbox after reset (was verified before); tagline copy inside footer logo reads "Make healthcare intelligent." (part of the approved logo file, rendered as-is).
