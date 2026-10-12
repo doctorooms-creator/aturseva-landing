@@ -208,6 +208,12 @@ discover doctors and hospitals (1); choose department/doctor and book (1); QR wa
 - **Commercial invention**: pricing, plan names, trials, launch dates.
 - **Market disparagement**: naming or diminishing competitors; claiming market leadership or "first/only" positions.
 
+### 12.3 Current-site wording issues — recorded for a later, separately authorized implementation pass
+
+These notes record observed wording on the **current live site** that does not yet satisfy the guardrails above. They are documentation only: **no site code or visible website copy has been changed by these notes**, and any correction requires a separate, explicitly authorized implementation pass.
+
+1. **Patient-path headline — "Walk in without the wait."** This headline on the current live site's patient pathway card implies the absence of waiting, which File 02 prohibits (capability matrix row 3: never promise zero waiting or priority; queue estimates are informational). Safer alternatives for a future pass: **"Walk in with greater clarity"** or **"Know where you are in the queue"**. This note records the wording issue; it does not claim the live phrase has been corrected.
+
 ---
 
 ## 13. Brand differentiation (credible, non-disparaging)
@@ -225,7 +231,7 @@ Aturseva differentiates on **a human-first coordination story**, told through ch
 
 ## 14. Optional tagline candidates — **PROPOSALS, NOT APPROVED**
 
-> **Status: proposals for owner review. None of these is the official tagline until the owner approves one. The live site's current title line ("Aturseva — Care that walks with you") is interim wording, likewise not an approved slogan.**
+> **Status: proposals for owner review — this remains an open owner decision. None of these candidates, the logo-embedded "Make healthcare intelligent.", nor the live site's interim title line ("Aturseva — Care that walks with you") is approved public wording until the owner explicitly designates one.**
 
 | # | Candidate | Angle |
 |---|---|---|
@@ -235,9 +241,9 @@ Aturseva differentiates on **a human-first coordination story**, told through ch
 | 4 | **With you, all the way.** | Presence across the whole journey; simple warmth. |
 | 5 | **Before, during, and after.** | The promise pillar made literal; structural and quiet. |
 
-**Recommended direction:** the companionship/journey family (candidates 1–2). Rationale: it matches the confirmed philosophy (helping hand, no one walks alone), makes no medical or performance claim, stays human-first rather than tech-first, and translates naturally into the site's existing journey-arc visuals.
+**Recommended direction (non-binding input to the owner's decision):** the companionship/journey family (candidates 1–2). Rationale: it matches the confirmed philosophy (helping hand, no one walks alone), makes no medical or performance claim, stays human-first rather than tech-first, and translates naturally into the site's existing journey-arc visuals. This recommendation selects nothing and approves nothing — the tagline decision stays open with the owner (§16, decision 1).
 
-**Emotional brand idea to preserve:** **"Aturseva ne hamara saath diya."** (*"Aturseva stood with us."*) — this line belongs in a deliberate patient voice or a Sevika example context (as an emotional testimony moment), never as general English marketing copy. The public website remains English.
+**Emotional brand idea to preserve:** **"Aturseva ne hamara saath diya."** (*"Aturseva stood with us."*) — treat this line strictly as **brand sentiment / a brand-philosophy line**, or use it inside an **explicitly labelled illustrative Sevika conversation**. There is no evidence in this project that it is an actual patient statement, so it must **not** be presented as a real patient testimonial, verified customer quote, endorsement, or evidence of outcomes unless the owner later supplies a genuine, authorized source and explicitly approves that use. Until then the sentiment stays in clearly contextualized brand-strategy or illustrative-conversation contexts only — never as general English marketing copy. The public website remains English.
 
 **Related open decision:** the approved logo file carries the embedded tagline "Make healthcare intelligent." — see §16.
 
@@ -265,15 +271,19 @@ Run this before approving any page copy or visual:
 
 Any "no" on items 2–7, or any unresolved checklist failure, blocks the piece.
 
+**Current-site review notes — recorded for a later implementation pass only (not fixed now):**
+
+- **Representative-preview labelling on the connection-section mock.** The current connection-section mock displays illustrative values ("Dr. Mehta", "Token #14", "Tokens today: 42"), but no visible "Representative preview" label is attached to those mock cards in the current implementation (the product-reveal section does carry such a label). A future, separately authorized implementation pass should visibly label representative product UI/data as a **"Representative preview"** and make sure example names and numbers cannot be mistaken for current live data. This entry records the gap — it does not assert that the visual labelling has been fixed.
+
 ---
 
 ## 16. Open decisions for the owner
 
 Only decisions that genuinely cannot be made from File 02:
 
-1. **Official tagline.** Approve one candidate from §14, keep the logo's embedded "Make healthcare intelligent.", or supply a different line. (The logo file and the site's interim wording currently differ — one should be designated official.)
-2. **Sevika example placement.** Whether Hinglish example conversations appear on the homepage (as part of the Sevika section) or are reserved for a dedicated patient page.
-3. **Multilingual scope.** Whether future Sevika examples should stay Hinglish-only or demonstrate additional languages.
+1. **Official tagline (unresolved).** Approve one candidate from §14, keep the logo's embedded "Make healthcare intelligent.", or supply a different line. (The logo file and the site's interim wording currently differ — one should be designated official.) Until the owner decides, **none** of these lines — including "Make healthcare intelligent." and "Care that walks with you." — is approved public wording.
+2. **Sevika example placement (unresolved).** Whether Hinglish example conversations appear on the homepage (as part of the Sevika section) or are reserved for a dedicated patient page.
+3. **Multilingual scope (unresolved).** Whether future Sevika examples should stay Hinglish-only or demonstrate additional languages.
 
 No other open decisions block current marketing work; everything else in this file follows from File 02.
 
