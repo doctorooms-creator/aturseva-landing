@@ -5,6 +5,8 @@
   "description": "Aturseva marketing landing page — independent workspace, canonical Next.js source",
   "scripts": {
     "dev": "next dev -p 3005 --webpack 2>&1 | tee dev.log",
+    "build": "next build",
+    "build:pages": "DEPLOY_TARGET=pages next build",
     "preview": "bun --hot scripts/serve-preview.ts",
     "build:preview": "bun scripts/build-preview.ts"
   },

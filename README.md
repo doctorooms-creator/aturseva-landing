@@ -2,7 +2,26 @@
 
 Independent marketing landing page for **Aturseva** — fully isolated from the product repo.
 
-**GitHub (private):** <https://github.com/doctorooms-creator/aturseva-landing> (branch `main`)
+**GitHub (public):** <https://github.com/doctorooms-creator/aturseva-landing> (branch `main`)
+
+## Live
+
+- **Public URL (auto-deploys on every push to `main`):**
+  <https://doctorooms-creator.github.io/aturseva-landing/>
+  (GitHub Actions workflow `.github/workflows/deploy-pages.yml` → static export → Pages)
+
+## Deploy to Vercel (optional, ~2 minutes)
+
+The repo is Vercel-ready (framework auto-detected, `build` script present, zero config needed):
+
+1. Open <https://vercel.com/new> and sign in.
+2. **Import** the `doctorooms-creator/aturseva-landing` repository
+   (connect the GitHub account if asked — private/public both work on the Hobby plan).
+3. Leave every setting as default and click **Deploy**.
+4. Vercel runs `next build` and serves the site at `…vercel.app` (custom domain attachable).
+
+Note: a Vercel deploy requires the owner's Vercel account login — that step cannot be
+automated from the sandbox. The GitHub Pages URL above is live meanwhile.
 
 ## Run
 
@@ -11,6 +30,7 @@ cd /home/z/landing-v2
 bun run dev          # canonical Next.js app → http://localhost:3005
 bun run preview      # self-contained preview server → http://localhost:3006
 bun run build:preview  # regenerate preview/index.html from the running app
+bun run build:pages   # static export for GitHub Pages → .next-pages/ (basePath /aturseva-landing)
 ```
 
 ## User-facing preview (sandbox gateway)

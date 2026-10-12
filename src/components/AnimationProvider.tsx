@@ -16,6 +16,9 @@ export function AnimationProvider() {
         import("gsap"),
         import("gsap/ScrollTrigger"),
       ]);
+      // Plain-JS side-effect module (IIFE, no exports) — shared verbatim with
+      // the self-contained preview artifact, hence not a typed ES module.
+      // @ts-expect-error TS2306: not a module by design
       await import("@/lib/aturseva-anim.js");
       if (cancelled) return;
       if (typeof window.initAtursevaAnimations !== "function") return;
