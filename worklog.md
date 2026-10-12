@@ -63,3 +63,21 @@ Work Log:
 
 Stage Summary:
 - Signature scroll animation works end-to-end on desktop AND mobile; QA screenshots in `qa/`. Reduced-motion branch is code-verified (static finale) but not browser-emulated.
+
+---
+Task ID: 5
+Agent: general-purpose (preview builder)
+Task: Self-contained single-file preview artifact + port 3006 preview server
+
+Work Log:
+- Read worklog (Tasks 1–4); verified dev server alive on :3005 (200) and gsap 3.15 UMD dist (`gsap.min.js` 72.9 KB, `ScrollTrigger.min.js` 44.6 KB) present locally; confirmed none of the three JS payloads contain `</script`, so they are safe to inline.
+- Audited the SSR HTML from :3005 (137.5 KB): all root-relative refs are `/_next` script/link tags (head) + React flight-data inline scripts (head `_R_` + body) — everything else is pure server-rendered markup with only `href="#…"` anchors.
+- Wrote `scripts/build-preview.ts` (bun TS): fetch SSR from :3005 with clear failure message → strip every `<script>…</script>` block and every `<link>` with `href^="/_next"` from head (also body, for gateway-safety) → compile CSS via `bunx @tailwindcss/cli -i ./src/app/globals.css -o ./.preview-tmp/styles.css --minify` (offline, CLI is a local devDependency) → inline the 3 variable fonts from `public/fonts/` as `data:font/woff2;base64` URIs → assemble: original doctype/html + cleaned head + single `<style>` with compiled CSS (it already carries `scroll-behavior:smooth` + body bg, so no extra flash-guard block — spec's "keep it minimal" clause) + cleaned body + 4 end-of-body scripts (gsap, ScrollTrigger, aturseva-anim verbatim, DOMContentLoaded bootstrap calling `window.initAtursevaAnimations(window.gsap, window.ScrollTrigger)`) → write `preview/index.html` → print size report + self-containment audit (root-relative `src="/`/`href="/` occurrences excluding `/#…` anchors; nonzero exit if any) → append `.preview-tmp/` to `.gitignore`.
+- Ran `bun scripts/build-preview.ts` — success: 387 KB single file, 0 root-relative refs.
+- Wrote `scripts/serve-preview.ts` (bun TS, `Bun.serve`): hardcoded port 3006; serves `preview/index.html` at `/` + `/index.html` as `text/html; charset=utf-8`; `/favicon.ico` → empty 204; any other path → 302 to `/`; re-reads the file per request (proved: appended marker → served; rebuilt → marker gone, no restart); logs one startup line.
+- Started server via `(nohup bun run preview > preview.log 2>&1 &)`; verified :3006 → 200.
+- Task C verification: :3006 = 200, 387,268 bytes served; artifact contains `initAtursevaAnimations` ×5, `Aturseva` ×30, `conn-svg` ×2, `sevika-msg` ×11, `data:font/woff2;base64` ×3; `/_next/static` ×0; served `src="/` = 0 and `href="/` = 0; favicon 204; stray path 302→`/`; dev server :3005 untouched and still 200; both ports listening simultaneously.
+- Cleaned stray temp file, committed (1ce655f), worktree clean.
+
+Stage Summary:
+- Gateway-safe user-facing preview shipped: `bun run build:preview` regenerates `preview/index.html` (≈378 KB, zero external requests — CSS + 3 base64 fonts + GSAP + ScrollTrigger + animation engine all inline), `bun run preview` serves it on :3006 with per-request file re-read. Canonical app on :3005 unaffected. Rebuilds are picked up live; browser-level QA left to the main agent (no agent-browser used per instructions).
