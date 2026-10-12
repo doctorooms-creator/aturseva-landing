@@ -2,6 +2,8 @@
 
 Independent marketing landing page for **Aturseva** — fully isolated from the product repo.
 
+**GitHub (private):** <https://github.com/doctorooms-creator/aturseva-landing> (branch `main`)
+
 ## Run
 
 ```bash

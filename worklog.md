@@ -109,3 +109,20 @@ Work Log:
 Stage Summary:
 - User preview path: Preview Panel → append `?XTransformPort=3006` (mechanism live-verified in the prior session; artifact verified self-contained locally).
 - Honest limits: prefers-reduced-motion branch is code-implemented (static finale) but not browser-emulated; external gateway URL not re-tested from inside this sandbox after reset (was verified before); tagline copy inside footer logo reads "Make healthcare intelligent." (part of the approved logo file, rendered as-is).
+
+---
+Task ID: 8
+Agent: main (Z.ai Code)
+Task: GitHub sync + post-session live verification ("Live kr do na" / "Git Hub pe update kr diya hai ?")
+
+Work Log:
+- Verified servers still healthy after session gap: next dev :3005 (200, 137.7 KB SSR) and preview server :3006 (200, 387.3 KB artifact); dev.log clean, no errors.
+- Discovered landing-v2 git had NO remote — nothing was ever pushed to GitHub. Extracted existing credential from the product repo's remote (read-only), verified via GitHub API (login doctorooms-creator, scopes repo/workflow).
+- Created PRIVATE repo `doctorooms-creator/aturseva-landing` via API; renamed local branch master→main; added remote; pushed all 5 commits (57 tracked files, no build/deps); verified on API (commits + default branch + private visibility).
+- Product repo sync (push-only, zero local modifications): found 7 unpushed local commits in /home/z/my-project (Sevika P1 product work: rx-parse, weekly-report, adherence UI, API routes — 27 files, ~2,957 lines; local strictly ahead, 0 behind). Scanned diff for secrets (clean) before pushing. Fast-forward push `7dc916b..db0a727` to Doctorooms2; API-verified SYNCED. No file in my-project was touched.
+- agent-browser sanity pass: desktop 1440×900 (:3005), mobile 390×844, preview :3006 — all render fully (qa/26/27/28 screenshots), console clean (dev HMR logs only).
+- README.md: added GitHub repo link at top.
+- 15-min webDevReview cron created, scoped STRICTLY to /home/z/landing-v2 (its own worklog + ports 3005/3006), with hard constraints forbidding any modification to /home/z/my-project.
+
+Stage Summary:
+- Both repos on GitHub: doctorooms-creator/aturseva-landing (private, landing) and Doctorooms2 (synced to db0a727). Site live and verified: canonical :3005 + user preview :3006 via ?XTransformPort=3006.
