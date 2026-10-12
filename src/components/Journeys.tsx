@@ -9,8 +9,8 @@ const JOURNEYS = [
     tint: "text-brand-600",
     lane: (
       <>
-        <path className="journey-lane" d="M6 34 C 46 8 78 8 108 34" stroke="#1f8f7b" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-        <path className="journey-lane" d="M152 34 C 192 60 224 60 254 34" stroke="#1f8f7b" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        <path className="journey-lane" d="M6 34 C 46 8 78 8 108 34" stroke="#7a8083" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        <path className="journey-lane" d="M152 34 C 192 60 224 60 254 34" stroke="#7a8083" strokeWidth="2.5" strokeLinecap="round" fill="none" />
       </>
     ),
     title: "The long wait",
@@ -23,8 +23,8 @@ const JOURNEYS = [
     tint: "text-ink-700",
     lane: (
       <>
-        <path className="journey-lane" d="M6 34 C 46 60 78 60 108 34" stroke="#2e6b60" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-        <path className="journey-lane" d="M152 34 C 192 8 224 8 254 34" stroke="#2e6b60" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        <path className="journey-lane" d="M6 34 C 46 60 78 60 108 34" stroke="#565b5e" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        <path className="journey-lane" d="M152 34 C 192 8 224 8 254 34" stroke="#565b5e" strokeWidth="2.5" strokeLinecap="round" fill="none" />
       </>
     ),
     title: "The full day",
@@ -37,8 +37,8 @@ const JOURNEYS = [
     tint: "text-gold-600",
     lane: (
       <>
-        <path className="journey-lane" d="M6 34 C 46 8 78 8 108 34" stroke="#c99a3f" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-        <path className="journey-lane" d="M152 34 C 192 60 224 60 254 34" stroke="#c99a3f" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        <path className="journey-lane" d="M6 34 C 46 8 78 8 108 34" stroke="#a5abae" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        <path className="journey-lane" d="M152 34 C 192 60 224 60 254 34" stroke="#a5abae" strokeWidth="2.5" strokeLinecap="round" fill="none" />
       </>
     ),
     title: "The busy desk",

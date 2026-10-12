@@ -58,51 +58,51 @@ export function Connection() {
             <path
               id="lane-patient"
               d={LANES.separate.patient}
-              stroke="#45ac97"
+              stroke="#9aa0a3"
               strokeWidth="2.5"
               strokeLinecap="round"
             />
             <path
               id="lane-doctor"
               d={LANES.separate.doctor}
-              stroke="#c2d6d1"
+              stroke="#d5d8da"
               strokeWidth="2.5"
               strokeLinecap="round"
             />
             <path
               id="lane-hospital"
               d={LANES.separate.hospital}
-              stroke="#d9ac55"
+              stroke="#b0b5b8"
               strokeWidth="2.5"
               strokeLinecap="round"
             />
             <path
               id="lane-unified"
               d={LANES.unified}
-              stroke="#7cc9b5"
+              stroke="#bfc4c6"
               strokeWidth="3.5"
               strokeLinecap="round"
             />
 
             {/* Travellers on the separate lanes */}
             <g id="comet-p" opacity="0" transform="translate(30,110)">
-              <circle r="10" fill="#45ac97" opacity="0.25" />
-              <circle r="4.5" fill="#aee0d0" />
+              <circle r="10" fill="#9aa0a3" opacity="0.25" />
+              <circle r="4.5" fill="#c9cdd0" />
             </g>
             <g id="comet-d" opacity="0" transform="translate(30,300)">
-              <circle r="10" fill="#c2d6d1" opacity="0.25" />
-              <circle r="4.5" fill="#e2eeEA" />
+              <circle r="10" fill="#d5d8da" opacity="0.25" />
+              <circle r="4.5" fill="#e9ebed" />
             </g>
             <g id="comet-h" opacity="0" transform="translate(30,490)">
-              <circle r="10" fill="#d9ac55" opacity="0.25" />
-              <circle r="4.5" fill="#efdcab" />
+              <circle r="10" fill="#b0b5b8" opacity="0.25" />
+              <circle r="4.5" fill="#c3c8cb" />
             </g>
 
             {/* Stations on the unified lane (dot + halo ring) */}
-            <circle id="dot-booking" cx="616" cy="295" r="4.5" fill="#aee0d0" stroke="#aee0d0" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
-            <circle id="dot-doctor" cx="792" cy="311" r="4.5" fill="#e2eeEA" stroke="#e2eeEA" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
-            <circle id="dot-hospital" cx="960" cy="300" r="4.5" fill="#efdcab" stroke="#efdcab" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
-            <circle id="dot-sevika" cx="1150" cy="215" r="4.5" fill="#e5c77e" stroke="#e5c77e" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
+            <circle id="dot-booking" cx="616" cy="295" r="4.5" fill="#c9cdd0" stroke="#c9cdd0" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
+            <circle id="dot-doctor" cx="792" cy="311" r="4.5" fill="#e9ebed" stroke="#e9ebed" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
+            <circle id="dot-hospital" cx="960" cy="300" r="4.5" fill="#c3c8cb" stroke="#c3c8cb" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
+            <circle id="dot-sevika" cx="1150" cy="215" r="4.5" fill="#d0d2d4" stroke="#d0d2d4" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
           </svg>
 
           {/* Overlay: lane labels + Aturseva hub (absolute, viewBox-aligned) */}

@@ -45,6 +45,22 @@ function stripNextLinks(html: string): string {
   });
 }
 
+/** Inline the favicon (root-relative /icon.svg?…) as a base64 data URI so the
+ *  single-file preview keeps its icon with zero external requests. */
+async function inlineIcon(html: string): Promise<string> {
+  const iconPath = ROOT + "/src/app/icon.svg";
+  if (!existsSync(iconPath)) return html;
+  const iconBytes = Buffer.from(await Bun.file(iconPath).arrayBuffer());
+  const dataUri =
+    "data:image/svg+xml;base64," + iconBytes.toString("base64");
+  const inlined = html.replace(
+    /href="\/icon\.svg[^"]*"/gi,
+    'href="' + dataUri + '"'
+  );
+  if (inlined !== html) console.log("  favicon inlined as data URI (" + (iconBytes.length / 1024).toFixed(1) + " KB)");
+  return inlined;
+}
+
 /* ─────────────────── 1) fetch SSR'd homepage ─────────────────── */
 
 console.log("→ fetching SSR HTML from " + DEV_URL);
@@ -80,12 +96,12 @@ let head = rawHtml.slice(headOpen, headClose + "</head>".length); // <head>…</
 let body = rawHtml.slice(bodyOpen, bodyClose); // <body …>… (no </body>)
 const postlude = rawHtml.slice(bodyClose + "</body>".length); // </html>
 
-// Head: drop scripts + /_next links; keep meta/title/inline styles.
-head = stripNextLinks(stripScripts(head));
+// Head: drop scripts + /_next links; inline the favicon; keep meta/title/inline styles.
+head = await inlineIcon(stripNextLinks(stripScripts(head)));
 // Body: drop scripts (React hydration/flight data). We also strip any stray
 // /_next link tags here — markup that references /_next can't load through
 // the gateway anyway, and the self-containment audit below enforces this.
-body = stripNextLinks(stripScripts(body));
+body = await inlineIcon(stripNextLinks(stripScripts(body)));
 
 /* ─────────────────── 3) compile Tailwind CSS ─────────────────── */
 

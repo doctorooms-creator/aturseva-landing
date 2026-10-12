@@ -145,3 +145,20 @@ Work Log:
 
 Stage Summary:
 - Site is publicly live at https://doctorooms-creator.github.io/aturseva-landing/ with auto-deploy on push. Vercel remains a 2-minute owner-side import (README has exact steps) — NOT VERIFIED from sandbox because no Vercel credentials exist here.
+
+---
+Task ID: 10
+Agent: main (Z.ai Code)
+Task: Execute the remaining work from File 02 — monochrome redesign of the live landing page (user: "jo baki hai usme development start kro")
+
+Work Log:
+- Analysed File 02 (docs/02_PRODUCT_TRUTH_AND_CAPABILITY_MATRIX.md) §12: v1 was aligned on copy, "Representative preview" labelling, Sevika framing and narrative order — the ONE deviation was the teal/green/gold/ivory palette vs the approved monochrome direction (§11.3). That became this task.
+- globals.css: swapped all @theme token VALUES to luminance-parity neutral greys while KEEPING token names (ink/brand/gold/ivory scales) — every colour-dependent utility class across all components converted to monochrome with zero component-logic churn. Shadows → neutral rgb(10 10 11) + white glow for dark surfaces; conn-card stems → grey gradients.
+- Hardcoded hex replacements: Hero.tsx (journey gradient, milestone dots, ECG trace), Journeys.tsx (three persona lanes as three distinct grey steps), Connection.tsx (lanes, station halos/cores, progress dots), icon.svg (favicon → black square + white symbol), layout.tsx (themeColor).
+- Audit: full hex sweep of src/ — every remaining hex is R=G=B pure grey; no hue class names anywhere; anim engine untouched (no colors in it).
+- Fixed preview-builder regression: new favicon introduced a root-relative /icon.svg ref that tripped the self-containment audit → added inlineIcon() step to scripts/build-preview.ts (favicon now inlined as base64 data URI). Rebuild: self-containment OK, 380.7 KB single file, 0 old-color refs.
+- QA: agent-browser desktop 1440×900 (hero, connection, platform, sevika) + mobile 390×844 (hero, connection) — 0 console errors everywhere; VLM visual review of hero/connection/platform: strictly monochrome, readable, elegant, no glitches/overlaps.
+- Rebuilt static export (build:pages → .next-pages) and pushed — GitHub Actions auto-deploy monitored to success; live site verified.
+
+Stage Summary:
+- The File 02 §11.3 deviation is now CLOSED: the entire site (canonical :3005, preview :3006, public Pages URL) is monochrome black/white/grey. Narrative, copy, animations, structure unchanged. Optional §4.4 Hinglish Sevika example remains a future choice, not a gap.

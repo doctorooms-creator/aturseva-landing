@@ -6,7 +6,7 @@
 
 /* ═══════════════════════════════════════════════════════════════
    ATURSEVA DESIGN SYSTEM
-   Deep ink-teal · warm ivory · calm gold. No blue.
+   Monochrome — black, white, grey only (File 02 §11.3).
    Fraunces (display serif) for emotion · Manrope for clarity.
    ═══════════════════════════════════════════════════════════════ */
 
@@ -14,48 +14,48 @@
   --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
 
-  /* Ink — deep teal-forest scale (dark surfaces + text on light) */
-  --color-ink-950: #04201c;
-  --color-ink-900: #072923;
-  --color-ink-800: #0b3530;
-  --color-ink-700: #11453e;
-  --color-ink-600: #17594f;
-  --color-ink-500: #2e6b60;
-  --color-ink-400: #54827a;
-  --color-ink-300: #8cafa8;
-  --color-ink-200: #c2d6d1;
-  --color-ink-100: #e2eeEA;
+  /* Ink — neutral near-black scale (dark surfaces + text on light) */
+  --color-ink-950: #0a0a0b;
+  --color-ink-900: #101113;
+  --color-ink-800: #191b1d;
+  --color-ink-700: #26292b;
+  --color-ink-600: #34383a;
+  --color-ink-500: #4b5052;
+  --color-ink-400: #6f7476;
+  --color-ink-300: #9aa0a2;
+  --color-ink-200: #c6cacb;
+  --color-ink-100: #e4e7e8;
 
-  /* Brand — healing teal-emerald */
-  --color-brand-50: #eff9f5;
-  --color-brand-100: #d7f0e6;
-  --color-brand-200: #aee0d0;
-  --color-brand-300: #7cc9b5;
-  --color-brand-400: #45ac97;
-  --color-brand-500: #1f8f7b;
-  --color-brand-600: #157564;
-  --color-brand-700: #115d50;
-  --color-brand-800: #0d483e;
-  --color-brand-900: #0a3831;
+  /* Brand — primary grey accent (silver on dark, charcoal on light) */
+  --color-brand-50: #f5f6f6;
+  --color-brand-100: #e7e9ea;
+  --color-brand-200: #d3d6d8;
+  --color-brand-300: #bec3c5;
+  --color-brand-400: #a6acae;
+  --color-brand-500: #7d8386;
+  --color-brand-600: #5d6366;
+  --color-brand-700: #474c4f;
+  --color-brand-800: #33383a;
+  --color-brand-900: #232729;
 
-  /* Gold — premium warm accent */
-  --color-gold-100: #f7ecd4;
-  --color-gold-200: #efdcab;
-  --color-gold-300: #e5c77e;
-  --color-gold-400: #d9ac55;
-  --color-gold-500: #c99a3f;
-  --color-gold-600: #a87b2c;
-  --color-gold-700: #86601f;
+  /* Gold → second grey accent (approval chips, focus rings) */
+  --color-gold-100: #f0f0f0;
+  --color-gold-200: #dedfdf;
+  --color-gold-300: #ccccce;
+  --color-gold-400: #b4b6b8;
+  --color-gold-500: #9c9fa1;
+  --color-gold-600: #848788;
+  --color-gold-700: #6c6f71;
 
-  /* Ivory — warm paper light surfaces */
-  --color-ivory-50: #fbf9f4;
-  --color-ivory-100: #f6f1e7;
-  --color-ivory-200: #eee7d7;
-  --color-ivory-300: #e2d7c0;
+  /* Ivory — neutral paper light surfaces */
+  --color-ivory-50: #fafafa;
+  --color-ivory-100: #f4f4f5;
+  --color-ivory-200: #eaeaeb;
+  --color-ivory-300: #dcddde;
 
-  --shadow-soft: 0 1px 2px rgb(7 41 35 / 0.05), 0 8px 24px -8px rgb(7 41 35 / 0.12);
-  --shadow-lift: 0 2px 4px rgb(7 41 35 / 0.06), 0 24px 56px -18px rgb(7 41 35 / 0.24);
-  --shadow-glow: 0 0 0 1px rgb(69 172 151 / 0.28), 0 10px 44px -6px rgb(31 143 123 / 0.5);
+  --shadow-soft: 0 1px 2px rgb(10 10 11 / 0.05), 0 8px 24px -8px rgb(10 10 11 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(10 10 11 / 0.06), 0 24px 56px -18px rgb(10 10 11 / 0.24);
+  --shadow-glow: 0 0 0 1px rgb(255 255 255 / 0.22), 0 10px 44px -6px rgb(255 255 255 / 0.16);
 
   --animate-breathe: breathe 6s ease-in-out infinite;
   --animate-pulse-ring: pulse-ring 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
@@ -198,12 +198,12 @@
     width: 2px;
     height: 14px;
     transform: translateX(-50%);
-    background: linear-gradient(to bottom, rgb(174 224 208 / 0.55), transparent);
+    background: linear-gradient(to bottom, rgb(200 205 208 / 0.55), transparent);
   }
   .conn-card[data-side="down"]:not(.conn-bubble)::after {
     bottom: auto;
     top: -17px;
-    background: linear-gradient(to top, rgb(174 224 208 / 0.55), transparent);
+    background: linear-gradient(to top, rgb(200 205 208 / 0.55), transparent);
   }
   .conn-caption {
     position: absolute;
