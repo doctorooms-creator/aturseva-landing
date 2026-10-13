@@ -1,6 +1,7 @@
 /**
  * §2 — Three journeys that rarely happen in step: patient, doctor, hospital.
  * Each card carries its own broken lane (a gap = the missing connection).
+ * (B9: lane greys tokenized via globals.css diagram scale — values unchanged.)
  */
 const JOURNEYS = [
   {
@@ -9,8 +10,8 @@ const JOURNEYS = [
     tint: "text-brand-600",
     lane: (
       <>
-        <path className="journey-lane" d="M6 34 C 46 8 78 8 108 34" stroke="#7a8083" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-        <path className="journey-lane" d="M152 34 C 192 60 224 60 254 34" stroke="#7a8083" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        <path className="journey-lane stroke-diagram-550" d="M6 34 C 46 8 78 8 108 34" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        <path className="journey-lane stroke-diagram-550" d="M152 34 C 192 60 224 60 254 34" strokeWidth="2.5" strokeLinecap="round" fill="none" />
       </>
     ),
     title: "The long wait",
@@ -23,8 +24,8 @@ const JOURNEYS = [
     tint: "text-ink-700",
     lane: (
       <>
-        <path className="journey-lane" d="M6 34 C 46 60 78 60 108 34" stroke="#565b5e" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-        <path className="journey-lane" d="M152 34 C 192 8 224 8 254 34" stroke="#565b5e" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        <path className="journey-lane stroke-diagram-600" d="M6 34 C 46 60 78 60 108 34" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        <path className="journey-lane stroke-diagram-600" d="M152 34 C 192 8 224 8 254 34" strokeWidth="2.5" strokeLinecap="round" fill="none" />
       </>
     ),
     title: "The full day",
@@ -37,8 +38,8 @@ const JOURNEYS = [
     tint: "text-gold-600",
     lane: (
       <>
-        <path className="journey-lane" d="M6 34 C 46 8 78 8 108 34" stroke="#a5abae" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-        <path className="journey-lane" d="M152 34 C 192 60 224 60 254 34" stroke="#a5abae" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        <path className="journey-lane stroke-diagram-400" d="M6 34 C 46 8 78 8 108 34" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        <path className="journey-lane stroke-diagram-400" d="M152 34 C 192 60 224 60 254 34" strokeWidth="2.5" strokeLinecap="round" fill="none" />
       </>
     ),
     title: "The busy desk",

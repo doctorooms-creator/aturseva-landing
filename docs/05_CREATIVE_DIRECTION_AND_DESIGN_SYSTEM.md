@@ -108,6 +108,26 @@ One unified **graphite scale** with neutral paper whites — proposed for a futu
 
 Rule: off-whites must stay **neutral** (B within ±2 of R/G); a warm `#f5f0e8`-style paper is prohibited.
 
+**Addendum — diagram micro-palette (INSTALLED; B9 closure pass, post-File-11-roadmap, owner-delegated "go ahead further"):** the data-line greys of §4.3 ("Data line (diagrams)") are now installed as a `diagram-*` step scale in `globals.css` `@theme` — a tokenization of the verified prior inline-SVG hexes, **values carried over exactly (zero visual diff)**. Components reference them through the generated `stroke-diagram-*` / `fill-diagram-*` utilities or the `--color-diagram-*` custom properties; the alpha-bearing conn-card stem keeps its own `--diagram-stem` var. Steps run dark (600) → light (50), direction-consistent with graphite/brand:
+
+| Token | HEX (= prior inline value) | Verified prior use sites (now token-driven) |
+|---|---|---|
+| `--color-diagram-600` | `#565b5e` | `Journeys.tsx` doctor lanes |
+| `--color-diagram-550` | `#7a8083` | `Journeys.tsx` patient lanes |
+| `--color-diagram-500` | `#8b9093` | `Hero.tsx` ECG trace |
+| `--color-diagram-450` | `#9aa0a3` | `Hero.tsx` arc-gradient start · `Connection.tsx` patient lane + comet halo |
+| `--color-diagram-400` | `#a5abae` | `Journeys.tsx` hospital lanes |
+| `--color-diagram-350` | `#b0b5b8` | `Connection.tsx` hospital lane + comet halo |
+| `--color-diagram-300` | `#bfc4c6` | `Hero.tsx` arc-gradient mid + milestone ring · `Connection.tsx` unified lane |
+| `--color-diagram-250` | `#c3c8cb` | `Connection.tsx` hospital comet core + hospital station dot |
+| `--color-diagram-200` | `#c9cdd0` | `Hero.tsx` milestone node · `Connection.tsx` patient comet core + booking station dot |
+| `--color-diagram-150` | `#d0d2d4` | `Hero.tsx` arc-gradient end · `Connection.tsx` Sevika station dot |
+| `--color-diagram-100` | `#d5d8da` | `Connection.tsx` doctor lane + comet halo |
+| `--color-diagram-50` | `#e9ebed` | `Connection.tsx` doctor comet core + doctor station dot |
+| `--diagram-stem` | `rgb(200 205 208 / 0.55)` | conn-card connector stems (`globals.css` `.conn-card::after`) |
+
+Closure evidence (acceptance per File 11 §5 B9 row — "hex sweep clean on touched components; zero visual diff"): component hex sweep clean; computed-style identity across all 28 migrated attribute sites + both stem gradients on dev `:3005`; byte-identical reduced-motion screenshots before/after; preview `:3006`, pages export and live Pages verified. Recorded in the repo worklog (B9 closure task).
+
 ### 4.3 Semantic roles (proposal)
 
 | Role | Light-section value | Dark-section value | Usage |
@@ -125,7 +145,7 @@ Rule: off-whites must stay **neutral** (B within ±2 of R/G); a warm `#f5f0e8`-s
 | Hover | fill lightens one step + `translate-y -0.5` lift (verified pattern) | same | buttons, cards |
 | Focus ring | `graphite-400`-range 2px outline, 3px offset (verified current: gold-500 `#9c9fa1`) | same | all interactive elements |
 | Disabled | `graphite-200` fill + `graphite-400` text + no shadow | same | never colour-coded by hue |
-| Data line (diagrams) | distinct grey steps: `#e9ebed`, `#d0d2d4`, `#c9cdd0`, `#c3c8cb` (verified in Connection SVG) + labels | same | lanes, connectors, ECG |
+| Data line (diagrams) | distinct grey steps: `#e9ebed`, `#d0d2d4`, `#c9cdd0`, `#c3c8cb` (verified in Connection SVG; tokenized as `diagram-*` steps — §4.2 addendum, values unchanged) + labels | same | lanes, connectors, ECG |
 | Overlay/scrim | black at 40–82% (verified nav-scrolled uses ink-950 @82%) | — | nav, modals |
 | Selection | `graphite-200` bg + `graphite-950` text (verified `::selection`) | — | global |
 
@@ -147,7 +167,7 @@ Two layers, both expressed as Tailwind 4 `@theme` custom properties (current mec
 1. **Primitive tokens** — raw values, no meaning: `graphite-*` scale, `paper-*` scale, `font-display`, `font-sans`, `radius-*`, `space-*`, `shadow-*`, `ease-*`, `duration-*`.
 2. **Semantic/component tokens** — meaning-bearing aliases that components consume: `color-bg-page`, `color-bg-stage-dark`, `color-text-primary`, `color-text-secondary`, `color-border-subtle`, `color-control-primary`, `color-focus-ring`, etc.
 
-Rule for all future work (governance, §18): components reference semantic tokens, never raw hex. The current codebase partially satisfies this (components use `ink-*`/`brand-*` classes but also **hardcoded SVG hex greys** — verified in `Hero.tsx` gradients and `Connection.tsx` lanes/dots; those live outside Tailwind's reach and should migrate to `currentColor`/CSS vars in a future pass, File 11).
+Rule for all future work (governance, §18): components reference semantic tokens, never raw hex. The current codebase partially satisfies this (components use `ink-*`/`brand-*` classes but also **hardcoded SVG hex greys** — verified in `Hero.tsx` gradients and `Connection.tsx` lanes/dots; those live outside Tailwind's reach and should migrate to `currentColor`/CSS vars in a future pass, File 11). **B9 CLOSED (post-roadmap closure pass, owner-delegated):** that migration has now happened — the Hero/Journeys/Connection inline-SVG greys and the conn-card stems all reference `diagram-*` tokens (§4.2 addendum); hex sweep clean, zero visual diff verified (computed-style identity + byte-identical reduced-motion screenshots).
 
 ### 5.2 Token dictionary (status: current = verified in source; proposed = this document's recommendation, not installed)
 
@@ -160,6 +180,7 @@ Rule for all future work (governance, §18): components reference semantic token
 | `--color-gold-*` (100–700) | 2nd grey accent | `#f0f0f0` … `#6c6f71` | chips, focus, milestones | Current (verified, misnamed) |
 | `--color-ivory-*` (50–300) | paper scale | `#fafafa` … `#dcddde` | light backgrounds | Current (verified, misnamed) |
 | `graphite-*` / `paper-*` | unified primitive scale | §4.2 | future canonical naming | Proposed |
+| `diagram-*` (600–50) + `--diagram-stem` | data-line micro-palette | §4.2 addendum (exact prior inline hexes) | SVG diagram lanes/nodes/dots/stems | Current (installed — B9 closure) |
 | `--radius-sm/md/lg/xl/full` | corner scale | 10/14/20/28px & pill | chips/cards/panels/buttons | Proposed (current usage: ad-hoc `rounded-2xl/3xl/full`, verified) |
 | `--space-1…` | 4/8-based spacing scale | 4/8/12/16/24/32/48/64/96/128 | all spacing | Proposed (current usage: Tailwind utilities, effectively 4-based) |
 | `--shadow-soft/-lift/-glow` | neutral elevation | verified values §2.4 | cards, buttons-on-dark | Current (verified) |
@@ -477,7 +498,7 @@ Bringing forward the design-relevant File 04 backlog items (plus this audit's ne
 | 6 | Official tagline "Care that walks with you." vs logo-embedded "Make healthcare intelligent." — asset strategy | `Logo.tsx` full variant (verified lettering) | P1 (File 04) | Owner asset decision (§20 open) | File 08 (brand-asset task) | **NOT IMPLEMENTED IN FILE 05 TASK** |
 | 7 | Role CTAs are toast-only with no destination (design must not pattern-copy) | `Paths.tsx` PathCta (verified) | P0 (File 04) | File 04 Phase A destination decisions | File 09/11 (Batch 2) | **NOT IMPLEMENTED IN FILE 05 TASK** |
 | 8 | Footer fixed "© 2025" | `Footer.tsx` (verified) | P2 (File 04) | None | File 11 (Batch 1) | **NOT IMPLEMENTED IN FILE 05 TASK** |
-| 9 | *(new from this audit)* Hardcoded SVG greys outside the token system (hero gradients, connection lanes/dots) | `Hero.tsx`, `Connection.tsx` inline SVG attrs (verified) | P2 | Touch-when-edited rule or File 11 batch | File 11 | **NOT IMPLEMENTED IN FILE 05 TASK** |
+| 9 | *(new from this audit)* Hardcoded SVG greys outside the token system (hero gradients, connection lanes/dots) | `Hero.tsx`, `Connection.tsx` inline SVG attrs (verified) | P2 | Touch-when-edited rule or File 11 batch | File 11 | **CLOSED — B9 closure pass (post-File-11-roadmap, owner-delegated): `diagram-*` tokens installed with values unchanged (§4.2 addendum); hex sweep clean; zero visual diff verified (computed-style identity + byte-identical reduced screenshots); evidence in repo worklog** |
 
 **Future implementation batches (grouped, not one-prompt-per-defect):** Batch 1 — truthfulness labels & copy (items 3, 4, 5, 8; File 04's Batch 1); Batch 2 — CTA destinations once decided (item 7); Batch 3 — brand assets (item 6); Batch 4 — imagery direction (item 2, with File 08); Batch 5 — token migration (items 1, 9, File 11).
 

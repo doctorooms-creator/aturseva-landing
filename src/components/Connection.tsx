@@ -53,7 +53,8 @@ export function Connection() {
           </div>
         </div>
 
-        {/* Lanes canvas */}
+        {/* Lanes canvas (B9: diagram greys tokenized via globals.css
+            diagram scale — values unchanged) */}
         <div className="conn-canvas relative min-h-[300px] flex-1 max-md:h-[36vh] max-md:min-h-[210px] max-md:flex-none">
           <svg
             id="conn-svg"
@@ -66,51 +67,51 @@ export function Connection() {
             <path
               id="lane-patient"
               d={LANES.separate.patient}
-              stroke="#9aa0a3"
+              className="stroke-diagram-450"
               strokeWidth="2.5"
               strokeLinecap="round"
             />
             <path
               id="lane-doctor"
               d={LANES.separate.doctor}
-              stroke="#d5d8da"
+              className="stroke-diagram-100"
               strokeWidth="2.5"
               strokeLinecap="round"
             />
             <path
               id="lane-hospital"
               d={LANES.separate.hospital}
-              stroke="#b0b5b8"
+              className="stroke-diagram-350"
               strokeWidth="2.5"
               strokeLinecap="round"
             />
             <path
               id="lane-unified"
               d={LANES.unified}
-              stroke="#bfc4c6"
+              className="stroke-diagram-300"
               strokeWidth="3.5"
               strokeLinecap="round"
             />
 
             {/* Travellers on the separate lanes */}
             <g id="comet-p" opacity="0" transform="translate(30,110)">
-              <circle r="10" fill="#9aa0a3" opacity="0.25" />
-              <circle r="4.5" fill="#c9cdd0" />
+              <circle r="10" className="fill-diagram-450" opacity="0.25" />
+              <circle r="4.5" className="fill-diagram-200" />
             </g>
             <g id="comet-d" opacity="0" transform="translate(30,300)">
-              <circle r="10" fill="#d5d8da" opacity="0.25" />
-              <circle r="4.5" fill="#e9ebed" />
+              <circle r="10" className="fill-diagram-100" opacity="0.25" />
+              <circle r="4.5" className="fill-diagram-50" />
             </g>
             <g id="comet-h" opacity="0" transform="translate(30,490)">
-              <circle r="10" fill="#b0b5b8" opacity="0.25" />
-              <circle r="4.5" fill="#c3c8cb" />
+              <circle r="10" className="fill-diagram-350" opacity="0.25" />
+              <circle r="4.5" className="fill-diagram-250" />
             </g>
 
             {/* Stations on the unified lane (dot + halo ring) */}
-            <circle id="dot-booking" cx="616" cy="295" r="4.5" fill="#c9cdd0" stroke="#c9cdd0" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
-            <circle id="dot-doctor" cx="792" cy="311" r="4.5" fill="#e9ebed" stroke="#e9ebed" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
-            <circle id="dot-hospital" cx="960" cy="300" r="4.5" fill="#c3c8cb" stroke="#c3c8cb" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
-            <circle id="dot-sevika" cx="1150" cy="215" r="4.5" fill="#d0d2d4" stroke="#d0d2d4" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
+            <circle id="dot-booking" cx="616" cy="295" r="4.5" className="fill-diagram-200 stroke-diagram-200" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
+            <circle id="dot-doctor" cx="792" cy="311" r="4.5" className="fill-diagram-50 stroke-diagram-50" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
+            <circle id="dot-hospital" cx="960" cy="300" r="4.5" className="fill-diagram-250 stroke-diagram-250" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
+            <circle id="dot-sevika" cx="1150" cy="215" r="4.5" className="fill-diagram-150 stroke-diagram-150" strokeWidth="6" strokeOpacity="0.22" opacity="0" />
           </svg>
 
           {/* Overlay: lane labels + Aturseva hub (absolute, viewBox-aligned) */}

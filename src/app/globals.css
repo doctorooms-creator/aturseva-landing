@@ -74,6 +74,29 @@
   --color-gold-600: #848788;
   --color-gold-700: #6c6f71;
 
+  /* Diagram — data-line micro-palette (File 05 §4.3 "Data line (diagrams)"
+     role; installed in the B9 closure pass). Tokenization of the verified
+     prior inline-SVG hexes — values carried over EXACTLY, zero visual diff.
+     Steps run dark (600) to light (50), direction-consistent with
+     graphite/brand. Consumed through the generated stroke-diagram and
+     fill-diagram utilities, or via the --color-diagram custom properties. */
+  --color-diagram-600: #565b5e;
+  --color-diagram-550: #7a8083;
+  --color-diagram-500: #8b9093;
+  --color-diagram-450: #9aa0a3;
+  --color-diagram-400: #a5abae;
+  --color-diagram-350: #b0b5b8;
+  --color-diagram-300: #bfc4c6;
+  --color-diagram-250: #c3c8cb;
+  --color-diagram-200: #c9cdd0;
+  --color-diagram-150: #d0d2d4;
+  --color-diagram-100: #d5d8da;
+  --color-diagram-50: #e9ebed;
+
+  /* B9 — conn-card connector stem: the one diagram value that embeds
+     alpha; kept as a plain var (not a palette step), exact prior value. */
+  --diagram-stem: rgb(200 205 208 / 0.55);
+
   --shadow-soft: 0 1px 2px rgb(10 10 11 / 0.05), 0 8px 24px -8px rgb(10 10 11 / 0.12);
   --shadow-lift: 0 2px 4px rgb(10 10 11 / 0.06), 0 24px 56px -18px rgb(10 10 11 / 0.24);
   --shadow-glow: 0 0 0 1px rgb(255 255 255 / 0.22), 0 10px 44px -6px rgb(255 255 255 / 0.16);
@@ -231,12 +254,12 @@
     width: 2px;
     height: 14px;
     transform: translateX(-50%);
-    background: linear-gradient(to bottom, rgb(200 205 208 / 0.55), transparent);
+    background: linear-gradient(to bottom, var(--diagram-stem), transparent);
   }
   .conn-card[data-side="down"]:not(.conn-bubble)::after {
     bottom: auto;
     top: -17px;
-    background: linear-gradient(to top, rgb(200 205 208 / 0.55), transparent);
+    background: linear-gradient(to top, var(--diagram-stem), transparent);
   }
   .conn-caption {
     position: absolute;

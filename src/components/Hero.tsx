@@ -59,7 +59,9 @@ export function Hero() {
           </a>
         </div>
 
-        {/* Journey arc — the patient's path, drawn on load */}
+        {/* Journey arc — the patient's path, drawn on load
+            (B9: diagram greys tokenized via globals.css diagram scale —
+            values unchanged) */}
         <div data-hero-fade className="mt-14 hidden md:mt-16 md:block">
           <svg
             viewBox="0 0 1120 120"
@@ -76,9 +78,9 @@ export function Hero() {
             />
             <defs>
               <linearGradient id="heroGrad" x1="0" y1="0" x2="1120" y2="0" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#9aa0a3" stopOpacity="0.25" />
-                <stop offset="0.5" stopColor="#bfc4c6" />
-                <stop offset="1" stopColor="#d0d2d4" stopOpacity="0.8" />
+                <stop style={{ stopColor: "var(--color-diagram-450)" }} stopOpacity="0.25" />
+                <stop offset="0.5" style={{ stopColor: "var(--color-diagram-300)" }} />
+                <stop offset="1" style={{ stopColor: "var(--color-diagram-150)" }} stopOpacity="0.8" />
               </linearGradient>
             </defs>
             {[
@@ -87,8 +89,8 @@ export function Hero() {
               { x: 1100, label: "Consult" },
             ].map((m) => (
               <g key={m.label} className="hero-milestone" style={{ transformOrigin: `${m.x}px 30px` }}>
-                <circle cx={m.x} cy="30" r="5.5" fill="#c9cdd0" />
-                <circle cx={m.x} cy="30" r="11" stroke="#bfc4c6" strokeOpacity="0.4" />
+                <circle cx={m.x} cy="30" r="5.5" className="fill-diagram-200" />
+                <circle cx={m.x} cy="30" r="11" className="stroke-diagram-300" strokeOpacity="0.4" />
                 <text
                   x={m.x}
                   y="12"
@@ -115,9 +117,8 @@ export function Hero() {
         >
           <path
             id="hero-ecg"
-            className="animate-ecg-march"
+            className="animate-ecg-march stroke-diagram-500"
             d="M0 70 H170 L200 70 L216 48 L232 70 H330 L360 70 L378 38 L396 96 L414 22 L432 108 L450 70 H620 L650 70 L666 48 L682 70 H780 L810 70 L828 38 L846 96 L864 22 L882 108 L900 70 H1440"
-            stroke="#8b9093"
             strokeOpacity="0.55"
             strokeWidth="2"
             strokeLinejoin="round"
