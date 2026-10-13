@@ -181,3 +181,19 @@ Work Log:
 
 Stage Summary:
 - B15 CLOSED: production typography now loads on GitHub Pages (both deploy shapes verified). Batch 1 released: B1, B2+B10, B3, B11, B17, B8 implemented; B18 deferred to Batch 3 per owner decision. Canonical tagline unchanged; monochrome system intact. Next per File 11: Batch 2 (B4 CTA honesty — owner decision required) / Batch 3 (lifecycle+tokens, incl. deferred B18).
+
+---
+Task ID: 12
+Agent: main (Z.ai Code)
+Task: Continuation-session re-verification of the Batch 1 release state (no code changes — owner instruction replayed after context handoff; implementation was already complete at b088772/bc72286)
+
+Work Log:
+- Confirmed git state: clean tree, main == origin/main == bc72286 (b088772 implementation + bc72286 worklog on top of baseline 84ac28e); all seven Batch 1 source changes re-grepped present (B1 Paths.tsx:48, B11 Connection.tsx:51, B2+B10 .rep-label globals.css:255 + Connection.tsx:44, B3 Sevika.tsx:93, B17 static label row, B8 getFullYear, B15 fix-pages-fonts.ts wired into build:pages).
+- GitHub Actions re-checked via authenticated API: run 38359695926 (b088772) completed success; run 38360205409 (bc72286, current live deploy) completed success.
+- LIVE re-verification (all executed this session): HTML 200 with all new copy + canonical tagline; emitted CSS 200 (one first-fetch 404 was a transient CDN edge miss — x-proxy-cache MISS, all retries and 4 browser loads 200, etag-stable 55,694 B); T-FONT-01 3× url(/aturseva-landing/fonts/…) and zero root-absolute leftovers; T-FONT-02 3×200 fonts (curl + browser network log); T-FONT-03 zero root-level /fonts/ requests; T-FONT-04 fonts.status=loaded with 3 faces incl. Fraunces italic 300–900; T-FONT-05 check() true ×4 (Manrope 400 / Fraunces 400 / Fraunces italic 400 / Fraunces 600); T-FONT-06 h1=Fraunces, body=Manrope; mobile 390×844 scrollWidth==innerWidth (no overflow); console + page errors empty; VLM visual review of fresh screenshots (qa/83–85): Fraunces glyphs correct, monochrome intact, no overlap/cut-off/fallback defects.
+- Local servers re-verified: :3005 dev 200 (139.5 KB SSR, dev.log clean), :3006 preview 200 (393.5 KB, all Batch 1 copy present, 3 base64 fonts, self-contained), :3007 pages-export 200 (byte-identical size to live HTML; export CSS font URLs all basePath-prefixed).
+- Automation audit: two legacy cron jobs (452703 my-project-scoped, 454168 landing-scoped) both already system-disabled ("Disabled due to exec limits exceeded"); NO new cron/scheduled task/background automation created, per owner's explicit instruction.
+- Evidence added: qa/83-verify-live-desktop-hero.png, qa/84-verify-live-desktop-paths.png, qa/85-verify-live-mobile-hero.png. No code, config, asset, dependency or route changes in this task.
+
+Stage Summary:
+- Batch 1 release state independently re-confirmed end-to-end this session: local dev, rebuilt preview, local pages export and live GitHub Pages all green; B15 fix holding in production. Zero deviations found from the Task 11 record. Ready for File 11 Batch 2 (B4 CTA honesty — needs owner decision) / Batch 3 (lifecycle + tokens, incl. deferred B18).
