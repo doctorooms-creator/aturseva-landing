@@ -164,6 +164,8 @@ A video is **not mandatory**. No asset is assumed ready before owner direction a
 | Effect on copy contrast | none (verified stage) | left-40% safe-area rule + luminance floor (§6/§10) | same, plus motion must not shift luminance under text |
 | Decision status | **VERIFIED CURRENT — valid permanent fallback** | `PROPOSED — OWNER DECISION REQUIRED` | `PROPOSED — OWNER DECISION REQUIRED` |
 
+> **Route 4 — procedural 3D (code-only), added 2026-10-14 (planning record):** the owner approved planning a fourth route — a **monochrome, procedurally generated 3D diya** in the hero, built with the external agent skill **img2threejs** (code-only output; no image/video/mesh asset enters the repo, so §4 imagery gates are not triggered). Full plan, gates, fallbacks and batching: `docs/14_3D_HERO_AND_IMG2THREEJS_PLAN.md`. Routes 2 and 3 remain independently open and untouched; Route 1 remains the verified standing default until Batch C's explicit owner enablement decision (File 14 §14).
+
 ---
 
 ## 10. Aspect ratios, responsive crops and safe areas

@@ -203,6 +203,12 @@ KEPT as the canonical provenance copy (Batch 5); B1/B11 copy fixed (Batch 1); B1
 flex shell (Batch 3). Items 2 and 3 (imagery sourcing / hero media route) remain genuinely open, with
 the zero-asset route standing as the deployed default. Evidence: repo worklog batch records.
 
+**Update (2026-10-14, register accuracy):** the owner approved **planning** a fourth hero route — a
+code-only procedural 3D diya via the img2threejs agent skill (owner quote recorded in File 14 §1).
+This does **not** resolve items 2 or 3 (imagery/film remain open and untouched); Route 1 stays the
+deployed default. The 3D route's own enablement is a new explicit owner gate (File 14 §14 Batch C).
+Plan of record: `docs/14_3D_HERO_AND_IMG2THREEJS_PLAN.md`.
+
 Recording rule: an owner decision becomes real when stated by the owner in the task conversation and then
 recorded (doc commit or batch prompt quote) with its date/scope. Recommendations in any doc are non-binding.
 
