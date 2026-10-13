@@ -14,17 +14,44 @@
   --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
 
-  /* Ink — neutral near-black scale (dark surfaces + text on light) */
-  --color-ink-950: #0a0a0b;
-  --color-ink-900: #101113;
-  --color-ink-800: #191b1d;
-  --color-ink-700: #26292b;
-  --color-ink-600: #34383a;
-  --color-ink-500: #4b5052;
-  --color-ink-400: #6f7476;
-  --color-ink-300: #9aa0a2;
-  --color-ink-200: #c6cacb;
-  --color-ink-100: #e4e7e8;
+  /* Graphite — canonical neutral dark scale (File 05 §4.2 primitives;
+     installed in File 11 Batch 3). Values are the verified current values. */
+  --color-graphite-950: #0a0a0b;
+  --color-graphite-900: #101113;
+  --color-graphite-800: #191b1d;
+  --color-graphite-700: #26292b;
+  --color-graphite-600: #34383a;
+  --color-graphite-500: #4b5052;
+  --color-graphite-400: #6f7476;
+  --color-graphite-300: #9aa0a2;
+  --color-graphite-200: #c6cacb;
+  --color-graphite-100: #e4e7e8;
+
+  /* Paper — canonical neutral light scale (File 05 §4.2 primitives). */
+  --color-paper-50: #fafafa;
+  --color-paper-100: #f4f4f5;
+  --color-paper-200: #eaeaeb;
+  --color-paper-300: #dcddde;
+
+  /* Ink — legacy semantic scale, now a compatibility alias of graphite
+     (File 05 §5.3 alias-first strategy: identical values, zero visual
+     change; legacy names retire last, after opportunistic migration). */
+  --color-ink-950: var(--color-graphite-950);
+  --color-ink-900: var(--color-graphite-900);
+  --color-ink-800: var(--color-graphite-800);
+  --color-ink-700: var(--color-graphite-700);
+  --color-ink-600: var(--color-graphite-600);
+  --color-ink-500: var(--color-graphite-500);
+  --color-ink-400: var(--color-graphite-400);
+  --color-ink-300: var(--color-graphite-300);
+  --color-ink-200: var(--color-graphite-200);
+  --color-ink-100: var(--color-graphite-100);
+
+  /* Ivory — legacy semantic scale, now a compatibility alias of paper. */
+  --color-ivory-50: var(--color-paper-50);
+  --color-ivory-100: var(--color-paper-100);
+  --color-ivory-200: var(--color-paper-200);
+  --color-ivory-300: var(--color-paper-300);
 
   /* Brand — primary grey accent (silver on dark, charcoal on light) */
   --color-brand-50: #f5f6f6;
@@ -38,7 +65,7 @@
   --color-brand-800: #33383a;
   --color-brand-900: #232729;
 
-  /* Gold → second grey accent (approval chips, focus rings) */
+  /* Gold → second grey accent (approval chips, rep-label dots) */
   --color-gold-100: #f0f0f0;
   --color-gold-200: #dedfdf;
   --color-gold-300: #ccccce;
@@ -46,12 +73,6 @@
   --color-gold-500: #9c9fa1;
   --color-gold-600: #848788;
   --color-gold-700: #6c6f71;
-
-  /* Ivory — neutral paper light surfaces */
-  --color-ivory-50: #fafafa;
-  --color-ivory-100: #f4f4f5;
-  --color-ivory-200: #eaeaeb;
-  --color-ivory-300: #dcddde;
 
   --shadow-soft: 0 1px 2px rgb(10 10 11 / 0.05), 0 8px 24px -8px rgb(10 10 11 / 0.12);
   --shadow-lift: 0 2px 4px rgb(10 10 11 / 0.06), 0 24px 56px -18px rgb(10 10 11 / 0.24);
@@ -61,7 +82,6 @@
   --animate-pulse-ring: pulse-ring 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
   --animate-ecg-march: ecg-march 7s linear infinite;
   --animate-blink: blink 1.7s ease-in-out infinite;
-  --animate-drift: drift 9s ease-in-out infinite;
 
   @keyframes breathe {
     0%, 100% { transform: scale(1); opacity: 0.7; }
@@ -77,10 +97,6 @@
   @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
-  }
-  @keyframes drift {
-    0%, 100% { transform: translate3d(0, 0, 0); }
-    50% { transform: translate3d(0, -14px, 0); }
   }
 }
 
@@ -114,14 +130,31 @@
   body {
     @apply bg-ivory-50 font-sans text-ink-900 antialiased;
     overflow-x: clip;
+    /* B18 (File 11 Batch 3) — flex shell: the footer carries mt-auto; with
+       the shell, short pages pin the footer to the viewport bottom while
+       long pages push it down naturally. It never overlays content. */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100svh; /* stable on mobile dynamic toolbars */
+  }
+  /* B18 — respect the bottom safe area on devices that have one (no-op
+     elsewhere: env() resolves to 0px). */
+  footer {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   ::selection {
     background: var(--color-brand-200);
     color: var(--color-ink-950);
   }
+  /* Neutral dual-layer focus indicator (File 11 Batch 3): the dark ring
+     reads on light surfaces, the light ring hugs the element and reads on
+     dark surfaces. Both layers are pure neutrals (graphite/paper) — the
+     former grey “gold” ring managed only ~2.6:1 against light surfaces. */
   :focus-visible {
-    outline: 2px solid var(--color-gold-500);
-    outline-offset: 3px;
+    outline: 2px solid var(--color-graphite-950);
+    outline-offset: 4px;
+    box-shadow: 0 0 0 2px var(--color-paper-50) !important;
     border-radius: 6px;
   }
   @media (prefers-reduced-motion: reduce) {

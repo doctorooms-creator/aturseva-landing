@@ -10,6 +10,15 @@
  * Signature moment: the "Connection" section — three separate lanes draw,
  * converge into the Aturseva hub, and one booking travels through the
  * doctor's and hospital's workflows before Sevika joins the patient.
+ *
+ * Lifecycle (File 11 Batch 3):
+ *   - B12: all media-preference evaluation (reduced-motion, Connection
+ *     breakpoint) lives inside ONE gsap.matchMedia() context, so changes
+ *     while the page is mounted re-evaluate modes live — no reload needed.
+ *   - B13: initAtursevaAnimations() RETURNS a dispose() that kills every
+ *     ScrollTrigger, reverts every media context, removes listeners and
+ *     resets the boot guard, so unmount is clean and re-mount boots once.
+ *     The single-init guard `window.__atursevaAnimBooted` is preserved.
  */
 (function () {
   "use strict";
@@ -27,23 +36,28 @@
     window.__atursevaAnimBooted = true;
 
     gsap.registerPlugin(ScrollTrigger);
+    var prevDefaults = gsap.defaults();
     gsap.defaults({ ease: "power3.out" });
 
     var reduceMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
     var mobileMQ = window.matchMedia("(max-width: 767px)");
+    var disposed = false;
 
     /* ───────────────────────── nav state ───────────────────────── */
+    /* Handler hoisted to init scope so dispose() can remove it (B13). */
     var nav = document.getElementById("site-nav");
+    var onScroll = function () {
+      if (!nav) return;
+      nav.classList.toggle("nav-scrolled", window.scrollY > 48);
+    };
     if (nav) {
-      var onScroll = function () {
-        nav.classList.toggle("nav-scrolled", window.scrollY > 48);
-      };
       window.addEventListener("scroll", onScroll, { passive: true });
       onScroll();
     }
 
     /* ───────────── overlay alignment (viewBox → pixels) ───────────── */
     function positionOverlay() {
+      if (disposed) return;
       var svg = document.getElementById("conn-svg");
       if (!svg) return;
       var r = svg.getBoundingClientRect();
@@ -289,6 +303,9 @@
       var t = connTargets();
       t.lanes.forEach(function (l, i) {
         if (!l) return;
+        /* Remember the markup's own path so leaving reduced-motion can
+           restore it before the animated builders re-prep everything. */
+        if (!l.__atursevaOrigD) l.__atursevaOrigD = l.getAttribute("d");
         l.setAttribute("d", CONVERGED[LANE_KEYS[i]]);
         l.style.strokeDasharray = "none";
         l.style.strokeDashoffset = "0";
@@ -308,6 +325,33 @@
         if (i < t.caps.length - 1) c.style.opacity = "0";
       });
       positionOverlay();
+    }
+
+    /* B12 — mirror of setConnectionStatic: removes the inline styles and
+       restores the markup's own lane paths, so the transition back to an
+       animated mode starts from the pristine DOM state. */
+    function clearConnectionStatic() {
+      var t = connTargets();
+      t.lanes.forEach(function (l) {
+        if (!l) return;
+        if (l.__atursevaOrigD) l.setAttribute("d", l.__atursevaOrigD);
+        l.style.strokeDasharray = "";
+        l.style.strokeDashoffset = "";
+      });
+      if (t.unified) {
+        t.unified.style.strokeDasharray = "";
+        t.unified.style.strokeDashoffset = "";
+        t.unified.style.opacity = "";
+      }
+      ["#dot-booking", "#dot-doctor", "#dot-hospital", "#dot-sevika"].forEach(
+        function (id) {
+          var el = document.querySelector(id);
+          if (el) el.style.opacity = "";
+        }
+      );
+      t.caps.forEach(function (c) {
+        c.style.opacity = "";
+      });
     }
 
     /* ───────────────────────── hero intro ───────────────────────── */
@@ -425,29 +469,84 @@
 
     /* ───────────────────────── boot ───────────────────────── */
     positionOverlay();
-    setTimeout(positionOverlay, 350);
+    var overlayTimer = setTimeout(function () {
+      if (!disposed) positionOverlay();
+    }, 350);
     window.addEventListener("resize", positionOverlay);
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(function () {
+        if (disposed) return;
         positionOverlay();
         ScrollTrigger.refresh();
       });
     }
 
-    if (reduceMQ.matches) {
-      setConnectionStatic();
-      return; /* everything else stays visible & static */
+    /* B12+B13 — ONE gsap.matchMedia() owns every conditional builder.
+       GSAP re-evaluates the conditions live when the media state changes
+       while the page is mounted (reverting the old context and running the
+       new one), and mm.revert() gives dispose() complete teardown. */
+    var mm = gsap.matchMedia();
+
+    /* Non-connection motion — runs only without reduced motion. When the
+       preference flips to reduce, GSAP reverts this context (elements
+       return to their stylesheet-visible state); when it flips back, the
+       builders re-run. Content is never left hidden. */
+    mm.add("(prefers-reduced-motion: no-preference)", function () {
+      if (disposed) return;
+      buildHero();
+      buildReveals();
+      buildJourneyLanes();
+      buildProductTilt();
+      buildSevika();
+    });
+
+    /* Connection — fully media-conditioned: static finale under reduced
+       motion, pinned scrub on desktop, choreographed auto-play on mobile.
+       The three conditions are mutually exclusive, so exactly one mode is
+       active in every state, and every mode keeps all content visible. */
+    mm.add(
+      {
+        reduce: "(prefers-reduced-motion: reduce)",
+        desktop: "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+        mobile: "(max-width: 767px) and (prefers-reduced-motion: no-preference)",
+      },
+      function (context) {
+        if (disposed) return;
+        var c = context.conditions;
+        if (c.reduce) {
+          setConnectionStatic();
+          /* Leaving reduced-motion: restore the markup's own state before
+             the animated builders re-prep and re-draw everything. */
+          return function () {
+            clearConnectionStatic();
+          };
+        }
+        if (c.desktop) buildConnectionPinned();
+        if (c.mobile) buildConnectionAuto();
+      }
+    );
+
+    /* B13 — full teardown for unmount: kill every trigger, revert every
+       media context (restoring elements to their pre-animation state),
+       remove listeners, restore globals, and reset the boot guard so a
+       later mount initialises cleanly exactly once. */
+    function dispose() {
+      if (disposed) return;
+      disposed = true;
+      mm.revert();
+      ScrollTrigger.getAll().forEach(function (st) {
+        st.kill();
+      });
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", positionOverlay);
+      clearTimeout(overlayTimer);
+      gsap.defaults(prevDefaults);
+      window.__atursevaAnimBooted = false;
+      window.__atursevaAnimDispose = null;
     }
 
-    buildHero();
-    buildReveals();
-    buildJourneyLanes();
-    buildProductTilt();
-    buildSevika();
-
-    var mm = gsap.matchMedia();
-    mm.add("(min-width: 768px)", buildConnectionPinned);
-    mm.add("(max-width: 767px)", buildConnectionAuto);
+    window.__atursevaAnimDispose = dispose;
+    return dispose;
   }
 
   window.initAtursevaAnimations = initAtursevaAnimations;

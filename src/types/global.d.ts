@@ -11,6 +11,10 @@ declare global {
     initAtursevaAnimations?: (
       gsap: unknown,
       ScrollTrigger: unknown
-    ) => void;
+    ) => (() => void) | undefined;
+    /** Teardown handle mirrored by the engine (B13); null after dispose. */
+    __atursevaAnimDispose?: (() => void) | null;
+    /** Single-init guard (verified since Batch 1); reset by the teardown. */
+    __atursevaAnimBooted?: boolean;
   }
 }
