@@ -429,7 +429,8 @@ hero media route remain open; B4/B5/B16/B1/B11/B18 were resolved or dispositione
 File 11 batches) — plus, from File 12 §23: contrast targets, performance bar, SEO additions (the
 canonical/robots/sitemap minimal set has since been implemented under the standing delegation — File 12
 §16 addendum; OG-image, twitter cards and analytics approval remain open), browser-support floor,
-structured-data policy confirmation, QA tooling.
+structured-data policy confirmation, QA tooling. The contrast-target and performance-bar questions now
+have measured lab data on file to decide against (File 12 §13/§15 addenda — QA-evidence pass, owner-delegated).
 
 **Limitations of this plan:** it documents one live environment (GitHub Pages project site) and workspace
 targets; no staging environment exists; no monitoring/observability exists (detection is manual); rollback

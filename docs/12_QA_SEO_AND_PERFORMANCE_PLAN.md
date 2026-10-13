@@ -325,6 +325,48 @@ order), each recording: method (manual keyboard / VoiceOver or NVDA spot-check /
 samples, measurements, and screenshots. **Tooling: already-available manual tooling only; no extensions,
 packages, or services added.**
 
+**§13 addendum — measured contrast record (QA-evidence pass, owner-delegated).** Under the standing
+"go ahead further" delegation, the representative §13 pairs were measured on the live Pages deploy
+(full-reveal state after a complete scroll sweep) using agent-browser's built-in axe-core 4.12.1 audit
+plus computed-style probes for the cases axe marks *incomplete* (the grain/glow pseudo-element overlays
+prevent background resolution — probes composite the ancestor alpha chain instead; effective stage
+background resolves to ink-950 per File 05 §4.3). Headless-lab method; ratios recorded, no conformance
+claimed beyond the numbers.
+
+axe-core result: **37 checks passed · 1 violation (color-contrast, 8 nodes) · 1 incomplete
+(color-contrast, 10 nodes — all resolved by the probe table below).**
+
+Dark-stage and headline pairs (probe-computed — all clear the 4.5:1 / 3:1 bars by wide margins):
+
+| Pair (per §13 list) | Foreground | Effective bg | Ratio | Size/weight |
+|---|---|---|---|---|
+| Hero eyebrow (brand-300) | `#bec3c5` | `#0a0a0b` | 11.12:1 | 12px/800 |
+| Hero lead (ink-200) | `#c6cacb` | `#0a0a0b` | 11.98:1 | 18px/400 |
+| Hero display italic (brand-200) | `#d3d6d8` | `#0a0a0b` | 13.55:1 | 72px/600 |
+| Hero strong emphasis (ivory-100) | `#f4f4f5` | `#0a0a0b` | 18.0:1 | 18px/700 |
+| Sevika muted text (ink-300 on dark) | `#9aa0a2` | `#0a0a0b` | 7.47:1 | 14px/400 |
+| conn-label (ink-300 on ink-950; SVG `fill-ink-300` text) | `#9aa0a2` | `#0a0a0b` | 7.47:1 (same token pair as the Sevika probe) | 10px/700 |
+| Approval-chip text (gold-300) | `#ccccce` | measured composite `rgb(9,9,9)` | 12.42:1 | 16px/400 |
+| ivory-50 on dark elevated surface | `#fafafa` | `rgb(45,45,45)` | 13.19:1 | 16px/400 |
+| ink-900 body on paper-50 | `#101113` | `#fafafa` | 18.1:1 | 16px/400 |
+| brand-600 eyebrow on paper-50 | `#5d6366` | `#fafafa` | 5.85:1 | 12px/800 |
+
+**Measured misses — every one on light surfaces, every one a §13-anticipated B10-adjacent minimum
+(owner decision per §23 Q1; recorded, deliberately NOT remediated in this pass):**
+
+| Element (axe-measured, live) | Fg on Bg | Ratio | Size |
+|---|---|---|---|
+| Paths card captions `text-ink-300` ×3 ("a journey with a gap in the middle") | `#9aa0a2` on `#ffffff` | **2.65:1** | 12px semibold uppercase |
+| Light-section eyebrows `text-gold-600` ×3 ("Hospital", "Sevika · Assistant", "Hospitals") | `#848788` on `#ffffff` | **3.61:1** | 12px bold |
+| Live-queue ui-chip `text-white` on `bg-brand-500` | `#ffffff` on `#7d8386` | **3.84:1** | 11px bold |
+| "+38 more tokens" `text-ink-400` on `bg-ivory-100` | `#6f7476` on `#f4f4f5` | **4.30:1** | 11px semibold |
+
+Toast-text pair: not measurable — no toast exists in the current DOM (Batch 2 replaced toast-only CTAs
+with honest in-page anchors); the pair is obsolete on the live page. Every other visible text node passed
+axe's color-contrast check (within the 37 passes). Size-floor observations for the owner's §23 Q1:
+conn-label SVG text renders at 10px, eyebrows 12px, chips/captions 11–12px — all above rendering
+legibility but below comfortable body floors; decisions documented, not re-made here. Evidence qa/143–146.
+
 ---
 
 ## 14. Reduced-motion & animation lifecycle tests
@@ -371,6 +413,29 @@ only lab measurement is currently possible (no analytics/RUM exists or may be ad
 Device profile: mobile emulation (mid-tier Android shape) for lab mobile numbers; physical iOS/Android
 spot-checks where available (File 11 §24). **No analytics, RUM, or monitoring product is added by any test.**
 
+**§15 addendum — lab measurement record (QA-evidence pass, owner-delegated).** Headless-Chrome lab
+measurements on the live Pages deploy (agent-browser `vitals`, fresh load per run; event-timing probe for
+interaction latency; rAF counter for scroll FPS; curl-measured gzipped transfer for page weight). No
+CPU/network throttling was applied — numbers are lab-shaped, not field data (field data is impossible by
+policy: no analytics/RUM exists or may be added without owner approval):
+
+| ID | Metric | Desktop 1440×900 | Mobile (Galaxy S25 emulation) | §15 target | Status |
+|---|---|---|---|---|---|
+| T-PERF-01 | LCP | 316 ms (hero span) | 172 ms (hero paragraph) | ≤ 2.5 s | PASS (lab) |
+| T-PERF-02 | CLS | 0.0 — zero layout-shift entries | 0.0 — zero entries | ≤ 0.1 | PASS (lab) |
+| T-PERF-03 | INP-shaped | worst discrete click 48 ms (event-timing entries; hover-event batches ≤ 152 ms) | — | ≤ 200 ms | PASS (lab probe) |
+| T-PERF-04 | Scroll FPS | 60 fps across a 2.5 s continuous scripted scroll (151 frames) | — (mobile has no pin by design) | 60 desktop / ≥50 mobile | PASS (lab) |
+| T-PERF-05 | GSAP split | 4 JS chunks (≈122 KB decoded) load after the fonts/first paint in the resource timeline — lazy animation-engine pattern intact | same timeline | code-split by design | PASS (observed) |
+| T-PERF-06 | Font loading | 3 woff2 · `font-display: swap` · B15 gate green live (see §6 protocol re-runs) | same | no lock-in | PASS |
+| T-PERF-07 | Critical CSS | one compiled stylesheet: 10.0 KB gz / 56.4 KB decoded | same | minimal critical CSS | OK (observed) |
+| T-PERF-08 | Media budgets | n/a — no media exists (zero-asset route standing) | — | future assets only | N/A |
+| T-PERF-09 | Pin stability | desktop scrub ran inside the 60 fps T-PERF-04 probe without drops | mobile fallback by design | stable pin | PASS (lab) |
+| T-PERF-10 | Page weight | **321 KB total gzipped transfer** (HTML 23.2 + CSS 10.0 + JS 195.2 + fonts 107.1 + icon 1.8 KB) | same set | evidence norm | RECORDED |
+
+Multi-browser (T-BR-01) and physical iOS/Android spot-checks (T-BR-02) remain NOT RUN — headless Chrome
+is the only engine available in this workspace. LCP/FCP/TTFB additional readings: FCP 316 ms desktop /
+172 ms mobile; TTFB ≈ 0.2–0.3 ms (cache-warm lab). Evidence qa/143–146 + the recorded command outputs.
+
 ---
 
 ## 16. SEO technical audit plan
@@ -388,17 +453,17 @@ subpath.
 
 | ID | Test/audit item | Current state | Future action (owner-gated) |
 |---|---|---|---|
-| T-SEO-01 | Title/description correctness | present, accurate, canonical tagline in title — verify rendering on live HTML | verify only |
+| T-SEO-01 | Title/description correctness | present, accurate, canonical tagline in title — verify rendering on live HTML | verify only — **VERIFIED live (QA-evidence pass): canonical tagline title + journey-weaving description rendered** |
 | T-SEO-02 | Canonical URL | **present** — `<link rel="canonical" href="https://doctorooms-creator.github.io/aturseva-landing/">` | **IMPLEMENTED (post-roadmap SEO-hygiene pass, owner-delegated — §16 addendum):** the deployed subpath is the production URL policy in effect; `src/lib/site.ts` is the one-pass origin-update point (File 04 §15). Narrowed owner question: subpath permanent, or future custom domain? |
 | T-SEO-03 | robots policy | **present** — `<meta name="robots" content="index, follow">` | **IMPLEMENTED (same pass):** the permissive crawler default made explicit (zero behavioural change vs the tag's absence); a physical `robots.txt` deliberately NOT added — ineffective on a Pages project subpath (robots.txt is only honoured at the host root; the meta tag is the effective channel — §16 addendum). No indexing goals implied. |
 | T-SEO-04 | Sitemap | **present** — `/aturseva-landing/sitemap.xml`, one URL, no indexing hints | **IMPLEMENTED (same pass):** `src/app/sitemap.ts` (`force-static` for the export); URL-only entry per "do not imply indexing goals"; direct-submission discoverable (§16 addendum). |
 | T-SEO-05 | Open Graph image | **absent** (`og:title`/`og:description` only) | propose 1200×630 monochrome OG image — asset creation is owner-gated (File 08 rules; no asset approved here) |
 | T-SEO-06 | Twitter/social cards | **absent** | bundle with T-SEO-05 decision |
 | T-SEO-07 | `lang` attribute | `en` — verified | verify only |
-| T-SEO-08 | Heading order | one `h1` (Hero) → section `h2`s (incl. sr-only Connection h2) → card `h3`s — verified markup; rendered-order check NOT RUN | verify DOM order |
+| T-SEO-08 | Heading order | one `h1` (Hero) → section `h2`s (incl. sr-only Connection h2) → card `h3`s — verified markup; rendered-order check NOT RUN | **VERIFIED live (QA-evidence pass): rendered DOM order = exactly one h1 → section h2s → card h3s, no level skips** |
 | T-SEO-09 | Link names meaningful | verified (aria-labels on icon-only controls) | verify |
 | T-SEO-10 | Icon/favicon | `icon.svg` present | T-ASSET-03 |
-| T-SEO-11 | Static export/basePath behaviour | verified (File 10 §18) | verify live URL resolves with correct asset prefixes |
+| T-SEO-11 | Static export/basePath behaviour | verified (File 10 §18) | **VERIFIED live (QA-evidence pass): every emitted resource URL carries the `/aturseva-landing` basePath prefix and loaded 200** |
 | T-SEO-12 | Route/indexing policy | only `/` exists; no other routes may be presented as live | verify; guard against route invention |
 | T-SEO-13 | External SEO services/tracking | none exist | **owner approval required for any addition** |
 
@@ -604,6 +669,18 @@ handling, and the handover evidence package are owned by `docs/13_DEPLOYMENT_AND
 references these test IDs as its release evidence requirements. B15 remains the open priority release gate:
 **a docs-only commit — including the one publishing this file — does not fix it, and live font tests stay
 `NOT RUN` until an authorized implementation batch executes T-FONT-01…09 and records results.**
+
+**§24 addendum — measured-subset record (post-roadmap QA-evidence pass, owner-delegated).** This dashboard
+is the authoring-time snapshot and stands as written. Later authorized passes measured and recorded
+subsets in-file: Batches 1–3 evidence (qa/…) covered the T-FONT/B15 gate, mobile-390 overflow, console
+cleanliness, reduced-motion finale, CTA/copy and focus states; the SEO-hygiene pass closed T-SEO-02/03/04
+(§16 addendum); the QA-evidence pass (this addendum) additionally recorded the §13 contrast table (axe +
+probes — 8 measured misses, all B10-adjacent owner-decision items), the §15 lab-metric table (LCP/CLS/
+INP-probe/FPS/page weight — all PASS at lab), live verifications for T-SEO-01/08/11, and 320 px + 390 px
+overflow checks (both 0 overflow). Still NOT RUN and not claimed: the full formal T-NAV/T-FRAME/T-MOCK/
+T-COPY/T-RSP suite rows beyond the specific checks cited above, multi-browser (T-BR-01) and physical-device
+(T-BR-02) rows, the formal no-JS run (readability is safe by construction per §13), 200 %-zoom reflow
+beyond the 320 px proxy, and any field/RUM data (prohibited without owner approval).
 
 ---
 
