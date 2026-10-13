@@ -205,9 +205,13 @@ the zero-asset route standing as the deployed default. Evidence: repo worklog ba
 
 **Update (2026-10-14, register accuracy):** the owner approved **planning** a fourth hero route — a
 code-only procedural 3D diya via the img2threejs agent skill (owner quote recorded in File 14 §1).
-This does **not** resolve items 2 or 3 (imagery/film remain open and untouched); Route 1 stays the
-deployed default. The 3D route's own enablement is a new explicit owner gate (File 14 §14 Batch C).
-Plan of record: `docs/14_3D_HERO_AND_IMG2THREEJS_PLAN.md`.
+**Later the same day the owner REJECTED that direction** ("ye diya wala mujhe sahi nai laga… kuch
+solid krna hoga") and demanded a landing that instantly communicates what the company does through
+UI and animation, citing launchfar.com, antigravity.google and stitch.withgoogle.com. File 14 is
+`ARCHIVED — OWNER REJECTED DIRECTION`; the successor plan of record is
+`docs/15_PRODUCT_UI_FIRST_LANDING_REDESIGN_PLAN.md` ("the page is the demo" — owner approval of
+that direction is its own gate, File 15 §12). Items 2/3 (imagery/film routes) remain open; Route 1
+stays the deployed default.
 
 Recording rule: an owner decision becomes real when stated by the owner in the task conversation and then
 recorded (doc commit or batch prompt quote) with its date/scope. Recommendations in any doc are non-binding.

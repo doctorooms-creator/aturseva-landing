@@ -1,6 +1,6 @@
 # Aturseva — File 14: 3D Hero (Procedural Diya) & img2threejs Usage Plan
 
-**Status:** `PLANNING — NOT IMPLEMENTED`
+**Status:** `ARCHIVED — OWNER REJECTED DIRECTION (2026-10-14)` *(superseded by `docs/15_PRODUCT_UI_FIRST_LANDING_REDESIGN_PLAN.md`; kept as a complete, reusable reference for any future 3D-object work — the skill probe, token-compliance and fallback-ladder sections remain valid technique)*
 **Created:** 2026-10-14 IST (2026-10-13 19:08 UTC working session; ISO 8601)
 **Source baseline:** repository `doctorooms-creator/aturseva-landing`, branch `main`, commit `3118652` (QA-evidence pass merge point). Live site verified HTTP 200 this session with canonical tagline title and `sitemap.xml` 200.
 **Planning dependencies:** `docs/02_PRODUCT_TRUTH_AND_CAPABILITY_MATRIX.md` (claims policy — "built in code" honesty cue basis), `docs/03_BRAND_MISSION_AND_POSITIONING.md` (diya/light brand metaphor), `docs/05_CREATIVE_DIRECTION_AND_DESIGN_SYSTEM.md` (**mandatory design baseline — monochrome graphite/paper token system; §4.2 diagram micro-palette precedent**), `docs/06_HOMEPAGE_STORYBOARD.md` (hero frame H), `docs/07_MOTION_AND_SCROLL_ANIMATION.md` (M-* IDs, B12 reduced-motion contract), `docs/08_VISUAL_ASSET_PLAN.md` (§9 hero media route matrix — this file adds Route 4; §12 imagery rules), `docs/11_COMPREHENSIVE_IMPLEMENTATION_PLAN.md` (batch model precedent), `docs/12_QA_SEO_AND_PERFORMANCE_PLAN.md` (T-* test-ID convention; §15 measured baseline), `docs/13_DEPLOYMENT_AND_HANDOVER_PLAN.md` (§10 owner-decision recording rule).
