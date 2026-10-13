@@ -22,7 +22,7 @@ Covered by the header block above. Additions:
 
 - **Document type:** implementation-ready narrative/visual storyboard for engineers, designers and QA — decisions, frame tables, state descriptions, acceptance criteria, handoffs; no inspiration-board prose.
 - **Truth hierarchy:** product truth → File 02; sitemap/CTA truth → File 04; design system → File 05; source code → implementation truth. This document plans; it never claims deployment.
-- **Verification method:** source audit of `src/app/page.tsx`, `src/app/layout.tsx`, `src/app/globals.css`, all rendered components, `src/lib/aturseva-anim.js`, `src/components/AnimationProvider.tsx`, `package.json`, `next.config.ts`, `public/` (fonts + favicon only). No browser QA was run for this task; HTTP/CI status is never treated as visual proof.
+- **Verification method:** source audit of `src/app/page.tsx`, `src/app/layout.tsx`, `src/app/globals.css`, all rendered components, `src/lib/aturseva-anim.js`, `src/components/AnimationProvider.tsx`, `package.json`, `next.config.ts`, `public/` (fonts + `assets/logo-primary.svg`, deployed but unreferenced at audit time — favicon lives at `src/app/icon.svg`; corrected per File 08 §2 in File 11 Batch 6; this line originally read "fonts + favicon only"). No browser QA was run for this task; HTTP/CI status is never treated as visual proof.
 - **Companion requirement:** every frame below carries a File 07 handoff (matching frame ID). Where a frame is static by design, File 07 says so explicitly.
 
 ---
@@ -122,7 +122,7 @@ Actual render order, verified in `src/app/page.tsx` (all statuses source-audited
 
 **First-screen mobile (verified):** arc hidden (<md), CTA pair wraps full-width, ECG shortens, nav collapses to hamburger + "Get started" hidden (menu carries it). H1 at `2.6rem`.
 
-**Honest record:** the hero is typography + abstract SVG only — **no photographic/video asset exists** (verified `public/`: fonts + favicon). Human-imagery planning is File 08's job; this storyboard reserves the composition's negative space (right of text) as a future image moment without fabricating one. No stock-photo clichés, no false promises.
+**Honest record:** the hero is typography + abstract SVG only — **no photographic/video asset exists** (verified `public/`: fonts + one unreferenced logo SVG, `assets/logo-primary.svg`; corrected per File 08 §2 in File 11 Batch 6 — the favicon is an App Router `src/app/icon.svg`, not a `public/` file). Human-imagery planning is File 08's job; this storyboard reserves the composition's negative space (right of text) as a future image moment without fabricating one. No stock-photo clichés, no false promises.
 
 **Proposed copy changes:** none to H1/eyebrow/lead (all claims-safe). Secondary CTA wording simplification remains a File 04 §10 proposal only.
 

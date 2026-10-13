@@ -1,7 +1,7 @@
 # Aturseva — File 03: Brand Mission & Positioning
 
 **Document type:** Implementation-ready brand strategy for all future Aturseva marketing-site work.
-**Status:** Proposed strategy — owner review pending. Nothing in this file is an approved public claim until the owner accepts it.
+**Status:** Proposed strategy — owner review pending. Nothing in this file is an approved public claim until the owner accepts it — **exception (reconciled, File 11 Batch 6): the canonical tagline "Care that walks with you." in §14 is owner-approved.**
 **Source of truth:** File 02 (`02_PRODUCT_TRUTH_AND_CAPABILITY_MATRIX.md`) — owner-confirmed working capabilities and claims guardrails. **If any conflict arises, File 02 takes precedence over this file.**
 **Companion context:** File 01 (`01_PROJECT_BRIEF_AND_BOUNDARIES.md`) is absent from the workspace (lost to a sandbox reset); its operative boundaries are restated in File 02 §13 and inherited here.
 **Out of scope:** Exact design tokens, typography scales, UI specifications, and motion rules — these belong to later roadmap files. The monochrome palette appears here only as a fixed creative constraint.
@@ -12,7 +12,7 @@
 
 - **Status:** proposed brand strategy awaiting owner review.
 - **Purpose:** give every future writer, designer, and prompt one shared definition of what Aturseva stands for, how it speaks, and what it may claim — so pages stay consistent without re-deriving strategy each time.
-- **Scope:** brand mission, vision, purpose, positioning, promise, personality, tone of voice, Sevika's brand role, narrative arc, message hierarchy, guardrails, differentiation, tagline proposals, and a practical checklist.
+- **Scope:** brand mission, vision, purpose, positioning, promise, personality, tone of voice, Sevika's brand role, narrative arc, message hierarchy, guardrails, differentiation, the tagline decision record (reconciled to the approved canonical tagline in File 11 Batch 6 — §14/§16), and a practical checklist.
 - **Relationship to File 02:** File 02 defines *what the product truthfully does*; this file defines *how the brand talks about it*. Every capability referenced here is grounded in a File 02 matrix row (§8 of File 02). No new capabilities, claims, numbers, or customer evidence are introduced by this document.
 
 ---
@@ -229,23 +229,25 @@ Aturseva differentiates on **a human-first coordination story**, told through ch
 
 ---
 
-## 14. Optional tagline candidates — **PROPOSALS, NOT APPROVED**
+## 14. Tagline decision record — **"Care that walks with you." APPROVED (CANONICAL)**
 
-> **Status: proposals for owner review — this remains an open owner decision. None of these candidates, the logo-embedded "Make healthcare intelligent.", nor the live site's interim title line ("Aturseva — Care that walks with you") is approved public wording until the owner explicitly designates one.**
+> **Status: RESOLVED — owner decision recorded and reconciled (B7, File 11 Batch 6).** The official Aturseva tagline is **"Care that walks with you."** — owner-approved, canonical, and not pending. The decision was recorded in the File 04 working session and carried forward verbatim through the roadmap: File 04 §4 ("owner-approved and canonical… not a candidate and not unresolved"), File 06 §2, File 08 §16, File 09 §13, Files 10–13, and it is live in source as the page title `Aturseva — Care that walks with you` (`src/app/layout.tsx` metadata). This section was reconciled in File 11 Batch 6 (docs-only) so File 03 no longer describes the tagline as an open proposal — the reconciliation re-opens nothing and changes no brand decision.
+
+**Archived candidates (historical record only — not pending, do not promote):**
 
 | # | Candidate | Angle |
 |---|---|---|
-| 1 | **Care that walks with you.** | Companionship through the journey; continuity with the live site's sentiment. |
-| 2 | **Your journey, kept in step.** | Coordination + togetherness; echoes the "Care in step" eyebrow. |
-| 3 | **Healthcare, kept in step.** | Coordination at category scale; calm and systematic. |
-| 4 | **With you, all the way.** | Presence across the whole journey; simple warmth. |
-| 5 | **Before, during, and after.** | The promise pillar made literal; structural and quiet. |
+| 1 | **Care that walks with you.** | Companionship through the journey; **SELECTED AND APPROVED by the owner — canonical.** |
+| 2 | **Your journey, kept in step.** | Coordination + togetherness; echoes the "Care in step" eyebrow. (Archived.) |
+| 3 | **Healthcare, kept in step.** | Coordination at category scale; calm and systematic. (Archived.) |
+| 4 | **With you, all the way.** | Presence across the whole journey; simple warmth. (Archived.) |
+| 5 | **Before, during, and after.** | The promise pillar made literal; structural and quiet. (Archived.) |
 
-**Recommended direction (non-binding input to the owner's decision):** the companionship/journey family (candidates 1–2). Rationale: it matches the confirmed philosophy (helping hand, no one walks alone), makes no medical or performance claim, stays human-first rather than tech-first, and translates naturally into the site's existing journey-arc visuals. This recommendation selects nothing and approves nothing — the tagline decision stays open with the owner (§16, decision 1).
+**Recommendation history (superseded):** the original non-binding recommendation pointed at the companionship/journey family (candidates 1–2) — rationale: it matches the confirmed philosophy (helping hand, no one walks alone), makes no medical or performance claim, stays human-first rather than tech-first, and translates naturally into the site's journey-arc visuals. The owner's decision adopted candidate 1. This paragraph is retained as decision provenance only; it selects nothing further.
 
 **Emotional brand idea to preserve:** **"Aturseva ne hamara saath diya."** (*"Aturseva stood with us."*) — treat this line strictly as **brand sentiment / a brand-philosophy line**, or use it inside an **explicitly labelled illustrative Sevika conversation**. There is no evidence in this project that it is an actual patient statement, so it must **not** be presented as a real patient testimonial, verified customer quote, endorsement, or evidence of outcomes unless the owner later supplies a genuine, authorized source and explicitly approves that use. Until then the sentiment stays in clearly contextualized brand-strategy or illustrative-conversation contexts only — never as general English marketing copy. The public website remains English.
 
-**Related open decision:** the approved logo file carries the embedded tagline "Make healthcare intelligent." — see §16.
+**Related tracked mismatch (B5 — still open, separate from the tagline decision):** the approved primary logo asset carries the embedded lettering **"Make healthcare intelligent."** as vector paths. That embedded phrase is **not** the official canonical tagline and must not be treated as one; the logo asset remains untouched (no crop/cover/recolour/retrace/replacement) pending the B5+B16 owner decision on brand-asset strategy (File 08 §16, File 11 Batch 5). The canonical tagline "Care that walks with you." is used as text where the source already uses it (page title/metadata; footer pairing rule per File 05 §10).
 
 ---
 
@@ -277,11 +279,11 @@ Any "no" on items 2–7, or any unresolved checklist failure, blocks the piece.
 
 ---
 
-## 16. Open decisions for the owner
+## 16. Decision register for the owner
 
-Only decisions that genuinely cannot be made from File 02:
+Originally three decisions; decision 1 is now **resolved** (reconciled in File 11 Batch 6):
 
-1. **Official tagline (unresolved).** Approve one candidate from §14, keep the logo's embedded "Make healthcare intelligent.", or supply a different line. (The logo file and the site's interim wording currently differ — one should be designated official.) Until the owner decides, **none** of these lines — including "Make healthcare intelligent." and "Care that walks with you." — is approved public wording.
+1. **Official tagline — RESOLVED.** **"Care that walks with you."** is the owner-approved canonical tagline (decision recorded in the File 04 working session; carried through Files 04 §4/§6, 05–13; live in source as the page title). The logo-embedded "Make healthcare intelligent." is not the official tagline; the logo/tagline asset mismatch remains a separate open owner decision tracked as **B5** (+ B16 disposition of `public/assets/logo-primary.svg`) — see §14 above and File 08 §16.
 2. **Sevika example placement (unresolved).** Whether Hinglish example conversations appear on the homepage (as part of the Sevika section) or are reserved for a dedicated patient page.
 3. **Multilingual scope (unresolved).** Whether future Sevika examples should stay Hinglish-only or demonstrate additional languages.
 
