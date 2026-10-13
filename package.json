@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev -p 3005 --webpack 2>&1 | tee dev.log",
     "build": "next build",
-    "build:pages": "DEPLOY_TARGET=pages next build",
+    "build:pages": "DEPLOY_TARGET=pages next build && bun scripts/fix-pages-fonts.ts",
     "preview": "bun --hot scripts/serve-preview.ts",
     "build:preview": "bun scripts/build-preview.ts"
   },

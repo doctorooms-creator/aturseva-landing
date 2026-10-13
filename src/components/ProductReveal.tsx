@@ -134,13 +134,16 @@ export function ProductReveal() {
             {/* Sevika panel */}
             <div className="border-t border-ink-100 p-5 md:border-l md:border-t-0">
               <p className="eyebrow text-gold-600">Sevika · Assistant</p>
-              <label className="mt-4 flex cursor-pointer items-center justify-between rounded-xl bg-ivory-50 px-3.5 py-3 text-sm font-bold text-ink-700">
-                Doctor-approved reminders
-                <span className="relative inline-flex h-6 w-11 items-center">
-                  <span className="absolute inset-0 rounded-full bg-brand-500" aria-hidden="true" />
-                  <span className="absolute right-1 h-4 w-4 rounded-full bg-white shadow" aria-hidden="true" />
+              {/* B17 — static presentation only: this is part of the labelled
+                  representative preview; a state glyph, NOT a control. No
+                  <label>, no cursor-pointer, no toggle behaviour implied. */}
+              <div className="mt-4 flex items-center justify-between rounded-xl bg-ivory-50 px-3.5 py-3 text-sm font-bold text-ink-700">
+                <span>Doctor-approved reminders</span>
+                <span className="relative inline-flex h-6 w-11 shrink-0 items-center" aria-hidden="true">
+                  <span className="absolute inset-0 rounded-full bg-brand-500" />
+                  <span className="absolute right-1 h-4 w-4 rounded-full bg-white shadow" />
                 </span>
-              </label>
+              </div>
               <ul className="mt-4 space-y-2 text-sm">
                 {[
                   { t: "11:15", m: "Token #14 — 20 min left" },

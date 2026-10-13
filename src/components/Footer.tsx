@@ -11,12 +11,15 @@ export function Footer() {
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
           <div className="max-w-sm">
             <Logo variant="full" className="h-24 w-auto text-ivory-50" />
-            <p className="mt-6 font-display text-lg italic text-brand-200">
+            {/* B3 — brand-philosophy framing (matches Sevika §5): our promise,
+                never a customer testimonial. */}
+            <p className="eyebrow mt-6 text-ink-300">Our philosophy</p>
+            <p className="mt-3 font-display text-lg italic text-brand-200">
               “Aturseva ne hamara saath diya.”
             </p>
             <p className="mt-2 text-sm leading-relaxed text-ink-300">
-              Support that walks with patients, doctors, and hospitals — never
-              in place of them.
+              “Aturseva stood with us.” Support that walks with patients,
+              doctors, and hospitals — never in place of them.
             </p>
           </div>
 
@@ -42,7 +45,9 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-ink-300 sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2025 Aturseva. Care, coordinated.</p>
+          {/* B8 — dynamic year (server-rendered: current year in dev; resolved
+              at build time in the static export — both honest). */}
+          <p>© {new Date().getFullYear()} Aturseva. Care, coordinated.</p>
           <p>Interface visuals shown are representative previews of the product.</p>
         </div>
       </div>

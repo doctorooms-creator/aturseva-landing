@@ -71,13 +71,27 @@ export function Sevika() {
             ))}
           </ul>
 
-          <blockquote className="mt-10 border-l-2 border-gold-400/60 pl-6" data-reveal>
-            <p className="font-display text-2xl italic leading-snug text-brand-100 sm:text-3xl">
-              “Aturseva ne hamara saath diya.”
-            </p>
-            <p className="mt-2 text-sm text-ink-300">— the promise we build by</p>
-          </blockquote>
+          {/* B3 — brand-philosophy framing: the line is OUR promise, never a
+              customer testimonial. */}
+          <figure className="mt-10 border-l-2 border-gold-400/60 pl-6" data-reveal>
+            <p className="eyebrow text-gold-400">Our philosophy</p>
+            <blockquote className="mt-3">
+              <p className="font-display text-2xl italic leading-snug text-brand-100 sm:text-3xl">
+                “Aturseva ne hamara saath diya.”
+              </p>
+            </blockquote>
+            <figcaption className="mt-2 text-sm text-ink-300">
+              “Aturseva stood with us.” — the promise we build by.
+            </figcaption>
+          </figure>
         </div>
+
+        {/* B3 — persistent illustrative label, placed OUTSIDE .sevika-thread so
+            the thread’s stagger scrub and the timeline line never touch it. */}
+        <p className="rep-label mb-7" data-reveal>
+          <span className="rep-dot" aria-hidden="true" />
+          Illustrative Sevika conversation — representative preview
+        </p>
 
         {/* Message thread */}
         <div className="sevika-thread relative" data-reveal>

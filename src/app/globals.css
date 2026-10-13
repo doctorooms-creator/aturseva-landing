@@ -247,6 +247,18 @@
     .conn-card-inner .font-display { font-size: 0.95rem; }
   }
 
+  /* ── Persistent representative-preview labels (B2/B3) ──────── */
+  /* Stage/section-level honesty labels on dark surfaces. Never placed
+     inside animated elements (conn-card pops, caption crossfades, sevika
+     stagger) so they stay visible in every mode. 11px floor on mobile
+     per B10 (matches the conn-card condensation). */
+  .rep-label {
+    @apply inline-flex max-w-full flex-wrap items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-ink-300 sm:px-4 sm:text-xs;
+  }
+  .rep-label .rep-dot {
+    @apply h-2 w-2 shrink-0 rounded-full bg-gold-400;
+  }
+
   /* ── Product mock window ────────────────────────────────────── */
   .ui-chip {
     @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-bold;

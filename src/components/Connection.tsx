@@ -37,10 +37,18 @@ export function Connection() {
         {/* Section heading (a11y) + crossfading captions */}
         <div className="relative mx-auto w-full max-w-7xl px-5 pt-24 sm:px-8 md:pt-28">
           <h2 className="sr-only">How Aturseva connects the three journeys</h2>
-          <div className="relative h-14 max-md:h-24 sm:h-16">
+          {/* B2/B10 — persistent representative-preview label. Stage level:
+              never inside a .conn-card (autoAlpha pop) or a .conn-caption
+              (crossfade), so it stays visible in every mode — desktop scrub,
+              mobile autoplay, static mobile grid, reduced-motion finale. */}
+          <p className="rep-label">
+            <span className="rep-dot" aria-hidden="true" />
+            Representative preview
+          </p>
+          <div className="relative mt-3 h-14 max-md:h-24 sm:h-16">
             <p className="conn-caption">Today, three journeys move apart…</p>
             <p className="conn-caption">Aturseva joins them into one calm flow.</p>
-            <p className="conn-caption">One booking travels — doctor and hospital, instantly in step.</p>
+            <p className="conn-caption">One booking travels — doctor and hospital, in step.</p>
             <p className="conn-caption">And Sevika stays beside the patient.</p>
           </div>
         </div>
