@@ -380,16 +380,18 @@ spot-checks where available (File 11 §24). **No analytics, RUM, or monitoring p
 `description` (journey-weaving sentence); `openGraph { title, description, type: "website" }`; `viewport
 { themeColor: "#0a0a0b", width: "device-width", initialScale: 1 }`; `html lang="en"`; favicon via
 `src/app/icon.svg` (Next convention). **Verified absent: `og:image`, `twitter`/social cards, `canonical`,
-`metadataBase`, `robots` meta or `robots.txt`, `sitemap.xml`, any structured data, any analytics.** Single
+`metadataBase`, `robots` meta or `robots.txt`, `sitemap.xml`, any structured data, any analytics.**
+*(Baseline record at this file's authoring time. A later owner-delegated SEO-hygiene pass implemented the
+canonical / robots-meta / sitemap subset — see the §16 addendum below.)* Single
 route `/` only; navigation is in-page anchors; GitHub Pages serves the static export under the project
 subpath.
 
 | ID | Test/audit item | Current state | Future action (owner-gated) |
 |---|---|---|---|
 | T-SEO-01 | Title/description correctness | present, accurate, canonical tagline in title — verify rendering on live HTML | verify only |
-| T-SEO-02 | Canonical URL | **absent** | propose adding once owner confirms production URL policy (subpath vs future custom domain) |
-| T-SEO-03 | robots policy | **absent** (no robots.txt/meta) | propose minimal robots + sitemap for a one-page site — owner decision; do not imply indexing goals |
-| T-SEO-04 | Sitemap | **absent** | same as T-SEO-03 |
+| T-SEO-02 | Canonical URL | **present** — `<link rel="canonical" href="https://doctorooms-creator.github.io/aturseva-landing/">` | **IMPLEMENTED (post-roadmap SEO-hygiene pass, owner-delegated — §16 addendum):** the deployed subpath is the production URL policy in effect; `src/lib/site.ts` is the one-pass origin-update point (File 04 §15). Narrowed owner question: subpath permanent, or future custom domain? |
+| T-SEO-03 | robots policy | **present** — `<meta name="robots" content="index, follow">` | **IMPLEMENTED (same pass):** the permissive crawler default made explicit (zero behavioural change vs the tag's absence); a physical `robots.txt` deliberately NOT added — ineffective on a Pages project subpath (robots.txt is only honoured at the host root; the meta tag is the effective channel — §16 addendum). No indexing goals implied. |
+| T-SEO-04 | Sitemap | **present** — `/aturseva-landing/sitemap.xml`, one URL, no indexing hints | **IMPLEMENTED (same pass):** `src/app/sitemap.ts` (`force-static` for the export); URL-only entry per "do not imply indexing goals"; direct-submission discoverable (§16 addendum). |
 | T-SEO-05 | Open Graph image | **absent** (`og:title`/`og:description` only) | propose 1200×630 monochrome OG image — asset creation is owner-gated (File 08 rules; no asset approved here) |
 | T-SEO-06 | Twitter/social cards | **absent** | bundle with T-SEO-05 decision |
 | T-SEO-07 | `lang` attribute | `en` — verified | verify only |
@@ -399,6 +401,35 @@ subpath.
 | T-SEO-11 | Static export/basePath behaviour | verified (File 10 §18) | verify live URL resolves with correct asset prefixes |
 | T-SEO-12 | Route/indexing policy | only `/` exists; no other routes may be presented as live | verify; guard against route invention |
 | T-SEO-13 | External SEO services/tracking | none exist | **owner approval required for any addition** |
+
+**§16 addendum — SEO-hygiene implementation record (post-roadmap pass, owner-delegated).**
+Under the owner's standing "go ahead" delegation (the same interpretation the Batch-5 and B9-closure
+passes used — execute the documented recommended path), the *minimal* additions this section itself
+proposes were implemented for **T-SEO-02/03/04 only**:
+
+- `src/lib/site.ts` — single source of truth for the public origin (`SITE_ORIGIN` / `SITE_PATH` /
+  `SITE_URL`); this is the File 04 §15 "one-pass origin update" point for any future hosting move.
+- `src/app/layout.tsx` — `metadataBase`, `alternates.canonical`, `openGraph.url` (all resolving to the
+  live Pages URL, trailing slash matching the served URL), `robots: { index: true, follow: true }`.
+- `src/app/sitemap.ts` — one-URL sitemap (`export const dynamic = "force-static"` for `output: "export"`),
+  emitted by the Pages build at `/aturseva-landing/sitemap.xml`; URL-only entry (no changeFrequency /
+  priority) per "do not imply indexing goals".
+
+**Deliberately NOT added (unchanged owner gates):**
+
+- **`robots.txt` file** — technically ineffective on this host: GitHub Pages project sites serve under
+  the `/aturseva-landing` subpath and robots.txt is only honoured at the host root, which this repo
+  cannot control. The meta tag is the effective policy channel; the sitemap is direct-submission
+  discoverable. Revisit only if hosting moves to a root domain.
+- **T-SEO-05 `og:image` / T-SEO-06 twitter cards** — asset creation remains File 08-gated; the text-only
+  OG preview is unchanged.
+- **T-SEO-13 analytics / SEO services** — owner approval still required; none added.
+- **Structured data** — §17 policy "none" unchanged.
+
+Verification: `tsc` clean; dev :3005 and the rebuilt preview :3006 render all three tags with the
+production URL; the Pages export emits `sitemap.xml` plus the tags in `index.html` with fix-pages-fonts
+assertions green; live re-verification (tags present, sitemap 200, B15 font gate holding, console clean)
+is recorded in the repo worklog evidence for this pass.
 
 ---
 
@@ -539,6 +570,9 @@ entering the product repo; creating any cron/scheduled/background automation.
    10–11px decorative/uppercase minima if measurements miss targets (B10-adjacent)?
 2. Performance bar sign-off — are the proposed LCP/CLS/INP numbers in §15 the accepted release targets?
 3. SEO additions — canonical/robots/sitemap/OG-image decisions (T-SEO-02…06) and any indexing intent?
+   *(partially executed under the standing delegation — the T-SEO-02/03/04 minimal set is implemented per
+   the §16 addendum; still open: OG image, twitter cards, analytics approval, and confirming the subpath
+   as the permanent production URL)*
 4. Browser/device floor — is the evergreen + iOS/Android spot-check matrix the agreed support statement?
 5. Structured data — confirm “none” as policy until verified organization facts exist?
 6. Q&A tooling — confirm manual/agent-browser tooling only (no purchased QA services)?

@@ -196,6 +196,13 @@ unchanged by this file; the **tagline is approved and is NOT an open decision**)
 5. **Exact copy sign-offs — B1 patient title; B11 caption wording.**
 6. **B18 scope — is sticky-footer-on-short-pages an acceptance requirement?**
 
+**Update (post-File-11-roadmap, owner-delegated batches — recorded for register accuracy):** items 1, 4, 5
+and 6 are no longer open — B4 closed via the honest-copy route (Batch 2: in-page anchors, no implied
+capture); B5/B16 closed via the no-tagline word lockup + separate tagline line with `logo-primary.svg`
+KEPT as the canonical provenance copy (Batch 5); B1/B11 copy fixed (Batch 1); B18 implemented as the
+flex shell (Batch 3). Items 2 and 3 (imagery sourcing / hero media route) remain genuinely open, with
+the zero-asset route standing as the deployed default. Evidence: repo worklog batch records.
+
 Recording rule: an owner decision becomes real when stated by the owner in the task conversation and then
 recorded (doc commit or batch prompt quote) with its date/scope. Recommendations in any doc are non-binding.
 
@@ -417,9 +424,12 @@ deleted without separate explicit owner permission. None exists as a result of t
 
 ## 23. Open decisions & limitations
 
-**Open owner decisions:** identical to §10's register (B4 destination; B6 sourcing/generated; hero media
-route; B5/B16 asset strategy; B1/B11 copy; B18 scope) — plus, from File 12 §23: contrast targets,
-performance bar, SEO additions, browser-support floor, structured-data policy confirmation, QA tooling.
+**Open owner decisions:** the §10 register as updated there (imagery sourcing/generated acceptability and
+hero media route remain open; B4/B5/B16/B1/B11/B18 were resolved or dispositioned by the owner-delegated
+File 11 batches) — plus, from File 12 §23: contrast targets, performance bar, SEO additions (the
+canonical/robots/sitemap minimal set has since been implemented under the standing delegation — File 12
+§16 addendum; OG-image, twitter cards and analytics approval remain open), browser-support floor,
+structured-data policy confirmation, QA tooling.
 
 **Limitations of this plan:** it documents one live environment (GitHub Pages project site) and workspace
 targets; no staging environment exists; no monitoring/observability exists (detection is manual); rollback

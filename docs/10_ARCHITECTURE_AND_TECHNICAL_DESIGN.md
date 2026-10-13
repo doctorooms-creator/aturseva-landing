@@ -50,7 +50,7 @@
 | Tokens | legacy names `ink/brand/gold/ivory` (neutral values) + hardcoded SVG greys (B9) | semantic aliases (`graphite/paper`) migrated opportunistically (File 05 §5.3) |
 | Motion lifecycle | no cleanup on unmount; MQ changes need reload (B12/B13) | revert/kill guard + live re-evaluation before any routing exists |
 | Imagery | zero photographic/video assets | optional, owner-gated (File 08 VS-01…VS-08) |
-| Metadata | title/description/OG text only | canonical/robots/OG-image as future owner-gated additions |
+| Metadata | title/description/OG text + canonical/robots-meta/sitemap (SEO-hygiene pass, owner-delegated) | og:image, twitter cards and analytics remain owner-gated additions |
 
 ---
 
@@ -277,7 +277,7 @@ Consumes File 07 (authority for all timings/M-IDs); architectural facts:
 
 **Verified present (`layout.tsx:4–20`):** title + OG title `"Aturseva — Care that walks with you"` (canonical tagline, verbatim); meta description + OG description; `openGraph.type: "website"`; viewport `themeColor #0a0a0b`, `width: device-width`, `initialScale: 1`; `<html lang="en">`; favicon via `src/app/icon.svg` (App Router convention).
 
-**Verified absent (do not invent; each addition is a future owner-gated task):** canonical URL; robots directives; twitter-card metadata; `og:image` (text-only OG preview today — a future OG image is itself a File 08 §20-5 asset decision); structured data (`JSON-LD`); `sitemap.xml`/`robots.txt` files; analytics. File 04 §15 records the metadata framework (title/description conventions, canonical-under-basePath caveat, slug stability); File 12 (future) owns the measurable SEO checks. **No SEO conformance is claimed by this document — no checks were run.**
+**Verified absent at this file's authoring (do not invent; each addition is an owner-gated task):** canonical URL; robots directives; twitter-card metadata; `og:image` (text-only OG preview today — a future OG image is itself a File 08 §20-5 asset decision); structured data (`JSON-LD`); `sitemap.xml`/`robots.txt` files; analytics. File 04 §15 records the metadata framework (title/description conventions, canonical-under-basePath caveat, slug stability); File 12 owns the measurable SEO checks. **No SEO conformance is claimed by this document — no checks were run.** **Update (post-roadmap SEO-hygiene pass, owner-delegated):** canonical URL, robots meta directives and `sitemap.xml` have since been implemented per that framework (T-SEO-02/03/04; File 12 §16 addendum) — `src/lib/site.ts` holds the origin constants. Twitter-card metadata, `og:image`, structured data and analytics remain owner-gated and absent.
 
 ---
 
