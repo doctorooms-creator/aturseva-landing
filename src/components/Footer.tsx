@@ -10,7 +10,16 @@ export function Footer() {
       <div className="relative z-[2] mx-auto max-w-7xl px-5 py-14 sm:px-8 sm:py-16">
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
           <div className="max-w-sm">
-            <Logo variant="full" className="h-24 w-auto text-ivory-50" />
+            {/* B5 (File 08 §16 option a, owner-delegated): tagline-free lockup +
+                the canonical tagline as a separate text line (File 04 §6, File 05
+                §10 — one pairing per page, adjacent to the wordmark). The full
+                variant and its "Make healthcare intelligent." lettering remain
+                untouched in Logo.tsx and public/assets/logo-primary.svg; only
+                the footer's display choice changes. Revert = variant="full". */}
+            <Logo variant="word" className="h-20 w-auto text-ivory-50" />
+            <p className="mt-3 font-display text-xl italic text-ivory-100">
+              Care that walks with you.
+            </p>
             {/* B3 — brand-philosophy framing (matches Sevika §5): our promise,
                 never a customer testimonial. */}
             <p className="eyebrow mt-6 text-ink-300">Our philosophy</p>
