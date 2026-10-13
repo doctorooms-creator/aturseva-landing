@@ -1,48 +1,13 @@
-"use client";
-
-import { useCallback, useEffect, useRef, useState } from "react";
-
-function PathCta({ role, singular }: { role: string; singular: string }) {
-  const [toast, setToast] = useState<string | null>(null);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const onClick = useCallback(() => {
-    setToast(`Early access for ${singular}s opens soon — Team Aturseva will reach out.`);
-    if (timer.current) clearTimeout(timer.current);
-    timer.current = setTimeout(() => setToast(null), 3800);
-  }, [singular]);
-
-  useEffect(() => () => {
-    if (timer.current) clearTimeout(timer.current);
-  }, []);
-
-  return (
-    <>
-      <button
-        type="button"
-        onClick={onClick}
-        className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-full bg-ink-900 px-6 text-sm font-bold text-ivory-50 transition-all hover:-translate-y-0.5 hover:bg-brand-600"
-      >
-        I&apos;m a {singular}
-      </button>
-
-      {toast && (
-        <div
-          role="status"
-          aria-live="polite"
-          className="fixed inset-x-4 bottom-6 z-[90] mx-auto max-w-md rounded-2xl border border-brand-300/30 bg-ink-900/95 px-5 py-4 text-center text-sm font-semibold text-ivory-50 shadow-lift backdrop-blur sm:left-1/2 sm:-translate-x-1/2"
-        >
-          {toast}
-        </div>
-      )}
-    </>
-  );
-}
+// (B4 — resolved, File 11 Batch 2) Honest in-page navigation CTAs: each
+// persona link goes to the section that tells their story. Nothing is
+// captured and no follow-up is promised. Owner-approved mappings:
+// patient → #sevika, doctor → #platform, hospital → #connection.
 
 const PATHS = [
   {
     role: "Patients",
     singular: "patient",
+    cta: "#sevika",
     accent: "text-brand-600",
     ring: "bg-brand-50 text-brand-600",
     title: "Walk in with greater clarity",
@@ -52,6 +17,7 @@ const PATHS = [
   {
     role: "Doctors",
     singular: "doctor",
+    cta: "#platform",
     accent: "text-ink-700",
     ring: "bg-ivory-100 text-ink-700",
     title: "Keep the day humane",
@@ -61,6 +27,7 @@ const PATHS = [
   {
     role: "Hospitals",
     singular: "hospital",
+    cta: "#connection",
     accent: "text-gold-600",
     ring: "bg-gold-100 text-gold-700",
     title: "One calm front desk",
@@ -102,7 +69,12 @@ export function Paths() {
               <p className="mt-3 flex-1 text-[15px] leading-relaxed text-ink-500">
                 {p.body}
               </p>
-              <PathCta role={p.role} singular={p.singular} />
+              <a
+                href={p.cta}
+                className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-full bg-ink-900 px-6 text-sm font-bold text-ivory-50 transition-all hover:-translate-y-0.5 hover:bg-brand-600"
+              >
+                I&apos;m a {p.singular}
+              </a>
             </article>
           ))}
         </div>
