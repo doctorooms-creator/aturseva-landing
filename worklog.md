@@ -162,3 +162,22 @@ Work Log:
 
 Stage Summary:
 - The File 02 §11.3 deviation is now CLOSED: the entire site (canonical :3005, preview :3006, public Pages URL) is monochrome black/white/grey. Narrative, copy, animations, structure unchanged. Optional §4.4 Hinglish Sevika example remains a future choice, not a gap.
+
+---
+Task ID: 11
+Agent: main (Z.ai Code)
+Task: File 11 — Batch 1 implementation (production typography + trust-first fixes) — first authorized code pass
+
+Work Log:
+- Owner checkpoint resolved: B1 wording "Walk in with greater clarity" APPROVED; B11 "One booking travels — doctor and hospital, in step." APPROVED; B18 DEFERRED to Batch 3 (no shell change made). Tagline untouched.
+- Batch 0 preflight: baseline 84ac28e (clean tree), servers healthy (:3005/:3006), before-evidence captured (qa/46–54 desktop+mobile), baseline pages export built and B15 defect reproduced locally with Pages-shape parity on :3007 (CSS requests /fonts/… → 404; actual location → 200).
+- T-FONT-01 baseline recorded verbatim: emitted CSS (unquoted) url(/fonts/Manrope-Variable.woff2) + 2× Fraunces, while HTML links CSS at /aturseva-landing/_next/static/chunks/….
+- B15 family selection on build evidence: F3 rejected (dev CSS depth /_next/static/css/app/ vs build /_next/static/chunks/ — proven unstable; would also break preview font inlining), F2 rejected (largest blast radius incl. preview pipeline + theme rewiring), F1 SELECTED.
+- Implemented scripts/fix-pages-fonts.ts (rewrite url(/fonts/ → url(/aturseva-landing/fonts/ across all .next-pages CSS, quoted+unquoted; hard assertions: ≥3 rewrites, per-font export presence + basePath reference, zero leftover root-absolute refs in CSS and HTML, non-zero exit on failure) — wired into build:pages npm script; workflow file untouched.
+- Trust fixes implemented together: B1 (Paths.tsx title), B11 (Connection caption 3), B2+B10 (new shared .rep-label component style in globals.css + stage-level "Representative preview" pill in Connection header, outside all animated elements, 11px floor), B3 (Sevika thread label "Illustrative Sevika conversation — representative preview" above .sevika-thread + philosophy reframing via "Our philosophy" eyebrow + translation caption in Sevika §5 AND Footer), B17 (ProductReveal toggle row → static div, no label/cursor-pointer), B8 (dynamic year; renders 2026).
+- Local QA executed: dev :3005 (SSR copy checks, desktop+mobile screenshots qa/56–73, console/errors zero, no overflow 360/390/1440, mobile menu + toast + anchors regression PASS, reduced-motion emulation PASS — labels visible, all 5 conn-cards opacity 1); pages export rebuilt via new build:pages (assertions green) and verified on :3007 (T-FONT-02 3×200, T-FONT-03 zero stray root /fonts requests, T-FONT-04/05/06 3 loaded faces incl. italic, check() ×3 true, computed Fraunces/Manrope, textContent copy sweep PASS); preview :3006 rebuilt (3 fonts base64, self-containment OK, __atursevaAnimBooted=true, zero errors). VLM visual reviews of all changed surfaces (one VLM response hallucinated an unrelated HTML document — discarded and re-run successfully with a stricter prompt).
+- Deployed: commit b088772 pushed → Actions run 38359695926 → SUCCESS. LIVE verification on https://doctorooms-creator.github.io/aturseva-landing/: T-FONT-01 emitted CSS requests exactly /aturseva-landing/fonts/×3; T-FONT-02 3×200 at requested URLs; T-FONT-03 network = 3 basePath-prefixed font requests 200, zero root-level; T-FONT-04 3 loaded faces; T-FONT-05 check() true ×3 (incl. italic); T-FONT-06 h1=Fraunces body=Manrope; T-FONT-07 dev parity PASS; T-FONT-08 preview parity PASS; T-FONT-09 visual pass (Fraunces glyphs confirmed live, no fallback/overlap); T-COPY-01/02/03/08/10 + T-MOCK-05 live PASS; live reduced-motion PASS; live mobile 390 no overflow; live console/errors empty. Evidence qa/77–82.
+- tsc --noEmit: 0 errors. No routes/integrations/analytics/media/deps/cron/scheduled tasks/background automations created. Product repo /home/z/my-project untouched (read-only).
+
+Stage Summary:
+- B15 CLOSED: production typography now loads on GitHub Pages (both deploy shapes verified). Batch 1 released: B1, B2+B10, B3, B11, B17, B8 implemented; B18 deferred to Batch 3 per owner decision. Canonical tagline unchanged; monochrome system intact. Next per File 11: Batch 2 (B4 CTA honesty — owner decision required) / Batch 3 (lifecycle+tokens, incl. deferred B18).
