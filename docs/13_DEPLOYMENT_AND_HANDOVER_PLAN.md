@@ -237,6 +237,16 @@ for execution = `docs/18_ATURSEVA_CHARACTER_IS_BRAND_LANDING_PLAN.md` (hero conv
 owner-endorsed orb; batches N1–N4 landing / P1 product rename; execution awaits owner "GO").
 File 17 §7 step 1 closed by this decision.
 
+Item 9 — Phase-wise implementation files (2026-10-14, later session): the owner directed a
+comprehensive phase-wise plan + per-location animation/interaction/scrolling files ("just like
+stitch website... konsi jageh pe konsa animation... antigravity kon kon se interactive elements
+hai... jo cursor ke sath move hote hai point to point"), to be implemented phase by phase. Created
+the spec suite: File 19 (8-phase master plan with gates), File 20 (hero/orb element spec),
+File 21 (day-beats motion spec), File 22 (master interaction/motion inventory incl. live-verified
+Antigravity decode: contextual cursor-CTAs, typed rotation, bouncing icon grid, scroll-reactive
+header, pinned sections — translated to a monochrome cursor family I-C-01…06). Execution remains
+phase-by-phase on owner go; development NOT started.
+
 Recording rule: an owner decision becomes real when stated by the owner in the task conversation and then
 recorded (doc commit or batch prompt quote) with its date/scope. Recommendations in any doc are non-binding.
 
