@@ -12,6 +12,7 @@
 |---|---|---|
 | 2026-10-14 | File created: owner rejection of "Sevika" recorded; 100-name catalogue (18 families); Grok-pattern analysis; top-10 shortlist; personality blueprint; monochrome 3D "living state orb" concept | Working session, post-File-16 |
 | 2026-10-14 | §4A added: owner's GoI question answered (SAATHI + Setu→Saathi story + backronym; Sanjeevani mythic alternate); GoI playbook decoded; 6 story-first round-2 additions; dual recommendation Baari-vs-Saathi | Working session, later |
+| 2026-10-14 | §6A added: owner ENDORSED the Living State Orb concept; single-name advertising principle recorded (two-register note in §4 withdrawn); orb = the character's body, name-agnostic; implementation still gated on name pick | Working session, later |
 
 ---
 
@@ -236,7 +237,7 @@ Grok's naming DNA: (a) **verb-able** ("grok it"), (b) **culture-rooted** (Heinle
 | 9 | **Mudita** | Joy-in-your-wellbeing; rare, premium, boundary-safe 🟢 |
 | 10 | **Boond** | The precise drop = the dose; "ek boond" is dawa-idiom in every Indian home 🟢 |
 
-**Agent's single recommendation if forced to one:** **Baari** — because it is the only name that encodes the USP (queue-state ownership) *and* passes every Grok filter *and* is honest (a turn/number, not a person, not a healer). Runner-up register note: Baari (the assistant) can coexist with a warm *app-level* word like Noor if the owner wants two registers later.
+**Agent's single recommendation if forced to one:** **Baari** — because it is the only name that encodes the USP (queue-state ownership) *and* passes every Grok filter *and* is honest (a turn/number, not a person, not a healer). ~~Runner-up register note: Baari (the assistant) can coexist with a warm *app-level* word like Noor if the owner wants two registers later.~~ **WITHDRAWN by owner feedback (2026-10-14, later session): advertising with two names would be a mistake — ONE name everywhere (character = voice = campaign face). See §6A.**
 
 ## 4A. Round-2 addendum — the GoI lens (owner question, later session 2026-10-14)
 
@@ -300,6 +301,19 @@ The owner asked: *"agar ye bot Indian government launch karti to kya naam rakhti
 **Integration lanes:** hero (single orb + token in core = the 5-second comprehension the owner demanded), chat launcher, notification toasts, loading states. **Tech lane:** three.js (R3F) — File 14's archived plan retains the reusable technical lane notes; img2threejs skill remains available if a richer form is chosen later. **File 08 gates:** a procedural 3D element is code-only (no photo/mesh asset enters the repo) — the §4 imagery gates are NOT triggered; the *design* approval remains the owner's.
 
 **B12/Motion compliance:** all loops respect reduced-motion (static finale state); GSAP remains the page-level engine; the orb renders inside the existing canvas budget (File 12 §15 baselines re-measured at integration time).
+
+## 6A. Owner endorsement of the 3D element + the single-name principle (2026-10-14, later session)
+
+The owner reviewed §6 and endorsed the "Living State Orb" direction, quoting its core properties back (faceless monochrome form; live state in the core — queue token / dose countdown; five motion states; hero placement giving 5-second comprehension). Recorded endorsement, with the owner's own strategic reason:
+
+> Advertising with **two names would be an issue** ("2 name se advertising krna" = problem). The orb avoids this structurally: **the 3D element is the character's BODY, not a second brand asset needing its own name.** One name → one form → one voice → one campaign. The orb is also name-agnostic — whichever name the owner picks (Baari / Saathi / other), the visual identity does not change; only the voice and the ad lines do.
+
+**Binding principles from this feedback (effective immediately for all future work):**
+1. **Single-name rule:** exactly one character name across product, landing, ads, app store, notifications. No dual-register naming (the withdrawn §4 note is the only casualty; its plan is dead).
+2. **The orb is the character's body:** any 3D work builds THE character's form, never a separate mascot.
+3. **Live-state principle (owner-quoted):** 3D must never be mere decoration — the core shows real state (token/countdown); this is the difference between a widget and a wallpaper.
+
+**Gate unchanged:** the implementation batch still waits on the name pick (§7 step 1). The orb concept itself is now owner-endorsed and no longer needs a separate direction approval.
 
 ## 7. Process after the owner picks (gated — not started)
 
