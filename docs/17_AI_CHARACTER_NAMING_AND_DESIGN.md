@@ -11,6 +11,7 @@
 | Date | Change | Author context |
 |---|---|---|
 | 2026-10-14 | File created: owner rejection of "Sevika" recorded; 100-name catalogue (18 families); Grok-pattern analysis; top-10 shortlist; personality blueprint; monochrome 3D "living state orb" concept | Working session, post-File-16 |
+| 2026-10-14 | §4A added: owner's GoI question answered (SAATHI + Setu→Saathi story + backronym; Sanjeevani mythic alternate); GoI playbook decoded; 6 story-first round-2 additions; dual recommendation Baari-vs-Saathi | Working session, later |
 
 ---
 
@@ -236,6 +237,31 @@ Grok's naming DNA: (a) **verb-able** ("grok it"), (b) **culture-rooted** (Heinle
 | 10 | **Boond** | The precise drop = the dose; "ek boond" is dawa-idiom in every Indian home 🟢 |
 
 **Agent's single recommendation if forced to one:** **Baari** — because it is the only name that encodes the USP (queue-state ownership) *and* passes every Grok filter *and* is honest (a turn/number, not a person, not a healer). Runner-up register note: Baari (the assistant) can coexist with a warm *app-level* word like Noor if the owner wants two registers later.
+
+## 4A. Round-2 addendum — the GoI lens (owner question, later session 2026-10-14)
+
+The owner asked: *"agar ye bot Indian government launch karti to kya naam rakhti, aur uske peeche ki story kya hoti?"* — a story-first naming lens, recorded here.
+
+**GoI naming playbook (decoded from real precedents):** (a) naam hi kaam ho — Aarogya **Setu** = bridge to health; (b) backronym + warm word — **UMANG** = Unified Mobile Application for New-age Governance, **NITI** Aayog; (c) myth when trust is needed — **Bhashini** (AI language mission), e-Sanjeevani; (d) helpline = warm word — **KIRAN** mental-health helpline; (e) Mitra/Saathi lineage — e-Mitra (Rajasthan), Ayushman Mitra (PM-JAY help-desk role); (f) feminine-warm AI names — Bhashini is GoI's flagship AI-naming precedent.
+
+**The GoI answer: SAATHI (साथी)** — full branding "Aarogya Saathi / AI SAATHI", with the press-note story: *2020 — Aarogya Setu built the bridge (setu) between citizen and health system. Five years later — the AI era — the bridge exists (UPI, Digital India, e-Sanjeevani); what is needed now is the one who walks it WITH you: token-holder, reminder-giver, clinic-companion. "Setu ne jod diya tha. Saathi ab saath dega."* Backronym: **AI SAATHI** — *Smart AI Assistant for Treatment, Health & Inclusion*. Passes every GoI filter: gender-neutral, pan-India comprehensible, no deity, no doctor-claim (companion, not vaidya — matches our File 02 §4 boundary).
+
+**Mythic runner-up: Sanjeevani** — Hanuman's story (couldn't identify the herb among thousands on Dronagiri, so lifted the ENTIRE mountain; mapping: "when reaching the cure is hard, bring the whole system home — token, dose, diet, doctor in the phone"). Rejected for GoI-real use: e-Sanjeevani (GoI telemedicine) already exists, and Sanjeevani = the medicine itself → doctor-coded (conflicts with our AI-seva boundary).
+
+**What the lens teaches this naming exercise:** the owner's repeated "story kya hoti" questions signal **story-first** weighing (GoI lens) in addition to the personality-first Grok lens of §4. Key discovery: **Saathi = the Hindi translation of Aturseva's canonical tagline "Care that walks with you."** — name and tagline explain each other (the same lock Aarogya Setu used: naam hi kaam).
+
+**Round-2 additions (story-first, appended to the §3 catalogue):**
+| Naam | Story (1-line) | Flag |
+|---|---|---|
+| **Saathi** ⭐ | Setu→Saathi arc + tagline-lock; gender-neutral companion | 🟡 common word (several brands); fine for in-app character, attorney check if campaign face |
+| **Kiran** | Govt mental-health helpline warmth precedent — "ghatan me ek kiran" | 🟢 |
+| **Madad** | MEA portal lineage — "madad ab pocket me" | 🟢 |
+| **Sampark** | Govt outreach-portal lineage — connection/touch | 🟢 |
+| **Jagriti** | awakening — morning-dose energy | 🟢 |
+| **Sanjeevani** | Hanuman's whole-mountain story | 🟡 e-Sanjeevani conflict + doctor-coded |
+| ~~Sevini / Arogyini~~ | Bhashini-pattern feminine agentive coinages — phonetically awkward; skipped with reason | — |
+
+**Updated dual recommendation:** the race is now **Baari (USP-first: queue ownership, private-brand ad energy) vs Saathi (story-first: tagline-locked, trust energy)**. Baari wins the ad; Saathi wins the trust. The pick remains owner-gated. Claim-gate reminder (R3): any GoI-style availability claim ("har pal", "24 ghante") in borrowed press-note phrasing must pass File 02 §4 reality before use.
 
 ## 5. Personality blueprint (Grok-pattern, Aturseva-soul)
 
