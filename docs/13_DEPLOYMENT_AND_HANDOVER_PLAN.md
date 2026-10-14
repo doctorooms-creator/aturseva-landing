@@ -213,6 +213,14 @@ UI and animation, citing launchfar.com, antigravity.google and stitch.withgoogle
 that direction is its own gate, File 15 §12). Items 2/3 (imagery/film routes) remain open; Route 1
 stays the deployed default.
 
+Item 6 — Sevika-first positioning (2026-10-14, recorded this session): the owner directed that
+Aturseva's single key point is **Sevika as the main character** — the AI seva layer who books, holds the
+queue number, and reminds ("Sevika ke paas apna queue number hai"); video call / queue / kiosk demote to
+verbs she performs. Record of direction + verified use-case catalogue (8 current / 5 future-tier) =
+`docs/16_SEVIKA_FIRST_POSITIONING_AND_USE_CASES.md` (planning only; development NOT started per owner
+instruction; Sevika visual identity still File 08-gated; File 15 remains the design vehicle, File 16 its
+narrative spine).
+
 Recording rule: an owner decision becomes real when stated by the owner in the task conversation and then
 recorded (doc commit or batch prompt quote) with its date/scope. Recommendations in any doc are non-binding.
 
