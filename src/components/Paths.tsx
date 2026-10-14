@@ -42,8 +42,13 @@ export function Paths() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="mx-auto max-w-3xl text-center" data-reveal>
           <p className="eyebrow text-brand-600">Begin</p>
+          {/* File 21 §8 (Phase 4 reframe): the Paths close now answers the
+              day story — "Aturseva ke saath shuru karein" — instead of the
+              generic journey question. Card hovers unchanged (existing lift
+              + border-brighten preserved per spec). */}
           <h2 className="mt-4 font-display text-4xl font-semibold leading-tight tracking-tight text-ink-950 sm:text-5xl">
-            Where do you fit <span className="italic text-brand-700">in the journey?</span>
+            Aturseva ke saath{" "}
+            <span className="italic text-brand-700">shuru karein.</span>
           </h2>
           <p className="mt-5 text-base leading-relaxed text-ink-500 sm:text-lg">
             Three paths, one direction — care that moves in step.
@@ -71,6 +76,7 @@ export function Paths() {
               </p>
               <a
                 href={p.cta}
+                data-magnetic
                 className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-full bg-ink-900 px-6 text-sm font-bold text-ivory-50 transition-all hover:-translate-y-0.5 hover:bg-brand-600"
               >
                 I&apos;m a {p.singular}

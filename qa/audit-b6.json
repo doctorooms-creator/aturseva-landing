@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "**IMAGE 1 (Hero Section)**\n*   **A) Headline/Statement:** **PASS.** Kicker `ATURSEVA KA DIN · 06` is present. The two-line serif statement reads exactly as specified: `Dose doctor badalega.` (Roman) and `Main yaad rakhungi.` (Italic). Sub-paragraph is correctly placed below.\n*   **B) Ring Gauge / Day Chips:** N/A (not fully visible in this crop, but the card header is present).\n*   **C) Rail Cards:** N/A.\n*   **D) Visual Defects:** **FAIL (Minor).** The doctor dashboard card at the bottom is partially cut off by the viewport edge. More critically, the ring gauge inside it displays **`0%`** instead of the expected `72%`, and the segment fill appears empty/incomplete.\n*   **E) Polish:** **8/10.** Typography, spacing, and the monochrome palette are excellent. The `0%` error on the gauge is a significant data-accuracy fail that drags down the score.\n\n**IMAGE 2 (Doctor Dashboard + Rail Header)**\n*   **A) Headline/Statement:** **PASS.** Top of the hero text is visible and consistent with Image 1.\n*   **B) Ring Gauge + 72% + Day Chips:** **PASS.** The frosted glass card for `DR. S. · PATIENT VIEW` is correctly rendered. The dashed `REPRESENTATIVE` badge is present. The ring gauge now correctly shows **`72%`** with **5 of 7 segments filled** (representing ~71%). The label `REPORTED REGULARITY` is centered. Below, the 7 day chips (`M T W T F S S`) are present with **5 filled dots** (M-F) and 2 empty (S-S).\n*   **C) Rail Cards (Partial):** **PASS (Visible portion).** The header `ATURSEVA KA DIN — 6 BEATS` is correct. Cards `01/06` through `06/06` are visible at the bottom with their respective icons.\n*   **D) Visual Defects:** None observed. Alignment is clean; no clipping or color leaks.\n*   **E) Polish:** **9/10.** This is a very strong execution of the \"doctor-side\" UI. The frosted glass effect and data visualization are crisp.\n\n**IMAGE 3 (Day Rail Full View)**\n*   **A) Headline/Statement:** N/A (scrolled past).\n*   **B) Ring Gauge / Day Chips:** **PASS.** The top of the image confirms the dashboard from Image 2 is intact above the rail.\n*   **C) 6 Rail Cards + Live Token:** **PASS.** All 6 cards are clearly rendered:\n    *   `01/06`: Dose reminder | REMINDER ON\n    *   `02/06`: Rx to plan | RX → DRAFT\n    *   `03/06`: Chat booking | BOOKED\n    *   `04/06`: Queue baari | **● 0 · aap ki baari** (Live token with dot present)\n    *   `05/06`: Clinic shaam | DIET ON\n    *   `06/06`: Doctor loop | LOOP CLOSED\n*   **D) Visual Defects:** **FAIL (Major Layout Break).** There is a massive **horizontal white bar** cutting across the lower third of the screen (below the card rail). This breaks the \"dark ink background\" requirement entirely and looks like a rendering glitch or an unstyled section bleeding through.\n*   **E) Polish:** **6/10.** The card rail itself is perfectly designed and all micro-copy is accurate. However, the huge white void at the bottom is a severe visual defect that ruins the immersive dark-mode experience.\n\n---\n### **Summary Audit Log**\n| Check | Image 1 | Image 2 | Image 3 |\n| :--- | :--- | :--- | :--- |\n| **A) Text Accuracy** | ✅ PASS | ✅ PASS | ✅ PASS |\n| **B) Dashboard Data** | ❌ FAIL (Shows 0%) | ✅ PASS (72%, 5/7 dots) | ✅ PASS (Confirmed) |\n| **C) Rail Cards / Token** | N/A | ✅ Partial Pass | ✅ PASS (Token on #4) |\n| **D) Visual Defects** | ⚠️ Minor (Card clip) | ✅ None | ❌ **CRITICAL (White bar)** |\n| **E) Polish (1-10)** | **8/10** | **9/10** | **6/10** |\n\n**Overall Verdict:** The content strategy and typography are flawless across all three images. Image 2 is the reference-quality capture. Image 1 has a data-state bug (0% vs 72%). Image 3 has a catastrophic layout/rendering failure with the white background section appearing mid-scroll.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1792018561,
+  "id": "20261015065546df0d23187d9c4023",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20261015065546df0d23187d9c4023",
+  "usage": {
+    "completion_tokens": 1066,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 5354,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 6420
+  }
+}

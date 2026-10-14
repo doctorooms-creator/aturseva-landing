@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\n  \"audit_id\": \"ATR-LP-05-CLINIC-SHAAM\",\n  \"section\": \"CLINIC + SHAAM (Aturseva AI Care Assistant)\",\n  \"viewport\": \"1440x900 Desktop\",\n  \"theme_check\": \"PASS - Strictly monochrome (greys, ivory/black). No non-grey colors detected.\",\n  \"checks\": [\n    {\n      \"id\": \"A\",\n      \"item\": \"QR Glyph Visibility & Pattern\",\n      \"status\": \"PASS\",\n      \"note\": \"QR glyph is clearly visible within the dark kiosk screen. It features the standard three position-detection squares and a randomized data matrix pattern. Reads unmistakably as a QR code.\"\n    },\n    {\n      \"id\": \"B\",\n      \"item\": \"Kiosk Card Layout Integrity\",\n      \"status\": \"PASS\",\n      \"note\": \"Layout is clean and well-structured. The white card contains the dark screen, which correctly houses the white QR card. No element overlaps; padding is consistent.\"\n    },\n    {\n      \"id\": \"C\",\n      \"item\": \"Headline & Kicker Accuracy\",\n      \"status\": \"FAIL\",\n      \"note\": \"The headline currently reads 'Bina form. Bina pen.' instead of the expected 'You walk in. / She checks you in.' (with serif/italic styling). The kicker 'ATURSEVA KA DIN · 05' is missing from this specific card view (it appears to be located in a section above or is omitted here).\"\n    },\n    {\n      \"id\": \"D\",\n      \"item\": \"Visual Defects (Clipping/Collision/Misalignment)\",\n      \"status\": \"PASS\",\n      \"note\": \"No visual defects observed. Text is fully legible, buttons are properly aligned, and there is no clipping of the QR code or status pills.\"\n    }\n  ],\n  \"polish_score\": \"8/10\",\n  \"polish_notes\": \"High-quality UI execution with excellent use of depth (shadows) and typography hierarchy. The 'Shaam ki diet' card on the right provides great context. The score is docked slightly for the mismatched headline text relative to the prompt's specific requirement, though the design itself is polished.\",\n  \"summary\": \"The section successfully captures the 'Clinic + Shaam' vibe with a sophisticated monochrome palette. The kiosk UI is intuitive and the QR integration looks realistic. The primary issue is the copy discrepancy in the main headline.\"\n}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1792018508,
+  "id": "202610150654599087bb291bf44116",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "202610150654599087bb291bf44116",
+  "usage": {
+    "completion_tokens": 528,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 1849,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 2377
+  }
+}

@@ -1,6 +1,8 @@
 import { AnimationProvider } from "@/components/AnimationProvider";
 import { BeatBaari } from "@/components/landing/beats/BeatBaari";
+import { BeatBoundary } from "@/components/landing/beats/BeatBoundary";
 import { BeatBooking } from "@/components/landing/beats/BeatBooking";
+import { BeatClinic } from "@/components/landing/beats/BeatClinic";
 import { BeatRxPhoto } from "@/components/landing/beats/BeatRxPhoto";
 import { BeatSubah } from "@/components/landing/beats/BeatSubah";
 import { Connection } from "@/components/Connection";
@@ -31,6 +33,13 @@ const BEATS_V2 = process.env.NEXT_PUBLIC_BEATS_V2 !== "0";
    only ships complete alongside the v2 hero and beats 1–2. */
 const BEATS_34 = process.env.NEXT_PUBLIC_BEATS_34 !== "0";
 
+/* File 19 Phase 4 — beats 5–6 flag: DEFAULT ON. NEXT_PUBLIC_BEATS_56=0
+   removes Beat 5 (Clinic + Shaam) and Beat 6 (Boundary + doctor mirror
+   + the day rail) and restores the pre-Phase-4 page instantly. Same
+   narrative-dependency rule: the day story only ships complete alongside
+   the v2 hero and beats 1–4. */
+const BEATS_56 = process.env.NEXT_PUBLIC_BEATS_56 !== "0";
+
 export default function Page() {
   return (
     <>
@@ -50,6 +59,12 @@ export default function Page() {
           <>
             <BeatBooking />
             <BeatBaari />
+          </>
+        ) : null}
+        {HERO_V2 && BEATS_V2 && BEATS_34 && BEATS_56 ? (
+          <>
+            <BeatClinic />
+            <BeatBoundary />
           </>
         ) : null}
         <Journeys />

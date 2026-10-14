@@ -11,7 +11,10 @@
  * converge into the Aturseva hub, and one booking travels through the
  * doctor's and hospital's workflows — and (Phase 3, File 21 §4) the BAARI
  * pinned queue countdown: the panel pins, the token scrubs #12 → #8 → #3,
- * and at 100% the alert moment fires ("Baari! Ab niklo.").
+ * and at 100% the alert moment fires ("Baari! Ab niklo.") — and (Phase 4,
+ * File 21 §5–§8) the day's close: beat 5's dusk scrub with the sun arc
+ * and the orb's night onset, beat 6's slow boundary line and doctor-ring
+ * mirror, and the 01/06…06/06 rail that remembers beat 4's token.
  *
  * Lifecycle (File 11 Batch 3):
  *   - B12: all media-preference evaluation (reduced-motion, Connection
@@ -518,6 +521,16 @@
         if (disposed) return;
         if (orb.classList.contains("orb--alert")) setOrb(orb, "idle");
       }, 1000);
+    }
+
+    /* The day rail's QUEUE LIVE mini-token mirrors beat 4's live state
+       (File 21 §8 — "the page remembering its own story"). Markup ships
+       the final state; beat 4's segment machine re-syncs it live. */
+    function updateRailToken(text) {
+      var els = document.querySelectorAll("[data-rail-token]");
+      Array.prototype.forEach.call(els, function (el) {
+        if (el.textContent !== text) el.textContent = text;
+      });
     }
 
     /* Split a bot paragraph into word spans for the stagger reveal. */
@@ -1112,6 +1125,7 @@
           if (orbCore) orbCore.textContent = s.core;
           if (cursorNum) cursorNum.textContent = s.cursor;
           if (cursorLabel) cursorLabel.textContent = "aap ka token";
+          updateRailToken(s.core + " · aap ka token");
           setDots(s.dots);
           if (youDot)
             gsap.to(youDot, { autoAlpha: 0, scale: 0.4, duration: 0.25, overwrite: "auto" });
@@ -1137,6 +1151,7 @@
           if (orbCore) orbCore.textContent = "YOUR TURN";
           if (cursorNum) cursorNum.textContent = "#0";
           if (cursorLabel) cursorLabel.textContent = "aap ki baari";
+          updateRailToken("0 · aap ki baari");
           setDots(0);
           if (panel) {
             panel.classList.remove("is-alert");
@@ -1234,6 +1249,203 @@
           var r = panel.getBoundingClientRect();
           bx(e.clientX - r.left + 18);
           by(e.clientY - r.top + 20);
+        });
+      }
+    }
+
+    /* ─────────────── BEATS 5–6 — the day's close (File 21 §5–§6) ───────────────
+       Phase 4: Beat 5 CLINIC+SHAAM (QR kiosk check-in, the day→dusk scrub
+       with the sun arc and the orb's night onset, the evening diet nudge)
+       and Beat 6 BOUNDARY (the slow boundary line, the doctor adherence-
+       ring mirror, the day rail). Markup ships each beat's FINAL state —
+       these builders replay it, so crawlers / no-JS / reduced-motion see
+       the complete beats. */
+
+    function buildBeat5() {
+      var section = document.querySelector("[data-beat5]");
+      if (!section) return;
+      beatEntrance(section);
+
+      var kiosk = section.querySelector("[data-b5-kiosk]");
+      var screenEl = section.querySelector("[data-b5-screen]");
+      var status = section.querySelector("[data-b5-status]");
+      var tokenline = section.querySelector("[data-b5-tokenline]");
+      var checkin = section.querySelector("[data-b5-checkin]");
+      var diet = section.querySelector("[data-b5-diet]");
+      var bubble = section.querySelector("[data-b5-bubble]");
+      var rows = gsap.utils.toArray("[data-b5-row]", section);
+      var dusk = section.querySelector("[data-b5-dusk]");
+      var arc = section.querySelector("[data-b5-arc]");
+      var sun = section.querySelector("[data-b5-sun]");
+      var orb = cameoOrb(section, "data-b5-orb");
+
+      /* Replay reset — markup ships the checked-in FINAL state (status
+         flipped, final token line, dusk complete, orb already night). */
+      if (status) status.classList.remove("is-in");
+      if (checkin) checkin.setAttribute("aria-pressed", "false");
+      if (tokenline) tokenline.textContent = "QR check-in — ek tap ka kaam.";
+      if (orb) setOrb(orb, "idle");
+
+      /* Kiosk entrance: the screen, status and button settle in. */
+      if (kiosk) {
+        var bits = [screenEl, status, checkin, tokenline].filter(Boolean);
+        if (bits.length) {
+          gsap.set(bits, { autoAlpha: 0, y: 16 });
+          gsap
+            .timeline({
+              defaults: { ease: "power2.out" },
+              scrollTrigger: { trigger: kiosk, start: "top 80%", once: true },
+            })
+            .to(bits, { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.09 }, 0);
+        }
+      }
+
+      /* M-E-51 — the evening bubble slides in, the diet rows assemble. */
+      if (diet) {
+        if (bubble) gsap.set(bubble, { autoAlpha: 0, x: -18 });
+        if (rows.length) gsap.set(rows, { autoAlpha: 0, x: -24 });
+        var dtl = gsap.timeline({
+          defaults: { ease: "power2.out" },
+          scrollTrigger: { trigger: diet, start: "top 80%", once: true },
+        });
+        if (bubble) dtl.to(bubble, { autoAlpha: 1, x: 0, duration: 0.5 }, 0);
+        if (rows.length)
+          dtl.to(rows, { autoAlpha: 1, x: 0, duration: 0.45, stagger: 0.14 }, 0.25);
+      }
+
+      /* M-E-50 — the day→dusk scrub: the ivory overlay fades in, the sun
+         dot arcs across the horizon (getPointAtLength on the dashed path)
+         and dims as it settles — and O-50, the orb dims to its night
+         state as the dusk completes (bidirectional: scrolling back wakes
+         it, so the day genuinely belongs to the scroll). */
+      if (dusk) {
+        gsap.set(dusk, { autoAlpha: 0 });
+        var arcLen = arc ? arc.getTotalLength() : 0;
+        if (sun && arc && arcLen) {
+          sun.setAttribute("cx", 60);
+          sun.setAttribute("cy", 110);
+          gsap.set(sun, { opacity: 1 });
+        }
+        var nightOn = false;
+        var sunPos = { p: 0 };
+        var duskTl = gsap.timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: {
+            trigger: section,
+            start: "top 45%",
+            end: "bottom 88%",
+            scrub: 0.5,
+          },
+          onUpdate: function () {
+            var pr = duskTl.progress();
+            if (orb) {
+              if (pr >= 0.8 && !nightOn) {
+                nightOn = true;
+                setOrb(orb, "night");
+              } else if (pr < 0.8 && nightOn) {
+                nightOn = false;
+                setOrb(orb, "idle");
+              }
+            }
+          },
+        });
+        duskTl.to(dusk, { autoAlpha: 1, duration: 1 }, 0);
+        if (sun && arc && arcLen) {
+          duskTl.to(
+            sunPos,
+            {
+              p: 1,
+              duration: 1,
+              onUpdate: function () {
+                var pt = arc.getPointAtLength(arcLen * sunPos.p);
+                sun.setAttribute("cx", pt.x);
+                sun.setAttribute("cy", pt.y);
+              },
+            },
+            0
+          );
+          duskTl.to(sun, { opacity: 0.3, duration: 0.3 }, 0.7);
+        }
+      }
+    }
+
+    function buildBeat6() {
+      var section = document.querySelector("[data-beat6]");
+      if (!section) return;
+      beatEntrance(section);
+
+      /* M-E-60 — THE BOUNDARY LINE: word-by-word fade, 0.8s each, 0.25s
+         stagger — the slowest, most deliberate moment on the page. Plain
+         fades with a slight rise (no mask grammar here); markup ships the
+         line fully readable, so RM / no-JS get the whole statement. */
+      var lines = section.querySelectorAll("[data-b6-bw]");
+      var words = [];
+      Array.prototype.forEach.call(lines, function (line) {
+        if (line.getAttribute("data-split") === "1") return;
+        var ws = (line.textContent || "").split(/\s+/).filter(Boolean);
+        if (!ws.length) return;
+        line.innerHTML = ws
+          .map(function (w) { return '<span class="b6-w">' + w + "</span>"; })
+          .join(" ");
+        line.setAttribute("data-split", "1");
+        Array.prototype.push.apply(
+          words,
+          Array.prototype.slice.call(line.querySelectorAll(".b6-w"))
+        );
+      });
+      if (words.length) {
+        gsap.set(words, { autoAlpha: 0, y: 10 });
+        gsap.to(words, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.25,
+          ease: "power1.inOut",
+          scrollTrigger: { trigger: section, start: "top 72%", once: true },
+        });
+      }
+
+      /* M-E-61 — the doctor-screen mirror: the adherence ring draws
+         itself 0→72% with a counting centre (markup ships the drawn
+         final state; labelled representative, never real data). */
+      var doc = section.querySelector("[data-b6-doc]");
+      var segs = gsap.utils.toArray(".b6-seg--on", section);
+      var pct = section.querySelector("[data-b6-pct]");
+      if (doc) {
+        segs.forEach(function (p) {
+          var len = p.getTotalLength();
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len });
+        });
+        if (pct) gsap.set(pct, { innerText: 0 });
+        var tl = gsap.timeline({
+          defaults: { ease: "power2.inOut" },
+          scrollTrigger: { trigger: doc, start: "top 78%", once: true },
+        });
+        if (segs.length)
+          tl.to(segs, { strokeDashoffset: 0, duration: 0.55, stagger: 0.14 }, 0.2);
+        if (pct)
+          tl.fromTo(
+            pct,
+            { innerText: 0 },
+            { innerText: 72, duration: 1.1, snap: { innerText: 1 }, ease: "power1.inOut" },
+            0.25
+          );
+      }
+
+      /* The day rail — the cards stagger in when the rail block arrives
+         (their entrance is their own: the section is tall, so the shared
+         [data-beat-fade] grammar only carries the rail's header row). */
+      var rail = section.querySelector("[data-b6-rail]");
+      var cards = gsap.utils.toArray(".rail-card", section);
+      if (rail && cards.length) {
+        gsap.set(cards, { autoAlpha: 0, y: 18 });
+        gsap.to(cards, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.45,
+          stagger: 0.07,
+          ease: "power2.out",
+          scrollTrigger: { trigger: rail, start: "top 88%", once: true },
         });
       }
     }
@@ -1392,6 +1604,98 @@
           });
         });
       });
+
+      /* I-T-50 — the QR kiosk check-in (beat 5, one-way): status flips
+         WAITING → CHECKED IN (the 0.5s Y-flip), the token line updates,
+         and the scan line sweeps down the QR (motion only). Under
+         reduced-motion the swap is instant (B12 parity). */
+      gsap.utils.toArray("[data-b5-checkin]").forEach(function (btn) {
+        var section = btn.closest("[data-beat5]");
+        if (!section) return;
+        var status = section.querySelector("[data-b5-status]");
+        var tokenline = section.querySelector("[data-b5-tokenline]");
+        var scan = section.querySelector("[data-b5-scan]");
+        var qrcard = section.querySelector("[data-b5-qrcard]");
+
+        on2(btn, "click", function () {
+          if (btn.getAttribute("aria-pressed") === "true") return;
+          btn.setAttribute("aria-pressed", "true");
+          if (status) status.classList.add("is-in");
+          if (tokenline)
+            tokenline.textContent = "Check-in ho gaya — Dr. S. ki live list par aa gaye.";
+          if (reduceMQ.matches || !scan || !qrcard) return;
+          /* The scan sweep — one pass down the QR card (motion only). */
+          gsap.fromTo(
+            scan,
+            { autoAlpha: 0.9, y: 0 },
+            {
+              y: qrcard.offsetHeight * 0.82,
+              autoAlpha: 0,
+              duration: 0.65,
+              ease: "power1.inOut",
+            }
+          );
+        });
+      });
+
+      /* I-H-61 — the adherence ring (beat 6): hover (desktop) or tap
+         (any pointer) a day chip and its ring segment highlights while
+         the others recede. Pure class toggles — identical under
+         reduced-motion. */
+      gsap.utils.toArray("[data-b6-doc]").forEach(function (doc) {
+        var ring = doc.querySelector(".b6-ring");
+        var chips = Array.prototype.slice.call(doc.querySelectorAll("[data-b6-day]"));
+        var segs = Array.prototype.slice.call(doc.querySelectorAll(".b6-seg"));
+        if (!chips.length || !segs.length) return;
+
+        function setHot(i) {
+          segs.forEach(function (s, j) { s.classList.toggle("is-hot", i === j); });
+          chips.forEach(function (c, j) { c.classList.toggle("is-hot", i === j); });
+          if (ring) ring.classList.toggle("is-focused", i !== -1);
+        }
+
+        chips.forEach(function (chip, i) {
+          if (finePointer.matches) {
+            on2(chip, "pointerenter", function () {
+              if (!disposed) setHot(i);
+            });
+          }
+          on2(chip, "click", function () {
+            setHot(chip.classList.contains("is-hot") ? -1 : i);
+          });
+        });
+        on2(doc, "pointerleave", function () {
+          if (!disposed) setHot(-1);
+        });
+      });
+    }
+
+    /* I-C-04 (site-wide) — magnetic drift for [data-magnetic] elements
+       outside the hero (the hero wires its own inside buildHeroV2).
+       Wired once per element, outside the media context, so the
+       interaction stays live in every state; the drift itself sits out
+       under reduced-motion. */
+    function wireGlobalMagnetics() {
+      var fine = window.matchMedia("(hover: hover) and (pointer: fine)");
+      if (!fine.matches) return;
+      gsap.utils.toArray("[data-magnetic]").forEach(function (el) {
+        if (el.closest("[data-hero2]") || el.getAttribute("data-mag-wired") === "1") return;
+        el.setAttribute("data-mag-wired", "1");
+        var mx = gsap.quickTo(el, "x", { duration: 0.4, ease: "power3.out" });
+        var my = gsap.quickTo(el, "y", { duration: 0.4, ease: "power3.out" });
+        on2(el, "pointermove", function (e) {
+          if (disposed || reduceMQ.matches) return;
+          var r = el.getBoundingClientRect();
+          var dx = e.clientX - (r.left + r.width / 2);
+          var dy = e.clientY - (r.top + r.height / 2);
+          mx(Math.max(-10, Math.min(10, dx * 0.22)));
+          my(Math.max(-10, Math.min(10, dy * 0.22)));
+        });
+        on2(el, "pointerleave", function () {
+          if (disposed || reduceMQ.matches) return;
+          gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.4)" });
+        });
+      });
     }
 
     /* B12+B13 — ONE gsap.matchMedia() owns every conditional builder.
@@ -1412,17 +1716,21 @@
       buildBeat2();
       buildBeat3();
       buildBeat4();
+      buildBeat5();
+      buildBeat6();
       buildReveals();
       buildJourneyLanes();
       buildProductTilt();
       buildSevika();
     });
 
-    /* HERO v2 chips and beats interactions are interaction, not motion —
-       they stay live in every media state (instant under reduced-motion,
-       B12 parity). */
+    /* HERO v2 chips, beats interactions and site-wide magnetics are
+       interaction, not motion — they stay live in every media state
+       (instant under reduced-motion, B12 parity; magnetic drift sits
+       itself out while the preference is reduced). */
     wireHero2Chips();
     wireBeatInteractions();
+    wireGlobalMagnetics();
 
     /* Connection — fully media-conditioned: static finale under reduced
        motion, pinned scrub on desktop, choreographed auto-play on mobile.

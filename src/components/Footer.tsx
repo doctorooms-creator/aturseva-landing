@@ -16,7 +16,13 @@ export function Footer() {
                 variant and its "Make healthcare intelligent." lettering remain
                 untouched in Logo.tsx and public/assets/logo-primary.svg; only
                 the footer's display choice changes. Revert = variant="full". */}
-            <Logo variant="word" className="h-20 w-auto text-ivory-50" />
+            <div className="flex items-center gap-3.5">
+              <Logo variant="word" className="h-20 w-auto text-ivory-50" />
+              {/* File 21 §9 (Phase 4): the orb, 24px, night-state, beside the
+                  wordmark — the day ends; she's still on. Static by design
+                  (no loop in the footer; reduced-motion by default). */}
+              <span className="orb-foot" aria-hidden="true" />
+            </div>
             <p className="mt-3 font-display text-xl italic text-ivory-100">
               Care that walks with you.
             </p>
