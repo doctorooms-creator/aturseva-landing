@@ -662,7 +662,7 @@
         if (words.length) gsap.set(words, { autoAlpha: 0, y: 6 });
         trimExtras(thread);
 
-        gsap
+        var tl2 = gsap
           .timeline()
           .to(userBubble, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" }, 0.1)
           .call(function () {
@@ -672,8 +672,11 @@
           .call(function () {
             if (typingEl) typingEl.classList.remove("is-typing");
           }, null, 1.7)
-          .to(botBubble, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" }, 1.75)
-          .to(words, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.045 }, 1.85)
+          .to(botBubble, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" }, 1.75);
+        if (words.length) {
+          tl2.to(words, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.045 }, 1.85);
+        }
+        tl2
           .call(function () { orbAlert(orb, tilt); }, null, 2.7)
           .call(function () {
             if (orb && orb.classList.contains("orb--alert")) setOrb(orb, "idle");
