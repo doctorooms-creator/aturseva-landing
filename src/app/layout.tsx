@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_ORIGIN),
   title: "Aturseva — Care that walks with you",
   description:
-    "Aturseva weaves patients, doctors, and hospitals into one calm, coordinated experience — from the first booking to Sevika's doctor-approved follow-up care.",
+    "Aturseva weaves patients, doctors, and hospitals into one calm, coordinated experience — from the first booking to the assistant's doctor-approved follow-up care.",
   // T-SEO-02 — canonical URL. The subpath form is the production URL
   // policy in effect (the deployed, verified live location); the trailing
   // slash matches GitHub Pages' final served URL. A hosting move later is

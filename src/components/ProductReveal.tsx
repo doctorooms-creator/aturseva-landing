@@ -131,7 +131,7 @@ export function ProductReveal() {
               </div>
             </div>
 
-            {/* Sevika panel */}
+            {/* Aturseva assistant panel */}
             <div className="border-t border-ink-100 p-5 md:border-l md:border-t-0">
               <p className="eyebrow text-gold-600">Aturseva · Assistant</p>
               {/* B17 — static presentation only: this is part of the labelled
