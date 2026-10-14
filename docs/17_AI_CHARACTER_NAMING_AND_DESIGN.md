@@ -13,6 +13,7 @@
 | 2026-10-14 | File created: owner rejection of "Sevika" recorded; 100-name catalogue (18 families); Grok-pattern analysis; top-10 shortlist; personality blueprint; monochrome 3D "living state orb" concept | Working session, post-File-16 |
 | 2026-10-14 | §4A added: owner's GoI question answered (SAATHI + Setu→Saathi story + backronym; Sanjeevani mythic alternate); GoI playbook decoded; 6 story-first round-2 additions; dual recommendation Baari-vs-Saathi | Working session, later |
 | 2026-10-14 | §6A added: owner ENDORSED the Living State Orb concept; single-name advertising principle recorded (two-register note in §4 withdrawn); orb = the character's body, name-agnostic; implementation still gated on name pick | Working session, later |
+| 2026-10-14 | §7 step 1 closed: owner locked the name to ATURSEVA (brand = character, Alexa pattern); Baari/Saathi shortlist overridden by owner decision; execution plan = File 18 | Working session, later |
 
 ---
 
@@ -317,7 +318,7 @@ The owner reviewed §6 and endorsed the "Living State Orb" direction, quoting it
 
 ## 7. Process after the owner picks (gated — not started)
 
-1. Owner selects 1 name (or asks for a focused round-2 on any family).
+1. Owner selects 1 name (or asks for a focused round-2 on any family). **DONE 2026-10-14: the owner selected ATURSEVA itself** (the brand name — Alexa/Siri pattern; overrides the Baari/Saathi shortlist; recorded File 13 §10 item 8, executed via File 18). Steps 2–6 follow File 18's batches (P1 = product rename, N1–N4 = landing).
 2. TM quick-check Class 9/42 + app-store collision scan on the finalist(s).
 3. File 02 §4 rewrite (Sevika rows → new name; capability claims unchanged), File 16 amendment (spine retitled), File 13 §10 item 7 closes.
 4. Product rename plan (`/home/z/my-project`: routes, chat copy, page titles) + landing integration plan (File 15 R-series narrative consumes the new name).

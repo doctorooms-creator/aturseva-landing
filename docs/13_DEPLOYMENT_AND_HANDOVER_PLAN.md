@@ -229,6 +229,14 @@ Grok-pattern re-search plus a 3D element. Record of the search =
 "living state orb" 3D concept). The pick is owner-gated; product rename + landing integration are
 gated on it (File 17 §7 process). File 16 stands with its name amendment note.
 
+Item 8 — Character name locked: ATURSEVA (2026-10-14, later session): the owner directed
+"Name atur seva hi rakhte hai" — the AI character keeps the brand's own name (Alexa/Siri pattern:
+brand = character = campaign; the single-name rule satisfied at the deepest level — one name in the
+entire system). "Sevika ka din" spine retitled "Aturseva ka din" (File 16 amended). Plan of record
+for execution = `docs/18_ATURSEVA_CHARACTER_IS_BRAND_LANDING_PLAN.md` (hero conversation + 6 beats +
+owner-endorsed orb; batches N1–N4 landing / P1 product rename; execution awaits owner "GO").
+File 17 §7 step 1 closed by this decision.
+
 Recording rule: an owner decision becomes real when stated by the owner in the task conversation and then
 recorded (doc commit or batch prompt quote) with its date/scope. Recommendations in any doc are non-binding.
 
