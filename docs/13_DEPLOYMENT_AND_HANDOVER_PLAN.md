@@ -221,6 +221,14 @@ verbs she performs. Record of direction + verified use-case catalogue (8 current
 instruction; Sevika visual identity still File 08-gated; File 15 remains the design vehicle, File 16 its
 narrative spine).
 
+Item 7 — "Sevika" character name rejected (2026-10-14, later session): the owner rejected the
+character name while reaffirming the character-first positioning, and directed a 100-name
+Grok-pattern re-search plus a 3D element. Record of the search =
+`docs/17_AI_CHARACTER_NAMING_AND_DESIGN.md`
+(100 candidates, 18 families, top-10 shortlist led by "Baari"; personality blueprint; monochrome
+"living state orb" 3D concept). The pick is owner-gated; product rename + landing integration are
+gated on it (File 17 §7 process). File 16 stands with its name amendment note.
+
 Recording rule: an owner decision becomes real when stated by the owner in the task conversation and then
 recorded (doc commit or batch prompt quote) with its date/scope. Recommendations in any doc are non-binding.
 

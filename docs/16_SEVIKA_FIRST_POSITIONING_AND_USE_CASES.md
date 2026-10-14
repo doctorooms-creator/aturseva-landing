@@ -1,6 +1,8 @@
 # Aturseva — File 16: Sevika-First Positioning ("One Key Point: The AI Seva Character")
 
 **Status:** `PLANNING — NOT IMPLEMENTED`
+
+> **NAME AMENDMENT (2026-10-14, later session):** the owner REJECTED the name "Sevika" ("sevika name nai chalega") and directed a new character-name search with Grok-pattern personality + a 3D element — see `docs/17_AI_CHARACTER_NAMING_AND_DESIGN.md` (100 candidates, top-10, personality blueprint, monochrome orb concept). **This file's POSITIONING stands unchanged**: one key point = the character; queue-number ownership; the "Sevika ka din" spine (§8) is provisionally retitled "[Character] ka din" pending the owner's name pick. All "Sevika" reads below = "the character (name pending)".
 **Created:** 2026-10-14 IST (working session; ISO 8601)
 **Source baseline:** repository `doctorooms-creator/aturseva-landing`, branch `main`, commit `bfab719` (File 15 merge point). Sandbox re-cloned this session; working tree clean.
 **Planning dependencies:** `docs/02_PRODUCT_TRUTH_AND_CAPABILITY_MATRIX.md` (**§4 Sevika truth — the hard boundary of every claim in this file**), `docs/03_BRAND_MISSION_AND_POSITIONING.md` (Sevika role), `docs/05_CREATIVE_DIRECTION_AND_DESIGN_SYSTEM.md` (mandatory design baseline — monochrome tokens, Fraunces/Manrope — unchanged by this file), `docs/15_PRODUCT_UI_FIRST_LANDING_REDESIGN_PLAN.md` (design vehicle — this file supplies the narrative spine that File 15's UI demonstration will carry), `docs/13_DEPLOYMENT_AND_HANDOVER_PLAN.md` (§10 decision recording).
