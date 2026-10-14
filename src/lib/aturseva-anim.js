@@ -7,9 +7,11 @@
  *   2. Self-contained preview artifact: inlined as a classic <script> after
  *      gsap.min.js + ScrollTrigger.min.js, then booted on DOMContentLoaded.
  *
- * Signature moment: the "Connection" section — three separate lanes draw,
+ * Signature moments: the "Connection" section — three separate lanes draw,
  * converge into the Aturseva hub, and one booking travels through the
- * doctor's and hospital's workflows before Sevika joins the patient.
+ * doctor's and hospital's workflows — and (Phase 3, File 21 §4) the BAARI
+ * pinned queue countdown: the panel pins, the token scrubs #12 → #8 → #3,
+ * and at 100% the alert moment fires ("Baari! Ab niklo.").
  *
  * Lifecycle (File 11 Batch 3):
  *   - B12: all media-preference evaluation (reduced-motion, Connection
@@ -42,6 +44,7 @@
     var reduceMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
     var mobileMQ = window.matchMedia("(max-width: 767px)");
     var disposed = false;
+    var b3TypingTimer = null; /* beat-3 typing→stamp delay (cleared on dispose) */
 
     /* ───────────────────────── nav state ───────────────────────── */
     /* Handler hoisted to init scope so dispose() can remove it (B13). */
@@ -966,6 +969,275 @@
       }
     }
 
+    function buildBeat3() {
+      var section = document.querySelector("[data-beat3]");
+      if (!section) return;
+      beatEntrance(section);
+
+      var card = section.querySelector("[data-b3-card]");
+      var doc = section.querySelector("[data-b3-doc]");
+      var userB = section.querySelector("[data-b3-user]");
+      var botB = section.querySelector("[data-b3-bot]");
+      var chips = gsap.utils.toArray("[data-b3-slot]", section);
+      var booked = section.querySelector("[data-b3-booked]");
+      var typing = section.querySelector("[data-b3-typing]");
+      var orb = cameoOrb(section, "data-b3-orb");
+      var orbCore = orb ? orb.querySelector("[data-orb-core]") : null;
+      var orbLabel = orb ? orb.querySelector(".orb-core-label") : null;
+
+      /* Replay reset — markup ships the booked FINAL state (first chip
+         selected, ticket visible, orb showing the booked slot). Motion
+         users watch the beat book itself, then booking is genuinely
+         theirs to tap (I-T-30 wiring lives in wireBeatInteractions). */
+      chips.forEach(function (c) { c.setAttribute("aria-pressed", "false"); });
+      if (booked)
+        gsap.set(booked, {
+          autoAlpha: 0,
+          scale: 0.92,
+          rotation: -2,
+          transformOrigin: "50% 62%",
+        });
+      if (typing) typing.classList.remove("is-typing");
+      if (orbCore) orbCore.textContent = "3";
+      if (orbLabel) orbLabel.textContent = "open slots";
+
+      /* M-E-30 — the entrance: doctor card slides in first, the
+         conversation assembles, the slot chips settle (panel itself
+         rides the shared beatEntrance fade). */
+      if (card) {
+        var bubbles = [userB, botB].filter(Boolean);
+        if (doc) gsap.set(doc, { autoAlpha: 0, x: -26 });
+        if (bubbles.length) gsap.set(bubbles, { autoAlpha: 0, y: 14 });
+        if (chips.length) gsap.set(chips, { autoAlpha: 0, scale: 0.8, y: 10 });
+
+        var tl = gsap.timeline({
+          defaults: { ease: "power2.out" },
+          scrollTrigger: { trigger: card, start: "top 80%", once: true },
+        });
+        if (doc) tl.to(doc, { autoAlpha: 1, x: 0, duration: 0.5 }, 0.1);
+        if (userB) tl.to(userB, { autoAlpha: 1, y: 0, duration: 0.4 }, 0.4);
+        if (botB) tl.to(botB, { autoAlpha: 1, y: 0, duration: 0.4 }, 0.6);
+        if (chips.length)
+          tl.to(
+            chips,
+            { autoAlpha: 1, scale: 1, y: 0, duration: 0.35, ease: "back.out(1.8)", stagger: 0.08 },
+            0.85
+          );
+      }
+    }
+
+    function buildBeat4() {
+      var section = document.querySelector("[data-beat4]");
+      if (!section) return;
+      beatEntrance(section);
+
+      var strip = section.querySelector("[data-b4-static]");
+      var stage = section.querySelector("[data-b4-pin]");
+      var panel = section.querySelector("[data-b4-panel]");
+      if (!stage || !panel) return;
+
+      var tokenEl = section.querySelector("[data-b4-token]");
+      var aheadNum = section.querySelector("[data-b4-aheadnum]");
+      var aheadText = section.querySelector("[data-b4-aheadtext]");
+      var railFill = section.querySelector("[data-b4-railfill]");
+      var bubble = section.querySelector("[data-b4-bubble]");
+      var orb = cameoOrb(section, "data-b4-orb");
+      var orbCore = orb ? orb.querySelector("[data-orb-core]") : null;
+      var dots = gsap.utils.toArray("[data-b4-dot]", section);
+      var youDot = section.querySelector("[data-b4-you]");
+      var cursorBadge = section.querySelector("[data-b4-cursor]");
+      var cursorNum = section.querySelector("[data-b4-cursor-num]");
+      var cursorLabel = section.querySelector("[data-b4-cursor-label]");
+
+      /* Two renderings, one markup: the static strip serves RM/no-JS;
+         motion users get the pinned stage. Both flips are gsap.set, so a
+         live media change reverts them (B12) — exactly one representation
+         is ever visible. */
+      if (strip) gsap.set(strip, { display: "none" });
+      gsap.set(stage, { display: "block" });
+
+      /* Full state reset — also covers re-entry after a live media flip
+         (textContent/class changes are not auto-reverted by mm). */
+      if (tokenEl) tokenEl.textContent = "#12";
+      if (aheadNum) aheadNum.textContent = "12";
+      if (aheadText) aheadText.textContent = "log aage hain";
+      if (orbCore) orbCore.textContent = "#12";
+      if (cursorNum) cursorNum.textContent = "#12";
+      if (cursorLabel) cursorLabel.textContent = "aap ka token";
+      if (panel) panel.classList.remove("is-alert");
+      if (youDot) gsap.set(youDot, { autoAlpha: 0, scale: 0.4 });
+      dots.forEach(function (d) { gsap.set(d, { autoAlpha: 1, scale: 1 }); });
+      if (bubble)
+        gsap.set(bubble, { autoAlpha: 0, scale: 0.7, y: 10, transformOrigin: "12% 90%" });
+
+      /* M-P-40/M-E-42 — the discrete countdown segments (12 / 8 / 3 /
+         alert), applied from the scrubbed timeline's own progress so the
+         token swaps stay in lockstep with the rail. */
+      var SEGS = [
+        { token: "#12", ahead: "12", text: "log aage hain", core: "#12", cursor: "#12", dots: 12 },
+        { token: "#8", ahead: "8", text: "log aage hain", core: "#8", cursor: "#8", dots: 8 },
+        { token: "#3", ahead: "3", text: "log aage hain", core: "#3", cursor: "#3", dots: 3 },
+      ];
+      var cur = -1;
+
+      function setDots(count) {
+        dots.forEach(function (d, i) {
+          gsap.to(d, {
+            autoAlpha: i < count ? 1 : 0.12,
+            scale: i < count ? 1 : 0.7,
+            duration: 0.35,
+            ease: "power2.out",
+            overwrite: "auto",
+          });
+        });
+      }
+
+      function popToken() {
+        if (tokenEl)
+          gsap.fromTo(tokenEl, { scale: 1.16 }, { scale: 1, duration: 0.3, ease: "power2.out", overwrite: "auto" });
+        if (orbCore)
+          gsap.fromTo(orbCore, { scale: 1.25 }, { scale: 1, duration: 0.3, ease: "power2.out", overwrite: "auto" });
+      }
+
+      function applySeg(idx) {
+        if (idx === cur) return;
+        var was = cur;
+        cur = idx;
+
+        if (idx <= 2) {
+          var s = SEGS[idx];
+          if (tokenEl) tokenEl.textContent = s.token;
+          if (aheadNum) aheadNum.textContent = s.ahead;
+          if (aheadText) aheadText.textContent = s.text;
+          if (orbCore) orbCore.textContent = s.core;
+          if (cursorNum) cursorNum.textContent = s.cursor;
+          if (cursorLabel) cursorLabel.textContent = "aap ka token";
+          setDots(s.dots);
+          if (youDot)
+            gsap.to(youDot, { autoAlpha: 0, scale: 0.4, duration: 0.25, overwrite: "auto" });
+          if (panel) panel.classList.remove("is-alert");
+          if (bubble)
+            gsap.to(bubble, {
+              autoAlpha: 0,
+              scale: 0.7,
+              y: 10,
+              duration: 0.3,
+              ease: "power2.in",
+              overwrite: "auto",
+            });
+          if (orb) setOrb(orb, "idle");
+          /* token slam on each swap (skip the initial set) */
+          if (was !== -1) popToken();
+        } else {
+          /* M-E-42 — the alert moment: token 0, bubble slams, panel
+             flashes, orb holds its alert pose, "you" joins the room. */
+          if (tokenEl) tokenEl.textContent = "0";
+          if (aheadNum) aheadNum.textContent = "0";
+          if (aheadText) aheadText.textContent = "log — sirf aap";
+          if (orbCore) orbCore.textContent = "YOUR TURN";
+          if (cursorNum) cursorNum.textContent = "#0";
+          if (cursorLabel) cursorLabel.textContent = "aap ki baari";
+          setDots(0);
+          if (panel) {
+            panel.classList.remove("is-alert");
+            void panel.offsetWidth; /* restart the flash animation */
+            panel.classList.add("is-alert");
+          }
+          if (bubble)
+            gsap.to(bubble, {
+              autoAlpha: 1,
+              scale: 1,
+              y: 0,
+              duration: 0.35,
+              ease: "back.out(2)",
+              overwrite: "auto",
+            });
+          if (youDot)
+            gsap.to(youDot, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(2.2)", overwrite: "auto" });
+          popToken();
+          if (orb) {
+            setOrb(orb, "alert");
+            var tilt = orb.querySelector("[data-orb-tilt]");
+            if (tilt)
+              gsap
+                .timeline()
+                .to(tilt, { y: -18, duration: 0.26, ease: "back.out(2)" })
+                .to(tilt, { y: 0, duration: 0.32, ease: "power1.inOut" });
+          }
+        }
+      }
+
+      /* ── The pin + scrub (M-P-40/M-P-41): ~150vh, bidirectional ── */
+      var tl = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: stage,
+          start: "top top",
+          end: "+=150%",
+          pin: true,
+          scrub: 0.6,
+          anticipatePin: 1,
+        },
+      });
+      /* The rail fills ink-700 → ink-200 (M-P-40). */
+      if (railFill) tl.to(railFill, { scaleX: 1, duration: 1 }, 0);
+      /* M-P-41 — the waiting room shuffles: three parallax layers, ±6px. */
+      var layerFront = section.querySelectorAll(".b4-wdot--front");
+      var layerMid = section.querySelectorAll(".b4-wdot--mid");
+      var layerBack = section.querySelectorAll(".b4-wdot--back");
+      if (layerFront.length) tl.to(layerFront, { x: 6, y: -3, duration: 1, stagger: 0.02 }, 0);
+      if (layerMid.length) tl.to(layerMid, { x: -6, y: 2, duration: 1, stagger: 0.02 }, 0);
+      if (layerBack.length) tl.to(layerBack, { x: 5, y: 3, duration: 1, stagger: 0.02 }, 0);
+
+      /* Segment swaps ride the timeline's own (smoothed) progress so the
+         token, rail and silhouettes never desync under scrub. The alert
+         threshold (0.98) is deliberately generous so fast scroll jumps
+         land the climax even when the scrub catch-up settles just shy of
+         the pin end. */
+      tl.eventCallback("onUpdate", function () {
+        var p = tl.progress();
+        applySeg(p < 0.34 ? 0 : p < 0.67 ? 1 : p < 0.98 ? 2 : 3);
+      });
+      applySeg(0);
+
+      /* M-P-43 — the handoff peel: after the unpin, the next section peels
+         the panel away (y -60, fade). Scrubbed, so scrolling back restores. */
+      gsap.to(panel, {
+        y: -60,
+        autoAlpha: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "bottom bottom",
+          end: "bottom 35%",
+          scrub: true,
+        },
+      });
+
+      /* I-C-42 — cursor counter badge: follows the pointer within the
+         pinned stage and syncs to the scrub value (desktop only; touch
+         never ships dead zones). Wired once so media re-entry never
+         stacks duplicate listeners. */
+      var finePointer4 = window.matchMedia("(hover: hover) and (pointer: fine)");
+      if (finePointer4.matches && cursorBadge && stage.getAttribute("data-cursor-wired") !== "1") {
+        stage.setAttribute("data-cursor-wired", "1");
+        var bx = gsap.quickTo(cursorBadge, "x", { duration: 0.35, ease: "power3.out" });
+        var by = gsap.quickTo(cursorBadge, "y", { duration: 0.35, ease: "power3.out" });
+        on2(stage, "pointerenter", function () {
+          if (!disposed) cursorBadge.classList.add("is-on");
+        });
+        on2(stage, "pointerleave", function () {
+          if (!disposed) cursorBadge.classList.remove("is-on");
+        });
+        on2(stage, "pointermove", function (e) {
+          if (disposed) return;
+          var r = panel.getBoundingClientRect();
+          bx(e.clientX - r.left + 18);
+          by(e.clientY - r.top + 20);
+        });
+      }
+    }
+
     /* Beats interactions — like the hero chips, these are interaction, not
        motion: they stay live in every media state (instant under RM). */
     function wireBeatInteractions() {
@@ -1038,6 +1310,88 @@
           });
         });
       });
+
+      /* I-T-30 — booking chips (beat 3): tap → selected → typing dots
+         (0.8s) → the booked ticket stamps in with quiet confetti + the
+         orb's alert-hop (O-30). Under reduced-motion the swap is instant
+         (B12 parity). Re-tapping another slot re-books — the ticket
+         re-stamps and the slot line + orb core update. */
+      gsap.utils.toArray("[data-beat3]").forEach(function (section) {
+        var chips = Array.prototype.slice.call(section.querySelectorAll("[data-b3-slot]"));
+        if (!chips.length) return;
+        var booked = section.querySelector("[data-b3-booked]");
+        var typing = section.querySelector("[data-b3-typing]");
+        var slotLine = section.querySelector("[data-b3-slotline]");
+        var orb = cameoOrb(section, "data-b3-orb");
+        var orbCore = orb ? orb.querySelector("[data-orb-core]") : null;
+        var orbLabel = orb ? orb.querySelector(".orb-core-label") : null;
+        var bits = Array.prototype.slice.call(section.querySelectorAll(".b3-conf"));
+
+        chips.forEach(function (chip) {
+          on2(chip, "click", function () {
+            if (chip.getAttribute("aria-pressed") === "true") return;
+            chips.forEach(function (c) {
+              c.setAttribute("aria-pressed", c === chip ? "true" : "false");
+            });
+            var line = chip.getAttribute("data-b3-line") || "";
+            var time = chip.getAttribute("data-b3-time") || "";
+            if (slotLine) slotLine.textContent = line;
+            if (orbCore) orbCore.textContent = time;
+            if (orbLabel) orbLabel.textContent = "booked slot";
+
+            if (reduceMQ.matches || !booked) {
+              /* Instant, no animation — content only (B12 parity). */
+              if (booked) {
+                booked.style.opacity = "1";
+                booked.style.visibility = "visible";
+              }
+              if (typing) typing.classList.remove("is-typing");
+              return;
+            }
+
+            if (typing) typing.classList.add("is-typing");
+            clearTimeout(b3TypingTimer);
+            b3TypingTimer = setTimeout(function () {
+              if (disposed) return;
+              if (typing) typing.classList.remove("is-typing");
+              /* I-T-30 finale — the ticket stamps in (scale 0.9→1 + rotate
+                 -2°→0, back.out(1.8)); O-30 orb alert-hop. */
+              gsap
+                .timeline()
+                .fromTo(
+                  booked,
+                  { autoAlpha: 0, scale: 0.92, rotation: -2 },
+                  { autoAlpha: 1, scale: 1, rotation: 0, duration: 0.5, ease: "back.out(1.8)" }
+                )
+                .call(
+                  function () {
+                    orbAlert(orb, orb && orb.querySelector("[data-orb-tilt]"));
+                  },
+                  null,
+                  0.18
+                );
+              /* M-L-31 — quiet confetti: six tiny squares drift up + fade,
+                 staggered (monochrome celebration, not confetti-noise). */
+              if (bits.length) {
+                gsap.fromTo(
+                  bits,
+                  { autoAlpha: 1, y: 12, rotation: 0 },
+                  {
+                    autoAlpha: 0,
+                    y: -48,
+                    x: function (i) { return i % 2 ? 10 : -10; },
+                    rotation: function (i) { return i % 2 ? 90 : -70; },
+                    duration: 1.2,
+                    stagger: 0.08,
+                    ease: "power1.out",
+                    delay: 0.12,
+                  }
+                );
+              }
+            }, 800);
+          });
+        });
+      });
     }
 
     /* B12+B13 — ONE gsap.matchMedia() owns every conditional builder.
@@ -1056,6 +1410,8 @@
       buildHeroV2();
       buildBeat1();
       buildBeat2();
+      buildBeat3();
+      buildBeat4();
       buildReveals();
       buildJourneyLanes();
       buildProductTilt();
@@ -1112,6 +1468,7 @@
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", positionOverlay);
       clearTimeout(overlayTimer);
+      clearTimeout(b3TypingTimer);
       gsap.defaults(prevDefaults);
       window.__atursevaAnimBooted = false;
       window.__atursevaAnimDispose = null;

@@ -1059,6 +1059,462 @@
   color: var(--color-ivory-50);
 }
 
+/* ════════════════════════════════════════════════════════════════════
+   BEATS 3–4 — "Aturseva ka din" (File 21 §3–§4, Phase 3)
+   Beat 3 BOOKING (ivory-100 stage): the chat that books the visit.
+   Beat 4 BAARI ⭐ (ink-950 stage): the pinned queue countdown — the hero
+   beat. Engine (aturseva-anim.js buildBeat3/buildBeat4) drives the motion;
+   beat 3's markup ships final state (RM/no-JS see the booked ticket), and
+   beat 4 ships a static 4-frame strip that the engine swaps for the pinned
+   stage when motion is allowed.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ── Beat 3 — BOOKING: doctor card, chat, chips, booked ticket ─── */
+.b3-panel { box-shadow: var(--shadow-soft); }
+
+/* M-E-30 — the doctor card (name-blocked; slides in first) */
+.b3-doc {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.85rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-ink-100);
+  background: var(--color-paper-50);
+}
+.b3-doc-avatar {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--color-ink-950);
+  color: var(--color-ivory-50);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+.b3-doc-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  flex: 1;
+}
+.b3-doc-name { margin: 0; font-weight: 700; font-size: 0.9rem; color: var(--color-ink-950); }
+.b3-doc-detail {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--color-ink-400);
+  font-variant-numeric: tabular-nums;
+}
+.b3-doc-badge {
+  flex: none;
+  padding: 0.3rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-ink-200);
+  background: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-ink-400);
+  white-space: nowrap;
+}
+
+/* The conversation thread — h2b grammar translated to the light stage */
+.b3-thread { display: flex; flex-direction: column; gap: 0.6rem; }
+.b3-b {
+  max-width: 88%;
+  padding: 0.6rem 0.9rem;
+  border-radius: 1.15rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+.b3-b p { margin: 0; }
+.b3-b--user {
+  align-self: flex-end;
+  background: var(--color-ink-950);
+  color: var(--color-ivory-50);
+  border-bottom-right-radius: 0.35rem;
+}
+.b3-b--bot {
+  align-self: flex-start;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  background: var(--color-paper-100);
+  border: 1px solid var(--color-ink-100);
+  color: var(--color-ink-800);
+  border-bottom-left-radius: 0.35rem;
+}
+.b3-typing { display: none; }
+.b3-typing.is-typing { display: flex; }
+
+/* I-T-30 — slot chips (≥44px; selected = brand-400 border) */
+.b3-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding-left: 2rem; /* aligns under the bot bubble's text (past its avatar) */
+}
+.b3-slot {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.12rem;
+  min-height: 56px;
+  min-width: 78px;
+  padding: 0.5rem 0.95rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-ink-200);
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.b3-slot:hover { border-color: var(--color-ink-400); transform: translateY(-2px); }
+.b3-slot:active { transform: scale(0.97); }
+.b3-slot:focus-visible { outline-offset: 2px; }
+.b3-slot[aria-pressed="true"] {
+  border-color: var(--color-brand-400);
+  background: var(--color-brand-50);
+  box-shadow: var(--shadow-soft);
+  cursor: default;
+}
+.b3-slot-day {
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-ink-400);
+}
+.b3-slot-time {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--color-ink-950);
+}
+
+/* The booked ticket — stamps in with back.out(1.8); side notches cut the
+   classic ticket silhouette into the white panel behind it. */
+.b3-booked {
+  position: relative;
+  border-radius: 1.25rem;
+  background: var(--color-ink-950);
+  color: var(--color-ivory-50);
+  padding: 1rem 1.15rem;
+  box-shadow: var(--shadow-lift);
+}
+.b3-booked::before,
+.b3-booked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff; /* the panel's own colour — the notch */
+  transform: translateY(-50%);
+}
+.b3-booked::before { left: -9px; }
+.b3-booked::after { right: -9px; }
+.b3-booked-main { display: flex; align-items: center; gap: 0.8rem; }
+.b3-booked-check {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--color-brand-400);
+  color: var(--color-ink-950);
+}
+.b3-booked-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: 0.01em;
+}
+.b3-booked-slot {
+  margin: 0.12rem 0 0;
+  font-size: 0.72rem;
+  color: var(--color-ink-300);
+  font-variant-numeric: tabular-nums;
+}
+.b3-booked-sub {
+  margin: 0.8rem 0 0;
+  padding-top: 0.8rem;
+  border-top: 1px dashed var(--color-ink-700);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-ivory-200);
+}
+
+/* M-L-31 — quiet confetti: six tiny ink squares above the ticket, engine
+   driven (drift up + fade, staggered). Hidden at rest by default. */
+.b3-conf {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: var(--color-ink-200);
+  opacity: 0;
+  pointer-events: none;
+}
+.b3-conf:nth-child(1) { left: 14%; top: -6px; background: var(--color-ink-300); }
+.b3-conf:nth-child(2) { left: 27%; top: -10px; width: 6px; height: 6px; }
+.b3-conf:nth-child(3) { left: 42%; top: -4px; background: var(--color-ink-300); }
+.b3-conf:nth-child(4) { left: 57%; top: -11px; width: 8px; height: 8px; }
+.b3-conf:nth-child(5) { left: 71%; top: -5px; background: var(--color-ink-300); }
+.b3-conf:nth-child(6) { left: 84%; top: -9px; width: 6px; height: 6px; }
+
+/* ── Beat 4 — BAARI: static strip + pinned queue panel ─────────── */
+
+/* The static 4-frame strip (RM / no-JS / crawlers) */
+.b4-frames {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.b4-frame {
+  position: relative;
+  border-radius: 1.25rem;
+  border: 1px solid var(--color-ink-800);
+  background: rgb(25 27 29 / 0.55);
+  padding: 1.5rem 1rem 1.25rem;
+  text-align: center;
+}
+.b4-frame-big {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 3.5vw, 2.3rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.b4-frame-small { margin: 0.55rem 0 0; font-size: 0.72rem; color: var(--color-ink-300); }
+.b4-frame--hot {
+  background: var(--color-paper-50);
+  border-color: var(--color-paper-300);
+}
+.b4-frame--hot .b4-frame-big { font-style: italic; color: var(--color-ink-950); }
+.b4-frame--hot .b4-frame-small { color: var(--color-ink-500); }
+@media (min-width: 640px) {
+  .b4-frames { grid-template-columns: repeat(4, 1fr); gap: 1.6rem; }
+  .b4-frame:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    right: -1.3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-ink-600);
+    font-size: 1rem;
+  }
+}
+
+/* The pinned stage — hidden until the engine reveals it (motion users);
+   under reduced-motion / no-JS the static strip above IS the beat. */
+.b4-stage { display: none; }
+
+/* The queue panel (glass on ink-950) */
+.b4-panel { box-shadow: var(--shadow-lift); }
+/* M-E-42 — the alert flash: overlay pulses once when .is-alert lands; the
+   border stays lifted while the moment holds (scrub-bidirectional). */
+.b4-panel::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: var(--color-ink-800);
+  opacity: 0;
+  pointer-events: none;
+}
+.b4-panel.is-alert { border-color: var(--color-ink-500); }
+.b4-panel.is-alert::after { animation: b4-flash 0.9s ease-out 1; }
+@keyframes b4-flash {
+  from { opacity: 0.55; }
+  to { opacity: 0; }
+}
+
+/* Token row — orb mirrors the live token beside the big number */
+.b4-tokenrow { display: flex; align-items: center; gap: 1.4rem; }
+.b4-nowlabel {
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-ink-400);
+}
+.b4-token {
+  margin: 0.25rem 0 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(3.2rem, 9vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.b4-ahead { margin: 0.5rem 0 0; font-size: 0.82rem; color: var(--color-ink-300); }
+.b4-aheadnum {
+  font-weight: 800;
+  color: var(--color-ivory-100);
+  font-variant-numeric: tabular-nums;
+}
+/* Mini orb inside the panel: core num sized so "#12" fits, and shrinks
+   further for the YOUR TURN flash at alert. */
+.b4-orb .orb-core-num { font-size: clamp(1.05rem, 3vw, 1.45rem); white-space: nowrap; }
+.b4-orb.orb--alert .orb-core-num { font-size: 0.72rem; letter-spacing: 0.12em; }
+
+/* M-P-41 — waiting-room silhouettes: anonymous dots, three depth layers */
+.b4-waiting {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 0.25rem 0.25rem;
+}
+.b4-wdot { border-radius: 999px; will-change: transform; }
+.b4-wdot--front {
+  width: 18px;
+  height: 18px;
+  background: var(--color-ink-500);
+  box-shadow: inset 0 1.5px 3px rgb(234 234 235 / 0.22);
+}
+.b4-wdot--mid { width: 13px; height: 13px; background: var(--color-ink-700); }
+.b4-wdot--back {
+  width: 10px;
+  height: 10px;
+  background: var(--color-ink-800);
+  border: 1px solid var(--color-ink-700);
+}
+/* The 13th dot — "you" — joins at the alert (engine pops it in) */
+.b4-wdot--you {
+  width: 20px;
+  height: 20px;
+  background: var(--color-paper-50);
+  box-shadow: 0 0 0 4px rgb(250 250 250 / 0.16);
+  opacity: 0;
+}
+.b4-waiting-note {
+  width: 100%;
+  margin: 0.5rem 0 0;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink-500);
+}
+
+/* M-P-40 — the progress rail (fills ink-700 → ink-200 with the scrub) */
+.b4-rail-track {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-ink-800);
+  overflow: hidden;
+}
+.b4-rail-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(to right, var(--color-ink-700), var(--color-ink-200));
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+.b4-rail-ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.45rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-500);
+  letter-spacing: 0.06em;
+}
+.b4-rail-end {
+  color: var(--color-ink-200);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+/* M-E-42 — the alert bubble: paper on ink, the one bright element at the
+   climax. Engine owns visibility (autoAlpha); CSS keeps it hidden at rest. */
+.b4-bubble {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 1.1rem;
+  padding: 0.7rem 1.05rem;
+  border-radius: 1rem;
+  border-bottom-left-radius: 0.35rem;
+  background: var(--color-paper-50);
+  color: var(--color-ink-950);
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-lift);
+  visibility: hidden;
+  opacity: 0;
+}
+.b4-bubble p { margin: 0; }
+.b4-bubble strong {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+/* I-C-42 — cursor counter badge: follows the pointer within the pinned
+   stage, syncs to the scrub value (desktop only; engine wires it). */
+.b4-cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  background: rgb(10 10 11 / 0.92);
+  border: 1px solid var(--color-ink-600);
+  color: var(--color-paper-50);
+  pointer-events: none;
+  opacity: 0;
+  scale: 0.9;
+  transition: opacity 0.2s ease, scale 0.2s ease;
+  will-change: transform;
+}
+.b4-cursor.is-on { opacity: 1; scale: 1; }
+.b4-cursor-num {
+  font-size: 0.85rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.b4-cursor-label {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-300);
+  line-height: 1;
+  white-space: nowrap;
+}
+@media (hover: none), (pointer: coarse) {
+  .b4-cursor { display: none; }
+}
+
 /* Mobile: beat rows stay comfortable at 320–390px */
 @media (max-width: 767px) {
   .b1-row { grid-template-columns: auto 1fr; }
@@ -1066,5 +1522,9 @@
   .b2-row { flex-wrap: wrap; }
   .b2-confirm { width: 100%; }
   .b2-cursor { display: none; }
+  .b3-slots { padding-left: 0; }
+  .b3-doc-badge { display: none; }
+  .b4-cursor { display: none; }
+  .b4-tokenrow { gap: 1rem; }
+  .b4-tokenrow > div:first-child { width: 96px; }
 }
-
