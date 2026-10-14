@@ -357,6 +357,7 @@
     /* ───────────────────────── hero intro ───────────────────────── */
     function buildHero() {
       var fades = gsap.utils.toArray("[data-hero-fade]");
+      if (!fades.length) return; /* legacy hero absent (hero v2 active) */
       var journey = document.getElementById("hero-journey");
       gsap.set(fades, { autoAlpha: 0, y: 26 });
       var tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -481,6 +482,305 @@
       });
     }
 
+    /* ─────────────── HERO v2 — "Aturseva ka din" (Files 18/20) ───────────────
+       Phase 0/1 primitives: entrance choreography (M-E-01…06), chat replay,
+       suggestion chips with canned product-true replies (I-T-01), the orb
+       state machine (O-01…05), the cursor layer (I-C-03/04/05) and the
+       hero parallax (M-P-01). Markup ships in its final state — this engine
+       only enhances, so crawlers / no-JS / reduced-motion see everything. */
+
+    var ORB_STATE_CLASSES = ["orb--idle", "orb--listening", "orb--speaking", "orb--alert", "orb--night"];
+    var hero2Listeners = [];
+
+    function on2(el, type, fn, opts) {
+      el.addEventListener(type, fn, opts);
+      hero2Listeners.push({ el: el, type: type, fn: fn, opts: opts });
+    }
+
+    function setOrb(orb, state) {
+      if (!orb) return;
+      ORB_STATE_CLASSES.forEach(function (c) { orb.classList.remove(c); });
+      orb.classList.add("orb--" + state);
+    }
+
+    function orbAlert(orb, tilt) {
+      if (!orb || !tilt) return;
+      setOrb(orb, "alert");
+      gsap
+        .timeline()
+        .to(tilt, { y: -24, duration: 0.28, ease: "back.out(2)" })
+        .to(tilt, { y: 0, scaleY: 0.92, duration: 0.2, ease: "power1.in" })
+        .to(tilt, { scaleY: 1, duration: 0.2, ease: "power1.out" });
+      setTimeout(function () {
+        if (disposed) return;
+        if (orb.classList.contains("orb--alert")) setOrb(orb, "idle");
+      }, 1000);
+    }
+
+    /* Split a bot paragraph into word spans for the stagger reveal. */
+    function splitWords(p) {
+      if (!p || p.getAttribute("data-split") === "1") return [];
+      var words = (p.textContent || "").split(/\s+/).filter(Boolean);
+      p.innerHTML = words
+        .map(function (w) { return '<span class="h2b-w">' + w + "</span>"; })
+        .join(" ");
+      p.setAttribute("data-split", "1");
+      return Array.prototype.slice.call(p.querySelectorAll(".h2b-w"));
+    }
+
+    function appendBubble(thread, kind, text) {
+      var el = document.createElement("div");
+      el.className = "h2b h2b--" + kind + " h2b-extra";
+      if (kind === "bot") {
+        var av = document.createElement("span");
+        av.className = "h2b-avatar";
+        av.setAttribute("aria-hidden", "true");
+        var pEl = document.createElement("p");
+        pEl.textContent = text;
+        el.appendChild(av);
+        el.appendChild(pEl);
+      } else {
+        var pU = document.createElement("p");
+        pU.textContent = text;
+        el.appendChild(pU);
+      }
+      thread.appendChild(el);
+      return el;
+    }
+
+    function trimExtras(thread) {
+      var extras = thread.querySelectorAll(".h2b-extra");
+      while (extras.length > 4) {
+        thread.removeChild(extras[0]);
+        extras = thread.querySelectorAll(".h2b-extra");
+      }
+    }
+
+    function scrollThread(thread) {
+      thread.scrollTo({
+        top: thread.scrollHeight,
+        behavior: reduceMQ.matches ? "auto" : "smooth",
+      });
+    }
+
+    /* Chip taps — interaction, so these are attached OUTSIDE the media
+       context: they work under reduced-motion too (instant replies). */
+    function wireHero2Chips() {
+      var orb = document.querySelector("[data-orb]");
+      var thread = document.querySelector("[data-hero2-thread]");
+      var chips = document.querySelectorAll(".hero2-chip");
+      if (!thread || !chips.length) return;
+
+      chips.forEach(function (chip) {
+        on2(chip, "click", function () {
+          if (chip.disabled) return;
+          chip.disabled = true;
+          setTimeout(function () { chip.disabled = false; }, 2600);
+
+          var reply = chip.getAttribute("data-chip-reply") || "";
+          var label = (chip.textContent || "").trim();
+          trimExtras(thread);
+
+          var userB = appendBubble(thread, "user", label);
+          var typingEl = thread.querySelector("[data-h2b-typing]");
+          var botB = appendBubble(thread, "bot", reply);
+
+          if (reduceMQ.matches) {
+            /* Instant, no animation — content only (B12 parity). */
+            typingEl.classList.remove("is-typing");
+            scrollThread(thread);
+            return;
+          }
+
+          var words = splitWords(botB.querySelector("p"));
+          gsap.set([userB, botB], { autoAlpha: 0, y: 12 });
+          gsap.set(words, { autoAlpha: 0, y: 6 });
+          if (typingEl) typingEl.classList.add("is-typing");
+          if (orb) setOrb(orb, "speaking");
+          scrollThread(thread);
+
+          gsap
+            .timeline()
+            .to(userB, { autoAlpha: 1, y: 0, duration: 0.35, ease: "power2.out" }, 0.05)
+            .call(function () {
+              if (typingEl) typingEl.classList.remove("is-typing");
+            }, null, 0.85)
+            .to(botB, { autoAlpha: 1, y: 0, duration: 0.35, ease: "power2.out" }, 0.95)
+            .to(words, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.04 }, 1.05)
+            .call(function () { orbAlert(orb, orb && orb.querySelector("[data-orb-tilt]")); }, null, 1.9)
+            .call(function () {
+              if (orb && orb.classList.contains("orb--alert")) setOrb(orb, "idle");
+            }, null, 3.2);
+        });
+      });
+    }
+
+    function buildHeroV2() {
+      var section = document.querySelector("[data-hero2]");
+      if (!section) return;
+
+      var orb = section.querySelector("[data-orb]");
+      var tilt = section.querySelector("[data-orb-tilt]");
+      var spot = section.querySelector("[data-hero2-spot]");
+      var dotsZone = section.querySelector(".hero2-dots-zone");
+      var thread = section.querySelector("[data-hero2-thread]");
+      var typingEl = thread ? thread.querySelector("[data-h2b-typing]") : null;
+      var botBubble = thread ? thread.querySelector("[data-h2b-bot]") : null;
+      var userBubble = thread ? thread.querySelector("[data-h2b-user]") : null;
+      var replayBtn = section.querySelector("[data-hero2-replay]");
+      var leftStack = section.querySelector("[data-hero2-left]");
+      var rightCluster = section.querySelector("[data-hero2-right]");
+
+      var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+      /* ── Entrance choreography (M-E-01…06, ≤2.2s total) ── */
+      var fades = gsap.utils.toArray("[data-hero2-fade]", section);
+      var h1lines = gsap.utils.toArray("[data-hero2-h1line]", section);
+      var chips = gsap.utils.toArray(".hero2-chip", section);
+      var dots = section.querySelector(".hero2-dots");
+
+      if (typingEl) typingEl.classList.remove("is-typing");
+
+      gsap.set(fades, { autoAlpha: 0, y: 24 });
+      gsap.set(h1lines, { autoAlpha: 0, y: 24 });
+      gsap.set(chips, { scale: 0.8, autoAlpha: 0 });
+      if (orb) gsap.set(orb, { scale: 0.6, autoAlpha: 0 });
+
+      var tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+      if (dots) tl.fromTo(dots, { autoAlpha: 0 }, { autoAlpha: 0.4, duration: 0.5 }, 0);
+      tl.to(h1lines, { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.12 }, 0.15);
+      tl.to(fades, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.1 }, 0.45);
+      if (orb) tl.to(orb, { scale: 1, autoAlpha: 1, duration: 0.7, ease: "back.out(1.4)" }, 0.55);
+      tl.to(chips, { scale: 1, autoAlpha: 1, duration: 0.4, ease: "back.out(2)", stagger: 0.08 }, 1.15);
+
+      /* ── Chat replay (M-E-05): re-plays the completed conversation ── */
+      function playReplay() {
+        if (disposed || !thread || !userBubble || !botBubble) return;
+        if (typingEl) typingEl.classList.remove("is-typing");
+        var words = splitWords(botBubble.querySelector("[data-h2b-bottext]") || botBubble.querySelector("p"));
+        gsap.set([userBubble, botBubble], { autoAlpha: 0, y: 14 });
+        if (words.length) gsap.set(words, { autoAlpha: 0, y: 6 });
+        trimExtras(thread);
+
+        gsap
+          .timeline()
+          .to(userBubble, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" }, 0.1)
+          .call(function () {
+            if (typingEl) typingEl.classList.add("is-typing");
+            if (orb) setOrb(orb, "speaking");
+          }, null, 0.75)
+          .call(function () {
+            if (typingEl) typingEl.classList.remove("is-typing");
+          }, null, 1.7)
+          .to(botBubble, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" }, 1.75)
+          .to(words, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.045 }, 1.85)
+          .call(function () { orbAlert(orb, tilt); }, null, 2.7)
+          .call(function () {
+            if (orb && orb.classList.contains("orb--alert")) setOrb(orb, "idle");
+          }, null, 4.0);
+      }
+      /* First replay starts just after the entrance settles. */
+      setTimeout(playReplay, 1700);
+      if (replayBtn) {
+        on2(replayBtn, "click", function () {
+          if (reduceMQ.matches) return; /* already complete in markup */
+          playReplay();
+        });
+      }
+
+      /* ── Cursor layer (desktop only; touch never ships dead zones) ── */
+      if (finePointer.matches) {
+        /* I-C-03 spotlight — CSS vars drive the mask; rAF-throttled.
+           The zone itself is pointer-events:none, so the hover state is
+           toggled here from the section's own enter/leave. */
+        if (dotsZone && spot) {
+          on2(section, "pointerenter", function () {
+            if (!disposed) dotsZone.classList.add("is-hover");
+          });
+          on2(section, "pointerleave", function () {
+            if (!disposed) dotsZone.classList.remove("is-hover");
+          });
+          var spotTick = false;
+          on2(dotsZone.ownerDocument, "pointermove", function (e) {
+            if (spotTick || disposed) return;
+            spotTick = true;
+            requestAnimationFrame(function () {
+              spotTick = false;
+              var r = dotsZone.getBoundingClientRect();
+              if (!r.width) return;
+              dotsZone.style.setProperty("--mx", e.clientX - r.left + "px");
+              dotsZone.style.setProperty("--my", e.clientY - r.top + "px");
+            });
+          });
+        }
+
+        /* I-C-05 orb listening tilt (max ±8°). */
+        if (orb && tilt) {
+          var qx = gsap.quickTo(tilt, "rotationX", { duration: 0.6, ease: "power2.out" });
+          var qy = gsap.quickTo(tilt, "rotationY", { duration: 0.6, ease: "power2.out" });
+          on2(section, "pointermove", function (e) {
+            if (disposed) return;
+            var r = section.getBoundingClientRect();
+            var dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
+            var dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
+            qy(Math.max(-1, Math.min(1, dx)) * 8);
+            qx(Math.max(-1, Math.min(1, -dy)) * 8);
+            if (orb.classList.contains("orb--idle")) setOrb(orb, "listening");
+          });
+          on2(section, "pointerleave", function () {
+            if (disposed) return;
+            qx(0);
+            qy(0);
+            if (orb.classList.contains("orb--listening")) setOrb(orb, "idle");
+          });
+        }
+
+        /* I-C-04 magnetic CTAs (≤10px drift, spring return). */
+        gsap.utils.toArray("[data-magnetic]", section).forEach(function (el) {
+          var mx = gsap.quickTo(el, "x", { duration: 0.4, ease: "power3.out" });
+          var my = gsap.quickTo(el, "y", { duration: 0.4, ease: "power3.out" });
+          on2(el, "pointermove", function (e) {
+            if (disposed) return;
+            var r = el.getBoundingClientRect();
+            var dx = e.clientX - (r.left + r.width / 2);
+            var dy = e.clientY - (r.top + r.height / 2);
+            mx(Math.max(-10, Math.min(10, dx * 0.22)));
+            my(Math.max(-10, Math.min(10, dy * 0.22)));
+          });
+          on2(el, "pointerleave", function () {
+            if (disposed) return;
+            gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.4)" });
+          });
+        });
+      }
+
+      /* ── Parallax scroll-away (M-P-01, transforms only, no CLS) ── */
+      if (leftStack && rightCluster) {
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: section,
+              start: "top top",
+              end: "bottom top",
+              scrub: 0.5,
+            },
+          })
+          .to(leftStack, { y: "-8%", autoAlpha: 0 }, 0)
+          .to(rightCluster, { y: "6%", autoAlpha: 0 }, 0);
+        if (orb) {
+          gsap.to(orb, {
+            scale: 0.85,
+            scrollTrigger: {
+              trigger: section,
+              start: "top top",
+              end: "bottom top",
+              scrub: 0.5,
+            },
+          });
+        }
+      }
+    }
+
     /* B12+B13 — ONE gsap.matchMedia() owns every conditional builder.
        GSAP re-evaluates the conditions live when the media state changes
        while the page is mounted (reverting the old context and running the
@@ -494,11 +794,16 @@
     mm.add("(prefers-reduced-motion: no-preference)", function () {
       if (disposed) return;
       buildHero();
+      buildHeroV2();
       buildReveals();
       buildJourneyLanes();
       buildProductTilt();
       buildSevika();
     });
+
+    /* HERO v2 chips are interaction, not motion — they stay live in every
+       media state (instant replies under reduced-motion, B12 parity). */
+    wireHero2Chips();
 
     /* Connection — fully media-conditioned: static finale under reduced
        motion, pinned scrub on desktop, choreographed auto-play on mobile.
@@ -537,6 +842,10 @@
       ScrollTrigger.getAll().forEach(function (st) {
         st.kill();
       });
+      hero2Listeners.forEach(function (L) {
+        L.el.removeEventListener(L.type, L.fn, L.opts);
+      });
+      hero2Listeners.length = 0;
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", positionOverlay);
       clearTimeout(overlayTimer);

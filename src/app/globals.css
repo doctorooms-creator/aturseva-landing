@@ -344,3 +344,308 @@
     box-shadow: 0 1px 0 rgb(255 255 255 / 0.08), 0 12px 40px -18px rgb(0 0 0 / 0.6);
   }
 }
+
+/* ════════════════════════════════════════════════════════════════════
+   HERO v2 — "Aturseva ka din" (Files 18/20; Phase 0/1 primitives)
+   All values token-driven (File 05 §4 monochrome lock). The vanilla
+   engine (aturseva-anim.js buildHeroV2) drives states/replay/cursor.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ── The Living State Orb (File 20 §3) ──────────────────────────── */
+.orb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+.orb--hero { max-width: clamp(220px, 34vw, 380px); }
+.orb--mini { max-width: 140px; }
+
+.orb-bloom {
+  position: absolute; inset: -14%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(77 83 86 / 0.28) 0%,   /* ink-500 @ 28% */
+    rgb(25 27 29 / 0.10) 55%,  /* ink-800 @ 10% */
+    transparent 72%
+  );
+  pointer-events: none;
+}
+
+.orb-tilt-perspective {
+  width: 100%;
+  aspect-ratio: 1;
+  perspective: 900px;
+}
+.orb-tilt {
+  position: absolute; inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.orb-body {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 28%, var(--color-ink-500), var(--color-ink-800) 46%, var(--color-ink-950) 80%),
+    var(--color-ink-900);
+  box-shadow:
+    inset 0 2px 6px rgb(234 234 235 / 0.10),   /* paper-200 specular hint */
+    inset 0 -18px 44px rgb(10 10 11 / 0.55),
+    0 24px 64px -20px rgb(10 10 11 / 0.7);
+}
+.orb--idle .orb-body { animation: orb-breathe 4s ease-in-out infinite; }
+.orb--night { filter: brightness(0.4); }
+.orb--night .orb-body { animation: orb-breathe 8s ease-in-out infinite; }
+
+@keyframes orb-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+.orb-rim {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  transform: scale(0.92);
+  pointer-events: none;
+}
+
+.orb-core {
+  position: absolute; left: 50%; top: 50%;
+  translate: -50% -50%;
+  width: 46%; aspect-ratio: 1;
+  border-radius: 50%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 0.15em;
+  background: radial-gradient(circle at 50% 38%, rgb(25 27 29 / 0.92), var(--color-ink-950) 78%);
+  border: 1px solid var(--color-ink-700);
+  box-shadow:
+    inset 0 4px 18px rgb(10 10 11 / 0.8),
+    0 0 0 1px rgb(10 10 11 / 0.4);
+}
+.orb-core-num {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 4.2vw, 2.4rem);
+  line-height: 1;
+  color: var(--color-ivory-100);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.orb-core-label {
+  font-size: clamp(0.5rem, 1.1vw, 0.625rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: var(--color-ink-300);
+}
+/* Alert flash — the core blinks the state twice (0.9s, File 20 §3) */
+.orb--alert .orb-core { animation: orb-core-flash 0.9s steps(1, jump-none) 1; }
+@keyframes orb-core-flash {
+  0%   { opacity: 1; }
+  20%  { opacity: 0.15; }
+  40%  { opacity: 1; }
+  60%  { opacity: 0.15; }
+  100% { opacity: 1; }
+}
+
+/* Speaking ripples (visible only while orb--speaking) */
+.orb-rings { position: absolute; inset: 0; pointer-events: none; display: none; }
+.orb--speaking .orb-rings { display: block; }
+.orb-ring {
+  position: absolute; inset: 4%;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-ink-200);
+  opacity: 0;
+  animation: pulse-ring 1.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+.orb-ring:nth-child(2) { animation-delay: 0.15s; }
+.orb-ring:nth-child(3) { animation-delay: 0.3s; }
+
+.orb-shadow {
+  position: absolute; left: 50%; bottom: -7%;
+  translate: -50% 0;
+  width: 64%; height: 9%;
+  border-radius: 50%;
+  background: rgb(10 10 11 / 0.35);
+  filter: blur(14px);
+  pointer-events: none;
+}
+
+/* Mini orb-dot (chat header status) */
+.orb-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--color-ink-400), var(--color-ink-700));
+  box-shadow: 0 0 0 3px rgb(77 83 86 / 0.25);
+}
+
+/* ── Hero v2: dot-grid backdrop + spotlight (I-C-03, File 20 §7) ── */
+.hero2-dots-zone { pointer-events: none; }
+.hero2-dots {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, var(--color-ink-600) 1.1px, transparent 1.3px);
+  background-size: 24px 24px;
+  opacity: 0.4;
+}
+.hero2-dots-hi {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, var(--color-brand-300) 1.3px, transparent 1.5px);
+  background-size: 24px 24px;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  -webkit-mask-image: radial-gradient(circle 240px at var(--mx, 50%) var(--my, 42%), black 0%, transparent 100%);
+  mask-image: radial-gradient(circle 240px at var(--mx, 50%) var(--my, 42%), black 0%, transparent 100%);
+}
+/* The zone is pointer-events:none (decorative backdrop, never blocks
+   clicks), so :hover can never fire on it — the engine toggles .is-hover
+   from the section's own pointerenter/leave instead (I-C-03). */
+.hero2-dots-zone.is-hover .hero2-dots-hi { opacity: 0.85; }
+
+/* ── Hero v2: chat replay (File 20 §4) ───────────────────────────── */
+.hero2-chat { box-shadow: var(--shadow-lift); }
+.hero2-replay {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  min-height: 44px; padding: 0 0.75rem;
+  border-radius: 999px;
+  font-size: 0.7rem; font-weight: 700;
+  color: var(--color-ink-300);
+  border: 1px solid var(--color-ink-700);
+  background: rgb(16 17 19 / 0.5);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  cursor: pointer;
+}
+.hero2-replay:hover { color: var(--color-ivory-100); border-color: var(--color-ink-500); }
+.hero2-replay:focus-visible { outline-offset: 2px; }
+
+.hero2-thread {
+  display: flex; flex-direction: column; gap: 0.6rem;
+  padding-right: 0.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-ink-700) transparent;
+}
+.hero2-thread::-webkit-scrollbar { width: 5px; }
+.hero2-thread::-webkit-scrollbar-thumb { background: var(--color-ink-700); border-radius: 999px; }
+.hero2-thread::-webkit-scrollbar-track { background: transparent; }
+
+/* Bubbles */
+.h2b {
+  max-width: 88%;
+  padding: 0.6rem 0.9rem;
+  border-radius: 1.15rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+.h2b p { margin: 0; }
+.h2b--user {
+  align-self: flex-end;
+  background: var(--color-ink-700);
+  color: var(--color-ivory-50);
+  border-bottom-right-radius: 0.35rem;
+}
+.h2b--bot {
+  align-self: flex-start;
+  display: flex; align-items: flex-start; gap: 0.5rem;
+  background: rgb(255 255 255 / 0.06);
+  border: 1px solid rgb(255 255 255 / 0.08);
+  color: var(--color-ivory-100);
+  border-bottom-left-radius: 0.35rem;
+}
+.h2b-avatar {
+  flex: none;
+  width: 22px; height: 22px; margin-top: 2px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 28%, var(--color-ink-500), var(--color-ink-800) 50%, var(--color-ink-950) 82%);
+  box-shadow: inset 0 1px 2px rgb(234 234 235 / 0.18);
+}
+.h2b--typing { display: none; }
+.h2b--typing.is-typing { display: flex; }
+.h2b-dots { display: inline-flex; gap: 4px; padding: 6px 2px; }
+.h2b-dots span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--color-ink-300);
+  animation: blink 1.2s ease-in-out infinite;
+}
+.h2b-dots span:nth-child(2) { animation-delay: 0.18s; }
+.h2b-dots span:nth-child(3) { animation-delay: 0.36s; }
+/* Word-stagger reveal for bot replies (engine splits into .h2b-w spans) */
+.h2b-w { display: inline-block; }
+
+/* ── Hero v2: suggestion chips (I-T-01, File 20 §5) ──────────────── */
+.hero2-chip {
+  min-height: 44px;
+  padding: 0 1rem;
+  border-radius: 999px;
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--color-ivory-200);
+  background: var(--color-ink-800);
+  border: 1px solid var(--color-ink-700);
+  transition: border-color 0.2s, color 0.2s, transform 0.2s, background 0.2s;
+  cursor: pointer;
+}
+.hero2-chip:hover {
+  border-color: var(--color-ink-200);
+  color: var(--color-ivory-50);
+  transform: translateY(-2px);
+}
+.hero2-chip:active { transform: scale(0.97); }
+.hero2-chip:focus-visible { outline-offset: 2px; }
+.hero2-chip[aria-pressed="true"] {
+  border-color: var(--color-brand-400);
+  color: var(--color-ivory-50);
+}
+.hero2-chip:disabled { opacity: 0.5; cursor: default; transform: none; }
+
+/* ── Hero v2: scroll cue + arrow micro-follow (I-C-06) ───────────── */
+.hero2-scrollcue {
+  display: block;
+  width: 26px; height: 42px;
+  border: 2px solid var(--color-ink-600);
+  border-radius: 999px;
+  position: relative;
+}
+.hero2-scrollcue::after {
+  content: "";
+  position: absolute; left: 50%; top: 7px;
+  width: 4px; height: 8px;
+  translate: -50% 0;
+  border-radius: 999px;
+  background: var(--color-ink-300);
+  animation: hero2-cue 1.8s ease-in-out infinite;
+}
+@keyframes hero2-cue {
+  0%, 100% { opacity: 0.2; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(8px); }
+}
+@keyframes hero2-arrow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+/* Cursor-follow contextual label (I-C-01, File 22 §2) — desktop only */
+.cursor-badge {
+  position: fixed; left: 0; top: 0;
+  z-index: 90;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  background: rgb(10 10 11 / 0.92);
+  border: 1px solid var(--color-ink-600);
+  color: var(--color-paper-50);
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  translate: 10px 14px;
+  transition: opacity 0.2s ease;
+  will-change: transform;
+}
+.cursor-badge.is-on { opacity: 1; }
+
+/* Mobile: orb smaller, conversation-first ordering is via Tailwind order */
+@media (max-width: 767px) {
+  .hero2-chat { border-radius: 1.25rem; }
+  .h2b { font-size: 0.82rem; }
+}
