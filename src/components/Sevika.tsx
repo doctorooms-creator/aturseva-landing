@@ -1,5 +1,8 @@
 /**
- * §5 — Sevika: continuous, doctor-approved care after the visit.
+ * §5 — Continuous care after the visit (formerly the "Sevika" section —
+ * renamed per File 18 §1 name lock: ONE name in the entire system;
+ * the assistant IS Aturseva, Alexa/Siri pattern. Section retires at
+ * Phase 7 with the rest of the old narrative).
  * Philosophy: "Aturseva ne hamara saath diya." — support, never substitute.
  */
 const THREAD = [
@@ -42,11 +45,11 @@ export function Sevika() {
         <div>
           <p className="eyebrow text-gold-400" data-reveal>Continuous care</p>
           <h2 className="mt-4 font-display text-4xl font-semibold leading-tight tracking-tight text-ivory-50 sm:text-5xl" data-reveal>
-            Sevika stays,{" "}
+            Aturseva stays,{" "}
             <span className="italic text-brand-200">long after the visit ends.</span>
           </h2>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-ink-200 sm:text-lg" data-reveal>
-            Sevika is Aturseva&apos;s caring assistant. She carries reminders,
+            Aturseva is the caring assistant. She carries reminders,
             queue updates, and follow-up nudges to the patient — each one{" "}
             <strong className="font-bold text-ivory-100">
               approved by the doctor first
@@ -90,7 +93,7 @@ export function Sevika() {
             the thread’s stagger scrub and the timeline line never touch it. */}
         <p className="rep-label mb-7" data-reveal>
           <span className="rep-dot" aria-hidden="true" />
-          Illustrative Sevika conversation — representative preview
+          Illustrative Aturseva conversation — representative preview
         </p>
 
         {/* Message thread */}

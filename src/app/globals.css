@@ -649,3 +649,422 @@
   .hero2-chat { border-radius: 1.25rem; }
   .h2b { font-size: 0.82rem; }
 }
+
+/* ════════════════════════════════════════════════════════════════════
+   BEATS 1–2 — "Aturseva ka din" (File 21 §1–§2, File 19 Phase 2)
+
+   Beat 1 SUBAH (ivory stage): dose timeline, reminder bubble, adherence
+   flip chips. Beat 2 Rx PHOTO (ink stage): CSS-composed prescription
+   photo, DRAFT rows, confirm rail, contextual cursor label (I-C-21).
+   All values token-driven (File 05 §4 monochrome lock). The vanilla
+   engine (aturseva-anim.js buildBeat1/buildBeat2) drives the motion;
+   markup ships final state so RM/no-JS see the complete beat.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ── Shared beat grammar: kicker + headline mask-reveal ─────────── */
+.beat-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-ink-200);
+  background: rgb(255 255 255 / 0.7);
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--color-ink-500);
+}
+.beat-kicker--dark {
+  border-color: rgb(234 234 235 / 0.16);
+  background: rgb(25 27 29 / 0.55);
+  color: var(--color-ink-300);
+}
+/* Headline word masks — the engine splits [data-line] text into these */
+.beat-w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.beat-wi { display: inline-block; will-change: transform; }
+
+/* ── Orb cameo (120px) + scanning state (O-10 / O-20) ───────────── */
+.orb--cameo { max-width: 120px; }
+.orb--cameo .orb-core-num {
+  font-size: clamp(0.95rem, 2.6vw, 1.3rem);
+}
+.orb--cameo .orb-core-label {
+  font-size: 0.42rem;
+  letter-spacing: 0.18em;
+}
+.orb-core { overflow: hidden; }
+/* Scan-line sweeps the core (0.6s × 2 passes while rows generate) */
+.orb--scanning .orb-core::after {
+  content: "";
+  position: absolute;
+  left: 4%; right: 4%; top: 0;
+  height: 16%;
+  border-radius: 999px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(234 234 235 / 0.4),
+    transparent
+  );
+  animation: orb-scan 0.6s linear 2;
+  pointer-events: none;
+}
+@keyframes orb-scan {
+  from { transform: translateY(-130%); }
+  to   { transform: translateY(600%); }
+}
+
+/* ── Beat 1 — SUBAH: the dose timeline card ─────────────────────── */
+.b1-card { box-shadow: var(--shadow-soft); }
+.b1-schedule-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-gold-400);
+  background: rgb(255 255 255 / 0.65);
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-ink-600);
+}
+/* M-L-10 — reminder bubble (Aturseva's voice, ink on ivory). Left-aligned
+   with her avatar dot — chat grammar, keeps the orb's corner clear. */
+.b1-bubble {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.65rem 1rem;
+  border-radius: 1rem;
+  border-bottom-left-radius: 0.35rem;
+  background: var(--color-ink-950);
+  color: var(--color-ivory-50);
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-lift);
+}
+.b1-bubble p { margin: 0; }
+/* Dose rows */
+.b1-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.8rem 0.9rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-ink-100);
+  background: var(--color-paper-50);
+}
+.b1-row--now {
+  border-color: var(--color-brand-400);
+  background: var(--color-brand-50);
+}
+.b1-time {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-ink-200);
+  background: #fff;
+  color: var(--color-ink-700);
+}
+.b1-row--now .b1-time {
+  background: var(--color-ink-950);
+  border-color: var(--color-ink-950);
+  color: var(--color-ivory-50);
+}
+.b1-med {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.b1-med-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--color-ink-950);
+}
+.b1-med-detail {
+  font-size: 0.75rem;
+  color: var(--color-ink-400);
+}
+.b1-status {
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-ink-400);
+  white-space: nowrap;
+}
+.b1-status--now {
+  color: var(--color-ink-700);
+}
+
+/* I-H-10 — adherence flip chips (Y-axis 0.5s) */
+.b1-chip {
+  display: inline-block;
+  border: none;
+  background: none;
+  cursor: pointer;
+  perspective: 600px;
+  -webkit-perspective: 600px;
+  font: inherit;
+}
+.b1-chip:focus-visible { outline-offset: 4px; border-radius: 999px; }
+.b1-chip-inner {
+  position: relative;
+  display: inline-flex;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.46, 0, 0.54, 1);
+  will-change: transform;
+}
+.b1-chip[aria-pressed="true"] .b1-chip-inner,
+.b1-chip.is-peek .b1-chip-inner {
+  transform: rotateY(180deg);
+}
+/* Front face stays in-flow so it sizes the chip; back face mirrors it. */
+.b1-chip-face {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border-radius: 999px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.b1-chip-face--front {
+  background: var(--color-ink-950);
+  color: var(--color-ivory-50);
+  box-shadow: var(--shadow-soft);
+}
+.b1-chip-face--back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  background: var(--color-brand-50);
+  border: 1px solid var(--color-brand-400);
+  color: var(--color-ink-700);
+  transform: rotateY(180deg);
+  font-size: 0.7rem;
+}
+
+/* ── Beat 2 — Rx PHOTO: the paper→plan moment ───────────────────── */
+/* M-E-20 — CSS-composed prescription photo (no real Rx, no patient data) */
+.b2-photo {
+  position: relative;
+  aspect-ratio: 320 / 210;
+  border-radius: 0.9rem;
+  background: var(--color-paper-100);
+  border: 1px solid var(--color-paper-200);
+  padding: 1.1rem;
+  box-shadow:
+    0 30px 70px -24px rgb(10 10 11 / 0.75),
+    0 4px 16px rgb(10 10 11 / 0.4);
+}
+.b2-rx-glyph {
+  position: absolute;
+  left: 1.1rem;
+  top: 0.9rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--color-ink-600);
+}
+.b2-scribbles {
+  position: absolute;
+  left: 1.1rem;
+  right: 1.1rem;
+  bottom: 1rem;
+  top: 3.2rem;
+  width: calc(100% - 2.2rem);
+  height: calc(100% - 4.2rem);
+}
+.b2-scribble {
+  stroke: var(--color-ink-300);
+  stroke-width: 2;
+  stroke-linecap: round;
+  fill: none;
+}
+.b2-scribble--sig { stroke: var(--color-ink-400); }
+.b2-stamp {
+  stroke: var(--color-ink-200);
+  stroke-width: 1.5;
+  fill: none;
+  stroke-dasharray: 3 4;
+}
+.b2-stamp--in { stroke-dasharray: none; opacity: 0.7; }
+
+/* I-C-21 — contextual cursor label ("Chhoo ke dekho", desktop only).
+   Fixed to the photo zone, follows the mouse point-to-point (engine). */
+.b2-cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  background: rgb(10 10 11 / 0.92);
+  border: 1px solid var(--color-ink-600);
+  color: var(--color-paper-50);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  scale: 0.9;
+  transition: opacity 0.2s ease, scale 0.2s ease;
+  will-change: transform;
+}
+.b2-cursor.is-on { opacity: 1; scale: 1; }
+@media (hover: none), (pointer: coarse) {
+  .b2-cursor { display: none; }
+}
+
+/* M-E-21 — DRAFT rows */
+.b2-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 1rem;
+  border: 1px solid rgb(234 234 235 / 0.1);
+  background: rgb(25 27 29 / 0.55);
+}
+.b2-row-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  flex: 1;
+}
+.b2-med {
+  margin: 0;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--color-ivory-100);
+}
+.b2-dose {
+  margin: 0;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-300);
+}
+/* DRAFT / ✓ badges — the state morph (I-H-20). Decorative: the button's
+   aria-pressed carries the state for assistive tech. */
+.b2-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.b2-badge--draft {
+  padding: 0.3rem 0.55rem;
+  background: var(--color-ink-200);
+  color: var(--color-ink-950);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+.b2-badge--done {
+  display: none;
+  width: 28px;
+  height: 28px;
+  background: var(--color-brand-400);
+  color: var(--color-ink-950);
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+.b2-row.is-confirmed .b2-badge--draft { display: none; }
+.b2-row.is-confirmed .b2-badge--done { display: inline-flex; }
+
+/* I-H-20 — confirm buttons (≥44px) */
+.b2-confirm {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 1rem;
+  border-radius: 999px;
+  border: 1px solid rgb(234 234 235 / 0.22);
+  background: transparent;
+  color: var(--color-ivory-100);
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+.b2-confirm:hover { border-color: var(--color-ink-300); }
+.b2-confirm:focus-visible { outline-offset: 2px; }
+.b2-c-off,
+.b2-c-on {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+.b2-c-on { display: none; }
+.b2-confirm[aria-pressed="true"] {
+  background: var(--color-brand-400);
+  border-color: transparent;
+  color: var(--color-ink-950);
+  cursor: default;
+}
+.b2-confirm[aria-pressed="true"] .b2-c-off { display: none; }
+.b2-confirm[aria-pressed="true"] .b2-c-on { display: inline-flex; }
+
+/* The confirm rail */
+.b2-rail {
+  border-radius: 1rem;
+  border: 1px solid rgb(234 234 235 / 0.12);
+  background: rgb(25 27 29 / 0.7);
+  padding: 0.9rem 1rem;
+}
+.b2-rail-head { margin: 0; font-size: 0.85rem; color: var(--color-ivory-100); }
+.b2-rail-head strong { font-weight: 800; }
+.b2-rail-final {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.7rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgb(234 234 235 / 0.12);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-ivory-50);
+}
+
+/* Mobile: beat rows stay comfortable at 320–390px */
+@media (max-width: 767px) {
+  .b1-row { grid-template-columns: auto 1fr; }
+  .b1-status { grid-column: 2; justify-self: start; }
+  .b2-row { flex-wrap: wrap; }
+  .b2-confirm { width: 100%; }
+  .b2-cursor { display: none; }
+}
+

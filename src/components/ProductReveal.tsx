@@ -133,7 +133,7 @@ export function ProductReveal() {
 
             {/* Sevika panel */}
             <div className="border-t border-ink-100 p-5 md:border-l md:border-t-0">
-              <p className="eyebrow text-gold-600">Sevika · Assistant</p>
+              <p className="eyebrow text-gold-600">Aturseva · Assistant</p>
               {/* B17 — static presentation only: this is part of the labelled
                   representative preview; a state glyph, NOT a control. No
                   <label>, no cursor-pointer, no toggle behaviour implied. */}
@@ -157,7 +157,7 @@ export function ProductReveal() {
                 ))}
               </ul>
               <p className="mt-4 text-[11px] leading-relaxed text-ink-400">
-                Every message is approved by the doctor before Sevika sends it.
+                Every message is approved by the doctor before Aturseva sends it.
               </p>
             </div>
           </div>
@@ -182,7 +182,7 @@ export function ProductReveal() {
               icon: "M12 4v16m0-16a8 8 0 0 0-8 8m16 0a8 8 0 0 1-8 8",
             },
             {
-              title: "Sevika follow-up",
+              title: "Aturseva follow-up",
               body: "Gentle, doctor-approved care that continues after the visit.",
               icon: "M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6.5 5.5 5.5 0 0 1 21.5 12C19 16.4 12 21 12 21z",
             },

@@ -489,7 +489,7 @@
        hero parallax (M-P-01). Markup ships in its final state — this engine
        only enhances, so crawlers / no-JS / reduced-motion see everything. */
 
-    var ORB_STATE_CLASSES = ["orb--idle", "orb--listening", "orb--speaking", "orb--alert", "orb--night"];
+    var ORB_STATE_CLASSES = ["orb--idle", "orb--listening", "orb--speaking", "orb--alert", "orb--night", "orb--scanning"];
     var hero2Listeners = [];
 
     function on2(el, type, fn, opts) {
@@ -564,11 +564,14 @@
     }
 
     /* Chip taps — interaction, so these are attached OUTSIDE the media
-       context: they work under reduced-motion too (instant replies). */
+       context: they work under reduced-motion too (instant replies).
+       Scoped to the hero2 section so the beat-section orbs are never
+       driven by hero chips (multiple [data-orb] now live on the page). */
     function wireHero2Chips() {
-      var orb = document.querySelector("[data-orb]");
-      var thread = document.querySelector("[data-hero2-thread]");
-      var chips = document.querySelectorAll(".hero2-chip");
+      var root = document.querySelector("[data-hero2]");
+      var orb = root ? root.querySelector("[data-orb]") : null;
+      var thread = root ? root.querySelector("[data-hero2-thread]") : null;
+      var chips = root ? root.querySelectorAll(".hero2-chip") : [];
       if (!thread || !chips.length) return;
 
       chips.forEach(function (chip) {
@@ -784,6 +787,259 @@
       }
     }
 
+    /* ─────────────── BEATS 1–2 — "Aturseva ka din" (File 21 §1–§2) ───────────────
+       Phase 2: Beat 1 SUBAH (dose timeline + reminder bubble + adherence
+       flips) and Beat 2 Rx PHOTO (photo drop → orb scan → DRAFT rows →
+       confirm rail). Markup ships each beat's FINAL state — these builders
+       replay it, so crawlers / no-JS / reduced-motion see the complete beat. */
+
+    /* Split a beat headline's [data-line] spans into masked words for the
+       mask-reveal (File 21 §global entrance grammar). Idempotent. */
+    function splitBeatH2(h2) {
+      if (!h2 || h2.getAttribute("data-split") === "1") return [];
+      var out = [];
+      Array.prototype.forEach.call(h2.querySelectorAll("[data-line]"), function (line) {
+        if (line.children.length) return;
+        var words = (line.textContent || "").split(/\s+/).filter(Boolean);
+        if (!words.length) return;
+        line.innerHTML = words
+          .map(function (w) {
+            return '<span class="beat-w"><span class="beat-wi">' + w + "</span></span>";
+          })
+          .join(" ");
+        out.push.apply(out, Array.prototype.slice.call(line.querySelectorAll(".beat-wi")));
+      });
+      h2.setAttribute("data-split", "1");
+      return out;
+    }
+
+    /* Shared section-entrance grammar (File 21 §global): kicker fade (0.3s)
+       → headline mask-reveal → body fade-up (0.6s). once: true. */
+    function beatEntrance(section) {
+      var kicker = section.querySelector(".beat-kicker");
+      var h2words = splitBeatH2(section.querySelector(".beat-h2"));
+      var fades = gsap.utils.toArray("[data-beat-fade]", section);
+
+      if (kicker) gsap.set(kicker, { autoAlpha: 0, y: 10 });
+      if (h2words.length) gsap.set(h2words, { yPercent: 112 });
+      if (fades.length) gsap.set(fades, { autoAlpha: 0, y: 22 });
+
+      var tl = gsap.timeline({
+        defaults: { ease: "power2.out" },
+        scrollTrigger: { trigger: section, start: "top 78%", once: true },
+      });
+      if (kicker) tl.to(kicker, { autoAlpha: 1, y: 0, duration: 0.3 }, 0);
+      if (h2words.length)
+        tl.to(h2words, { yPercent: 0, duration: 0.55, stagger: 0.05, ease: "power3.out" }, 0.12);
+      if (fades.length) tl.to(fades, { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.1 }, 0.3);
+      return tl;
+    }
+
+    /* A beat's cameo orb lives inside its hook wrapper ([data-b1-orb] etc.). */
+    function cameoOrb(section, hook) {
+      var wrap = section.querySelector("[" + hook + "]");
+      return wrap ? wrap.querySelector("[data-orb]") : null;
+    }
+
+    function buildBeat1() {
+      var section = document.querySelector("[data-beat1]");
+      if (!section) return;
+      beatEntrance(section);
+
+      var card = section.querySelector("[data-b1-card]");
+      var rows = gsap.utils.toArray("[data-b1-row]", section);
+      var bubble = section.querySelector("[data-b1-bubble]");
+      var chips = gsap.utils.toArray("[data-b1-flip]", section);
+      var orb = cameoOrb(section, "data-b1-orb");
+
+      /* M-E-11 — dose rows slide in from the left (stagger 0.15s), then
+         the adherence chips settle in. */
+      if (card) {
+        gsap.set(rows, { autoAlpha: 0, x: -28 });
+        gsap.set(chips, { autoAlpha: 0, y: 10 });
+        gsap
+          .timeline({
+            defaults: { ease: "power2.out" },
+            scrollTrigger: { trigger: card, start: "top 80%", once: true },
+          })
+          .to(rows, { autoAlpha: 1, x: 0, duration: 0.5, stagger: 0.15 }, 0.1)
+          .to(chips, { autoAlpha: 1, y: 0, duration: 0.35, stagger: 0.06 }, 0.45);
+      }
+
+      /* M-L-10 — the reminder bubble pops when the 9:00 row reaches the
+         centre of the viewport; O-10 — the orb cameo ripples along. */
+      if (bubble) {
+        gsap.set(bubble, { autoAlpha: 0, scale: 0.8, transformOrigin: "20% 90%" });
+        ScrollTrigger.create({
+          trigger: rows[0] || card,
+          start: "top 62%",
+          once: true,
+          onEnter: function () {
+            gsap.to(bubble, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.7)" });
+            if (orb) {
+              setOrb(orb, "speaking");
+              setTimeout(function () {
+                if (disposed) return;
+                if (orb.classList.contains("orb--speaking")) setOrb(orb, "idle");
+              }, 1200);
+            }
+          },
+        });
+      }
+    }
+
+    function buildBeat2() {
+      var section = document.querySelector("[data-beat2]");
+      if (!section) return;
+      beatEntrance(section);
+
+      var photoWrap = section.querySelector("[data-b2-photo-wrap]");
+      var photo = section.querySelector("[data-b2-photo]");
+      var rows = gsap.utils.toArray("[data-b2-row]", section);
+      var rail = section.querySelector("[data-b2-rail]");
+      var finalLine = section.querySelector("[data-b2-final]");
+      var orb = cameoOrb(section, "data-b2-orb");
+      var cursorLabel = section.querySelector("[data-b2-cursor]");
+
+      /* Replay reset: markup ships the final (all-confirmed) state — motion
+         users watch the beat build itself, then confirm for real. */
+      rows.forEach(function (r) { r.classList.remove("is-confirmed"); });
+      section.querySelectorAll("[data-b2-confirm]").forEach(function (b) {
+        b.setAttribute("aria-pressed", "false");
+      });
+
+      if (photo) gsap.set(photo, { y: -40, rotation: 4, autoAlpha: 0 });
+      if (rows.length) gsap.set(rows, { autoAlpha: 0, x: -44 });
+      if (rail) gsap.set(rail, { autoAlpha: 0, y: 16 });
+      if (finalLine) gsap.set(finalLine, { autoAlpha: 0 });
+
+      if (photoWrap) {
+        var seq = gsap.timeline({
+          defaults: { ease: "power2.out" },
+          scrollTrigger: { trigger: photoWrap, start: "top 78%", once: true },
+        });
+        /* M-E-20 — photo card drops in from -40px with 4° rotate settle. */
+        if (photo)
+          seq.to(photo, { y: 0, rotation: 0, autoAlpha: 1, duration: 0.7, ease: "bounce.out" }, 0);
+        /* O-20 — the scan-line sweeps the core (2 passes, 1.2s) while the
+           rows generate. */
+        if (orb) {
+          seq.call(
+            function () {
+              setOrb(orb, "scanning");
+              setTimeout(function () {
+                if (disposed) return;
+                if (orb.classList.contains("orb--scanning")) setOrb(orb, "idle");
+              }, 1250);
+            },
+            null,
+            0.8
+          );
+        }
+        /* M-E-21 — DRAFT rows slide out of the photo (stagger 0.18s). */
+        if (rows.length)
+          seq.to(rows, { autoAlpha: 1, x: 0, duration: 0.5, stagger: 0.18 }, 1.0);
+        if (rail) seq.to(rail, { autoAlpha: 1, y: 0, duration: 0.5 }, 1.7);
+      }
+
+      /* I-C-21 — "Chhoo ke dekho" cursor label follows the mouse over the
+         photo zone (desktop only; touch never ships dead zones). Wired once
+         per element so media re-entry never stacks duplicate listeners. */
+      var finePointer2 = window.matchMedia("(hover: hover) and (pointer: fine)");
+      if (finePointer2.matches && cursorLabel && photoWrap &&
+          photoWrap.getAttribute("data-cursor-wired") !== "1") {
+        photoWrap.setAttribute("data-cursor-wired", "1");
+        var lx = gsap.quickTo(cursorLabel, "x", { duration: 0.3, ease: "power3.out" });
+        var ly = gsap.quickTo(cursorLabel, "y", { duration: 0.3, ease: "power3.out" });
+        on2(photoWrap, "pointerenter", function () {
+          if (!disposed) cursorLabel.classList.add("is-on");
+        });
+        on2(photoWrap, "pointerleave", function () {
+          if (!disposed) cursorLabel.classList.remove("is-on");
+        });
+        on2(photoWrap, "pointermove", function (e) {
+          if (disposed) return;
+          var r = photoWrap.getBoundingClientRect();
+          lx(e.clientX - r.left + 16);
+          ly(e.clientY - r.top + 18);
+        });
+      }
+    }
+
+    /* Beats interactions — like the hero chips, these are interaction, not
+       motion: they stay live in every media state (instant under RM). */
+    function wireBeatInteractions() {
+      var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+      /* I-H-10 — adherence flips (tap toggles; hover previews on desktop). */
+      gsap.utils.toArray("[data-b1-flip]").forEach(function (chip) {
+        on2(chip, "click", function () {
+          var on = chip.getAttribute("aria-pressed") === "true";
+          chip.setAttribute("aria-pressed", on ? "false" : "true");
+          chip.classList.remove("is-peek");
+        });
+        if (finePointer.matches) {
+          on2(chip, "pointerenter", function () {
+            if (chip.getAttribute("aria-pressed") !== "true") chip.classList.add("is-peek");
+          });
+          on2(chip, "pointerleave", function () {
+            chip.classList.remove("is-peek");
+          });
+        }
+      });
+
+      /* I-H-20 — the confirm rail: DRAFT → ✓ morph per row; all-confirmed
+         reveals the final line (+ a quiet orb ripple, motion only). */
+      gsap.utils.toArray("[data-beat2]").forEach(function (section) {
+        var rows = Array.prototype.slice.call(section.querySelectorAll("[data-b2-row]"));
+        var finalLine = section.querySelector("[data-b2-final]");
+        var orb = cameoOrb(section, "data-b2-orb");
+
+        function checkAll() {
+          if (!finalLine) return;
+          var all =
+            rows.length > 0 &&
+            rows.every(function (r) { return r.classList.contains("is-confirmed"); });
+          if (reduceMQ.matches) {
+            finalLine.style.opacity = all ? "1" : "0";
+            finalLine.style.visibility = all ? "visible" : "hidden";
+            return;
+          }
+          if (all) {
+            gsap.to(finalLine, { autoAlpha: 1, duration: 0.45, ease: "power2.out" });
+            if (orb) {
+              setOrb(orb, "speaking");
+              setTimeout(function () {
+                if (disposed) return;
+                if (orb.classList.contains("orb--speaking")) setOrb(orb, "idle");
+              }, 1100);
+            }
+          } else {
+            gsap.to(finalLine, { autoAlpha: 0, duration: 0.3, ease: "power1.in" });
+          }
+        }
+
+        rows.forEach(function (row) {
+          var btn = row.querySelector("[data-b2-confirm]");
+          if (!btn) return;
+          on2(btn, "click", function () {
+            var on = row.classList.toggle("is-confirmed");
+            btn.setAttribute("aria-pressed", on ? "true" : "false");
+            if (on && !reduceMQ.matches) {
+              var done = row.querySelector("[data-b2-done]");
+              if (done)
+                gsap.fromTo(
+                  done,
+                  { scale: 0.3, autoAlpha: 0 },
+                  { scale: 1, autoAlpha: 1, duration: 0.3, ease: "back.out(2)" }
+                );
+            }
+            checkAll();
+          });
+        });
+      });
+    }
+
     /* B12+B13 — ONE gsap.matchMedia() owns every conditional builder.
        GSAP re-evaluates the conditions live when the media state changes
        while the page is mounted (reverting the old context and running the
@@ -798,15 +1054,19 @@
       if (disposed) return;
       buildHero();
       buildHeroV2();
+      buildBeat1();
+      buildBeat2();
       buildReveals();
       buildJourneyLanes();
       buildProductTilt();
       buildSevika();
     });
 
-    /* HERO v2 chips are interaction, not motion — they stay live in every
-       media state (instant replies under reduced-motion, B12 parity). */
+    /* HERO v2 chips and beats interactions are interaction, not motion —
+       they stay live in every media state (instant under reduced-motion,
+       B12 parity). */
     wireHero2Chips();
+    wireBeatInteractions();
 
     /* Connection — fully media-conditioned: static finale under reduced
        motion, pinned scrub on desktop, choreographed auto-play on mobile.

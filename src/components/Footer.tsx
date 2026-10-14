@@ -20,7 +20,7 @@ export function Footer() {
             <p className="mt-3 font-display text-xl italic text-ivory-100">
               Care that walks with you.
             </p>
-            {/* B3 — brand-philosophy framing (matches Sevika §5): our promise,
+            {/* B3 — brand-philosophy framing (matches the assistant §5): our promise,
                 never a customer testimonial. */}
             <p className="eyebrow mt-6 text-ink-300">Our philosophy</p>
             <p className="mt-3 font-display text-lg italic text-brand-200">
@@ -41,7 +41,7 @@ export function Footer() {
             </ul>
             <ul className="space-y-3">
               <li className="eyebrow mb-4 text-ink-300">Care</li>
-              <li><a className="text-ivory-100/80 transition-colors hover:text-ivory-50" href="#sevika">Sevika</a></li>
+              <li><a className="text-ivory-100/80 transition-colors hover:text-ivory-50" href="#sevika">Aturseva</a></li>
               <li><a className="text-ivory-100/80 transition-colors hover:text-ivory-50" href="#paths">For you</a></li>
             </ul>
             <ul className="space-y-3">

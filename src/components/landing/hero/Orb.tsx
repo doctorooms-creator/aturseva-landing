@@ -17,6 +17,10 @@
  *   orb--speaking  concentric ripple rings
  *   orb--alert     hop + core flash (the "baari" moment)
  *   orb--night     dimmed 40%, slower breathe
+ *   orb--scanning  scan-line sweeps the core (File 21 §2 O-20, Rx beat)
+ *
+ * Sizes: hero (clamp 220–380px) · mini (140px) · cameo (120px — the
+ * beat-section float, File 21 O-10/O-20).
  */
 export function Orb({
   token = "#12",
@@ -26,12 +30,14 @@ export function Orb({
 }: {
   token?: string;
   coreLabel?: string;
-  size?: "hero" | "mini";
+  size?: "hero" | "mini" | "cameo";
   className?: string;
 }) {
   return (
     <div
-      className={`orb orb--idle ${size === "hero" ? "orb--hero" : "orb--mini"} ${className}`}
+      className={`orb orb--idle ${
+        size === "hero" ? "orb--hero" : size === "mini" ? "orb--mini" : "orb--cameo"
+      } ${className}`}
       data-orb
       role="img"
       aria-label={`Aturseva — the AI care assistant, showing ${coreLabel} ${token}`}

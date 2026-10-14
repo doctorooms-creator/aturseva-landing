@@ -7,7 +7,7 @@ const LINKS = [
   { href: "#journeys", label: "The Journeys" },
   { href: "#connection", label: "How it connects" },
   { href: "#platform", label: "Platform" },
-  { href: "#sevika", label: "Sevika" },
+  { href: "#sevika", label: "Aturseva" },
 ];
 
 export function Nav() {

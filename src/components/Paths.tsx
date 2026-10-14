@@ -11,7 +11,7 @@ const PATHS = [
     accent: "text-brand-600",
     ring: "bg-brand-50 text-brand-600",
     title: "Walk in with greater clarity",
-    body: "Book ahead, watch your token move in real time, and let Sevika remember the follow-ups for you.",
+    body: "Book ahead, watch your token move in real time, and let Aturseva remember the follow-ups for you.",
     icon: "M12 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0 10c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5z",
   },
   {

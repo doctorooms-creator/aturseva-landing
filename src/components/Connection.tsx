@@ -49,7 +49,7 @@ export function Connection() {
             <p className="conn-caption">Today, three journeys move apart…</p>
             <p className="conn-caption">Aturseva joins them into one calm flow.</p>
             <p className="conn-caption">One booking travels — doctor and hospital, in step.</p>
-            <p className="conn-caption">And Sevika stays beside the patient.</p>
+            <p className="conn-caption">And Aturseva stays beside the patient.</p>
           </div>
         </div>
 
